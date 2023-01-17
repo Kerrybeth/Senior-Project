@@ -1,0 +1,42 @@
+body {
+background-color: #282c34;
+}
+
+.App {
+  text-align: center;
+}
+
+
+.App-header {
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+table {
+	background-color: #000000;
+	border: 1px solid;
+}
+
+th {
+	border: 1px solid;
+	font-family:calibri;
+}
+td {
+	border: 1px solid;
+	font-family:calibri;
+}
+tr:nth-of-type(even) {
+	background-color: #026440;
+}
+a{
+ color: #04B880;
+}
+a:hover{
+	 color:#880088;
+}
+a:active{
+	color:#0000FF
+}
