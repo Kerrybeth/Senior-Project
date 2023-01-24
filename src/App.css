@@ -24,6 +24,11 @@
   color: white;
 }
 
+.carousel {
+  width:90vw;
+  height:100%;
+}
+
 .App-link {
   color: #61dafb;
 }

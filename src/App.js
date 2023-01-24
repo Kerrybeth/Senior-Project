@@ -1,5 +1,9 @@
 import logo from './logo.svg';
+
+import EventCarousel from './ui/home/EventCarousel';
+
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
