@@ -1,9 +1,7 @@
 import React from 'react';
 
 
-class NavbarComp extends React.Component{
-	
-render(){
+function DisplayNav() {
   return (
 	<ul>
 		<li>
@@ -16,6 +14,6 @@ render(){
 	</ul>
 	);
 }
-}
 
-export default NavbarComp;
+
+export default DisplayNav;
