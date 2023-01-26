@@ -13,6 +13,27 @@
   }
 }
 
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	
+	
+}
+
+li {
+	display: block;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 200px;
+}
+
+.navbutton {
+	width: 200px;
+	height: 150px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
