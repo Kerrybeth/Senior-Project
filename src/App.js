@@ -1,12 +1,15 @@
 import Home from './ui/home/Home';
+import Navbar from './ui/components/Navbar.js';
 
 import './App.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <Home />
-    
+    <div>
+      <Home />
+      <Navbar />
+    </div>
   );
 }
 

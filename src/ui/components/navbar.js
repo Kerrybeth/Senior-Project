@@ -1,7 +1,6 @@
-import React from 'react';
+import '../../App.css';
 
-
-function DisplayNav() {
+function Navbar() {
   return (
 	<ul>
 		<li>
@@ -16,4 +15,4 @@ function DisplayNav() {
 }
 
 
-export default DisplayNav;
+export default Navbar;
