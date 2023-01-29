@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 
-const Home = () => {
+const Groups = () => {
     return (
         <Box
             sx={{
@@ -12,10 +12,10 @@ const Home = () => {
             }}
         >
             <Typography variant="h1" style={{ color: 'black' }}>
-             I am home :)
+             I am groups!
             </Typography>
         </Box>
     );
 }
 
-export default Home; 
+export default Groups; 
