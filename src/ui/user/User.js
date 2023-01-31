@@ -3,18 +3,47 @@ import Typography from '@mui/material/Typography';
 
 const User = () => {
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '30vh',
-            }}
-        >
-            <Typography variant="h1" style={{ color: 'black' }}>
-               I am user :) 
-            </Typography>
-        </Box>
+		<div>
+			<Box component='button' style={{minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px'}}>
+				<image>
+				User Pic
+				</image>
+			</Box>
+			<Box
+				sx={{
+					display: 'flex',
+					minHeight: '100px',
+					maxWidth: '1000px',
+					border: 'solid',
+					position: 'fixed', 
+					top: '100px', 
+					right: '100px'
+				}}
+			>
+				<Typography variant="h3" style={{ 
+					color: 'black', 
+					justifyContent: 'left', 
+					alignItems: 'left'
+				}}>
+				Name: 
+				<br/>
+				<br/>
+				Bio:
+				<br/>
+				<br/>
+				Description:
+				<br/>
+				</Typography>
+				<Typography variant ="h4" style={{ color: 'black', justifyContent: 'right', alignItems: 'right'}}>
+				Edit
+				</Typography>
+			</Box>
+			<Box>
+				<Typography variant ="h1" style={{ color: 'black', position: 'relative', top: '200px'}}>
+				Availability
+				</Typography>
+			</Box>
+		</div>
     );
 }
 
