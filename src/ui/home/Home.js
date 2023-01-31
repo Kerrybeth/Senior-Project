@@ -7,6 +7,7 @@ function Home() {
     <div className="App">
         <div id="Home">
             <EventCarousel></EventCarousel>
+            <div id="calendar">CALENDAR HERE</div>
         </div>
     </div>
     );
