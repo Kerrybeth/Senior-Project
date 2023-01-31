@@ -3,7 +3,6 @@ import { sizeConfigs } from "./configs";
 import { colorConfigs } from "./configs";
 import * as React from 'react';
 import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -20,8 +19,6 @@ const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
 
 const Topbar = () => {
-
-
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -64,9 +61,6 @@ const Topbar = () => {
             </Button>
           ))}
         </Box>
-
-
-
       </Toolbar>
     </AppBar>
   );
