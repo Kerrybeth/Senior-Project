@@ -55,6 +55,13 @@ li {
   color: white;
 }
 
+#calendar {
+  min-height: 70vh;
+  width:90vw;
+  padding-top:5vh;
+  padding-bottom:5vh;
+}
+
 .carousel {
   width:90vw;
   height:100%;
