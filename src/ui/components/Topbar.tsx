@@ -14,6 +14,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom'
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
@@ -52,14 +53,17 @@ const Topbar = () => {
           component="div"
           sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
         >
-         CalandarBoard
+          CalandarBoard
         </Typography>
-        <Box sx={{ display: { xs: 'none', sm: 'block' }, color : 'black'}}>
-          {navItems.map((item) => (
+        <Box sx={{ display: { xs: 'none', sm: 'block' }, color: 'black' }}>
+          {/* {navItems.map((item) => (
             <Button key={item} sx={{ color: 'black' }}>
               {item}
             </Button>
-          ))}
+          ))} */}
+          <Button component={Link} to="/" sx={{color: 'black'}}>
+            Home
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
