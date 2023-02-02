@@ -7,7 +7,6 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import User from "../user/User";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Error from "../components/Error";
-import Settings from "../settings/Settings";
 import Contacts from "../contacts/Contacts";
 import Events from "../events/Events";
 import Groups from "../groups/Groups";
@@ -52,14 +51,6 @@ const appRoutes: RouteType[] = [
         sidebarProps: {
             displayText: "Contacts",
             icon: <GroupIcon />
-        }
-    }, {
-        path: "/settings",
-        element: <Settings />,
-        state: "settings",
-        sidebarProps: {
-            displayText: "Settings",
-            //icon: <SettingsIcon />
         }
     },
 ];
