@@ -6,10 +6,7 @@ import routes from "./ui/layout+routes/Routes"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-
-
   return (
-    <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
@@ -17,7 +14,6 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-    </>
   );
 }
 
