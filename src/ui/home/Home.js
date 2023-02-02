@@ -1,21 +1,17 @@
-import { Box } from "@mui/system";
-import Typography from '@mui/material/Typography';
+import EventCarousel from './EventCarousel';
 
-const Home = () => {
+import '../../App.css';
+
+function Home() {
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '30vh',
-            }}
-        >
-            <Typography variant="h1" style={{ color: 'black' }}>
-             I am home :)
-            </Typography>
-        </Box>
+    <div className="App">
+        <div id="Home">
+            <EventCarousel></EventCarousel>
+            <div id="calendar">CALENDAR HERE</div>
+        </div>
+    </div>
     );
-}
-
-export default Home; 
+  }
+  
+  export default Home;
+  
