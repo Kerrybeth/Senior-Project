@@ -1,43 +1,41 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 import '../../App.css';
 
 function Groups() {
     return (
-    <div className="App">
-        <div id="Home">
+    <div className="pageLight">
+        <div className="tabList">
         <Tabs
-            defaultActiveKey="profile"
-            id="uncontrolled-tab-example"
+            defaultActiveKey="first"
+            id="groups-tabs"
             className="mb-3"
         >
-            <Tab eventKey="groups" title="Groups">
+            <Tab eventKey="first" title="Groups">
             <ListGroup>
                 <ListGroup.Item>
                 <div>
-                <div className="fw-bold">Subheading</div>
-                    Cras justo odio
+                <div className="fw-bold">Group 1</div>
+                    Group description
                 </div>
                 </ListGroup.Item>
-                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
             </ListGroup>
             </Tab>
-            <Tab eventKey="groupinvites" title="Invites">
+            <Tab eventKey="second" title="Invites">
             <ListGroup>
-                <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                <ListGroup.Item>You were invited to "Group 2" by Logan Tiraboschi 
+                    <div style={{ padding:5 }}>
+                        <Button variant="success">Accept</Button>{' '} <Button variant="danger">Deny</Button>{' '}
+                    </div>
+                </ListGroup.Item>
             </ListGroup>
             </Tab>
         </Tabs>
         </div>
+        <Button variant="secondary">Create group</Button>{' '}
     </div>
     );
   }
