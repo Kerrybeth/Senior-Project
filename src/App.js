@@ -4,10 +4,7 @@ import MainLayout from "./ui/layout+routes/MainLayout";
 import routes from "./ui/layout+routes/Routes"
 
 function App() {
-
-
   return (
-    <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
@@ -15,7 +12,6 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-    </>
   );
 }
 

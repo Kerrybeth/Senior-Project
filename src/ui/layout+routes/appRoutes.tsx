@@ -5,6 +5,7 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import User from "../user/User";
+import UserEdit from "../user/UserEdit";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Error from "../components/Error";
 import Contacts from "../contacts/Contacts";
@@ -27,7 +28,11 @@ const appRoutes: RouteType[] = [
         sidebarProps: {
             displayText: "User",
             icon: <AccountBoxIcon />
-        }
+		}
+    }, {
+        path: "/useredit",
+        element: <UserEdit />,
+        state: "useredit"
     }, {
         path: "/groups",
         element: <Groups />,

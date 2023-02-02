@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 
-const User = () => {
+const UserEdit = () => {
     return (
 		<div>
 			<Box component='button' style={{minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px'}}>
@@ -26,19 +26,28 @@ const User = () => {
 					justifyContent: 'left', 
 					alignItems: 'left'
 				}}>
-				Name: 
+				<label>
+					Name:
+					<input type="text" name="name"/>
+				</label>
 				<br/>
 				<br/>
-				Bio:
+				<label>
+					Bio:
+					<input type="text" name="bio"/>
+				</label>
 				<br/>
 				<br/>
-				Description:
+				<label>
+					Description:
+					<input type="text" name="description"/>
+				</label>
 				<br/>
 				</Typography>
-				<Link to= "/UserEdit">
+				<Link to= "/User">
 					<button style={{maxHeight:'50px',}}>
 						<Typography variant ="h4" style={{ color: 'black', justifyContent: 'right', alignItems: 'right'}}>
-						Edit
+						Back
 						</Typography>
 					</button>
 				</Link>
@@ -52,4 +61,4 @@ const User = () => {
     );
 }
 
-export default User; 
+export default UserEdit; 
