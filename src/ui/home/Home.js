@@ -5,7 +5,7 @@ import '../../App.css';
 function Home() {
     return (
     <div className="App">
-        <div id="Home">
+        <div className="pageLight">
             <EventCarousel></EventCarousel>
             <div id="calendar">CALENDAR HERE</div>
         </div>
