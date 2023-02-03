@@ -15,6 +15,7 @@ import Home from "../home/Home";
 import GroupIcon from '@mui/icons-material/Group';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const appRoutes: RouteType[] = [
     {
@@ -59,7 +60,7 @@ const appRoutes: RouteType[] = [
         state: "settings",
         sidebarProps: {
             displayText: "Settings",
-            //icon: <SettingsIcon />
+            icon: <SettingsIcon />
         }
     },
 ];
