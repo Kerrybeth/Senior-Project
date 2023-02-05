@@ -15,6 +15,10 @@ function App() {
           </Route>
           <Route path="*" element={<Error />}>
           </Route>
+          <Route path="/login" element={<Error />}>
+          </Route>
+          <Route path="/signup" element={<Error />}>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
