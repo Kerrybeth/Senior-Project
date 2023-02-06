@@ -5,7 +5,7 @@ import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Divider from '@mui/material/Divider';
 import { styled } from "@mui/material/styles";
 import { Link } from 'react-router-dom'
-
+import HomeIcon from '@mui/icons-material/Home';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -27,19 +27,33 @@ const Error = () => {
             }}
 
         >
-            <Typography variant="h1" style={{ color: 'red', margin: "20px", position: "absolute" }}>
-            Error
-            </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: '30vh',
+                    position: "fixed",
+
+                }}
+
+            >
+                <Typography variant="h1" style={{ color: 'red', margin: "20px", position: "absolute" }}>
+                    !!404!! 
+                </Typography>
+            </Box>
+
             <Stack
                 direction="row"
                 divider={<Divider orientation="vertical" flexItem />}
                 spacing={2}
+                sx={{marginTop: "150px"}}
             >
-                <Button  component={Link} to="/"  variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
-                    <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+                <Button component={Link} to="/" variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
+                    <HomeIcon sx={{ mr: "10px" }} /> Go Home
                 </Button>
 
-                <Button  component={Link} to="/" variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
+                <Button component={Link} to="/" variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
                     Logout
                 </Button>
             </Stack>
