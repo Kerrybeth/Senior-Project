@@ -8,6 +8,7 @@ import User from "../user/User";
 import UserEdit from "../user/UserEdit";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Error from "../components/Error";
+import Settings from "../settings/Settings";
 import Contacts from "../contacts/Contacts";
 import Events from "../events/Events";
 import Groups from "../groups/Groups";
@@ -15,6 +16,7 @@ import Home from "../home/Home";
 import GroupIcon from '@mui/icons-material/Group';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const appRoutes: RouteType[] = [
     {
@@ -56,6 +58,14 @@ const appRoutes: RouteType[] = [
         sidebarProps: {
             displayText: "Contacts",
             icon: <GroupIcon />
+        }
+    }, {
+        path: "/settings",
+        element: <Settings />,
+        state: "settings",
+        sidebarProps: {
+            displayText: "Settings",
+            icon: <SettingsIcon />
         }
     },
 ];
