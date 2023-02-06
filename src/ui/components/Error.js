@@ -4,6 +4,7 @@ import { Button, Stack, Paper } from "@mui/material";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Divider from '@mui/material/Divider';
 import { styled } from "@mui/material/styles";
+import { Link } from 'react-router-dom'
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -26,21 +27,21 @@ const Error = () => {
             }}
 
         >
-            <Typography variant="h1" style={{ color: 'red', margin: "20px" }}>
-            
+            <Typography variant="h1" style={{ color: 'red', margin: "20px", position: "absolute" }}>
+            Error
             </Typography>
             <Stack
                 direction="row"
                 divider={<Divider orientation="vertical" flexItem />}
                 spacing={2}
             >
-                <Item>  <Button variant="outlined" sx={{ backgroundColor: "#fff", width: "fit-content", textAlign: "center" }} >
+                <Button  component={Link} to="/"  variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
                     <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-                    <a href={"/"}>Back Home</a>
-                </Button></Item>
-                <Item> <Button variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
+                </Button>
+
+                <Button  component={Link} to="/" variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
                     Logout
-                </Button></Item>
+                </Button>
             </Stack>
         </Box>
     );

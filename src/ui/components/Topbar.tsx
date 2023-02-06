@@ -65,15 +65,10 @@ const Topbar = () => {
           </Typography>
         </Typography>
         <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
-          {/* {navItems.map((item) => (
-            <Button key={item} sx={{ color: 'black' }}>
-              {item}
-            </Button>
-          ))} */}
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          <Button component={Link} to="/" sx={{ color: 'red' }}>
+          <Button component={Link} to="/login" sx={{ color: 'red' }}>
             Logout
           </Button>
           <IconButton
