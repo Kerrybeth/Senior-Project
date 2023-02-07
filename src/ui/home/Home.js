@@ -5,18 +5,6 @@ import { useUserAuth } from "../auth/UserAuthContext";
 import EventCarousel from "./EventCarousel";
 
 const Home = () => {
-  // const { logOut, user } = useUserAuth();
-  // const navigate = useNavigate();
-
-  // const handleLogout = async () => {
-  //   try {
-  //     await logOut();
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
 
   return (
     <>
@@ -24,9 +12,9 @@ const Home = () => {
         <div className="pageLight">
           <EventCarousel></EventCarousel>
           <div className="d-grid gap-2">
-            <Button variant="primary" >
-              Log out
-            </Button>
+            <div id="calendar">
+              calendar here
+            </div>
           </div>
         </div>
       </div>
