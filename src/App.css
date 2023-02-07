@@ -71,6 +71,15 @@
   padding:5vw;
 }
 
+.listThumbnail {
+  height:25px;
+  width:25px;
+}
+
+.contactName {
+  padding-left:2%;
+}
+
 .App-link {
   color: #61dafb;
 }
