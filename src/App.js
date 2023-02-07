@@ -1,12 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import MainLayout from "./ui/layout+routes/MainLayout";
 import routes from "./ui/layout+routes/Routes"
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './ui/login/login';
 import Signup from './ui/login/signup';
-import { Routes, Route} from "react-router-dom";
+import Home from "./ui/home/Home";
 import { Container, Row, Col } from "react-bootstrap";
 import { UserAuthContextProvider } from './ui/auth/UserAuthContext';
 import Error from "./ui/components/Error";
