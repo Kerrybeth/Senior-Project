@@ -5,8 +5,8 @@ import { useUserAuth } from "../auth/UserAuthContext";
 import EventCarousel from "./EventCarousel";
 
 const Home = () => {
-  const { logOut, user } = useUserAuth();
-  const navigate = useNavigate();
+  // const { logOut, user } = useUserAuth();
+  // const navigate = useNavigate();
 
   // const handleLogout = async () => {
   //   try {
@@ -20,19 +20,18 @@ const Home = () => {
 
   return (
     <>
-    <div classname="App">
-      <div className="pageLight">
-      <EventCarousel></EventCarousel>
-      <div className="d-grid gap-2">
-        <Button variant="primary" onClick={alert("You clicked me")}>
-          Log out
-        </Button>
+      <div classname="App">
+        <div className="pageLight">
+          <EventCarousel></EventCarousel>
+          <div className="d-grid gap-2">
+            <Button variant="primary" >
+              Log out
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
 
 export default Home;
-  
