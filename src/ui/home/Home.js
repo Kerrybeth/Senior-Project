@@ -7,21 +7,24 @@ import EventCarousel from "./EventCarousel";
 const Home = () => {
   const { logOut, user } = useUserAuth();
   const navigate = useNavigate();
-  const handleLogout = async () => {
-    try {
-      await logOut();
-      navigate("/");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
+  // const handleLogout = async () => {
+  //   try {
+  //     await logOut();
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
+
   return (
     <>
     <div classname="App">
       <div className="pageLight">
       <EventCarousel></EventCarousel>
       <div className="d-grid gap-2">
-        <Button variant="primary" onClick={handleLogout}>
+        <Button variant="primary" onClick={alert("You clicked me")}>
           Log out
         </Button>
         </div>

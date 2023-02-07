@@ -11,24 +11,19 @@ import Error from "./ui/components/Error";
 
 function App() {
   return (
-    <div>
-      <Container>
-        <Row>
-          <Col>
-          <UserAuthContextProvider>
-            <BrowserRouter>
-            <Routes>
-              <Route path="*" element={<Error />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
-            </Routes>
-            </BrowserRouter>
-          </UserAuthContextProvider>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <UserAuthContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            {routes}
+          </Route>
+          <Route path="*" element={<Error />} />
+
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </UserAuthContextProvider>
   );
 }
 
