@@ -3,8 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const Settings = () => {
-    return (
         function AutoLayoutExample() {
             return (
               <Container>
@@ -32,7 +30,5 @@ const Settings = () => {
               </Container>
             );
           }
-    );
-}
 
 export default Settings; 
