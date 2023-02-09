@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-        function AutoLayoutExample() {
+function Settings() {
             return (
               <Container>
                 <Row>
@@ -29,6 +29,6 @@ import Col from 'react-bootstrap/Col';
                 </Row>
               </Container>
             );
-          }
+}
 
 export default Settings; 
