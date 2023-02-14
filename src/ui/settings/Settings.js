@@ -74,11 +74,7 @@ function Settings() {
       </Row>
       <Row>
           <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
-      </Row>
-      <Row>
           <Col><Button type="button" class="btn btn-outline-primary">Change Password</Button></Col>
-      </Row>
-      <Row>
           <Col><Button type="button" class="btn btn-outline-primary">Delete Account</Button></Col>
       </Row>
     </Container>
