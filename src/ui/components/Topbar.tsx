@@ -15,13 +15,29 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom'
+import SettingsIcon from '@mui/icons-material/Settings';
+import Settings from "@mui/icons-material/Settings";
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../auth/UserAuthContext";
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
 
 const Topbar = () => {
 
+    const { logOut, user } = useUserAuth();
+   const navigate = useNavigate();
 
+   const handleLogout = async () => {
+     try {
+       await logOut();
+       navigate("/login");
+     } catch (error) {
+       console.log(error);
+     }
+   };
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -51,18 +67,35 @@ const Topbar = () => {
           <MenuIcon />
         </IconButton>
         <Typography
-          variant="h6"
+          variant="h4"
           component="div"
           sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
         >
-         CalandarBoard
+          CalandarBoard
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ color: "green", ml: "5px"}}
+          >
+            Welcome {user && user.email}!
+          </Typography>
         </Typography>
-        <Box sx={{ display: { xs: 'none', sm: 'block' }, color : 'black'}}>
-          {navItems.map((item) => (
-            <Button key={item} sx={{ color: 'black' }}>
-              {item}
-            </Button>
-          ))}
+        <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
+          <Button component={Link} to="/" sx={{ color: 'black' }}>
+            Home
+          </Button>
+          <Button component={Link} to="/login" sx={{ color: 'red' }} onClick={handleLogout}>
+            Logout
+          </Button>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ m: 2 }}
+          >
+            <NotificationsActiveIcon />
+          </IconButton>
         </Box>
 
 

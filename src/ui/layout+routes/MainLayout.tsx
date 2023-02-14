@@ -5,7 +5,12 @@ import { sizeConfigs } from "../components/configs";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 
-const MainLayout = () => {
+
+export interface LayoutProps  { 
+  children: React.ReactNode
+}
+const MainLayout = (props:LayoutProps) => {
+
   return (
     <Box sx={{ display: "flex" }}>
       <Topbar />
@@ -29,7 +34,7 @@ const MainLayout = () => {
         }}
       >
         <Toolbar />
-        <Outlet />
+        {props.children}
       </Box>
     </Box>
   );
