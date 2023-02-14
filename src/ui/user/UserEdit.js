@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import ListGroup from 'react-bootstrap/Listgroup';
 import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 
 const UserEdit = () => {
     return (
@@ -36,18 +38,20 @@ const UserEdit = () => {
 							</Form.Group>
 							<Form.Group>
 								<Form.Label> Description: </Form.Label>
-								<Form.Control type="textarea" placeholder="Enter Description" style={{Height: '200px'}}/>
+								<Form.Control type="textarea" placeholder="Enter Description" style={{minHeight:'200px'}}/>
 							</Form.Group>
 						</Typography>
+						<br/>
+						<Button type="submit">Submit</Button>
 					</Form>
 				</ListGroup.Item>
 				<ListGroup.Item>
 					<Link to= "/User">
-						<button style={{maxHeight:'50px',}}>
-							<Typography variant ="h4" style={{ color: 'black', justifyContent: 'right', alignItems: 'right'}}>
+						<Button style={{maxHeight:'50px',}}>
+							<Typography variant ="h4" style={{ justifyContent: 'right', alignItems: 'right'}}>
 							Back
 							</Typography>
-						</button>
+						</Button>
 					</Link>
 				</ListGroup.Item>
 			</ListGroup>

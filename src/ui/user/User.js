@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/Listgroup';
+import Button from 'react-bootstrap/Button';
 
 const User = () => {
     return (
@@ -35,16 +36,16 @@ const User = () => {
 				</ListGroup.Item>
 				<ListGroup.Item>
 					<Link to= "/UserEdit">
-					<button style={{maxHeight:'50px',}}>
-						<Typography variant ="h4" style={{ color: 'black', justifyContent: 'right', alignItems: 'right'}}>
-						Edit
-						</Typography>
-					</button>
+						<Button style={{maxHeight:'50px',}}>
+							<Typography variant ="h4" style={{  justifyContent: 'right', alignItems: 'right'}}>
+							Edit
+							</Typography>
+						</Button>
 					</Link>
 				</ListGroup.Item>
 			</ListGroup>
 			<Box>
-				<Typography variant ="h1" style={{ color: 'black', position: 'relative', top: '200px'}}>
+				<Typography variant ="h1" style={{ position: 'relative', top: '200px'}}>
 				Availability
 				</Typography>
 			</Box>
