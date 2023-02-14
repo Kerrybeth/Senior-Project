@@ -11,10 +11,10 @@ function Settings() {
             return (
               <Container>
                 <Row>
-                    <Col><Typography variant="h2" style={{ color: 'black' }}> Settings </Typography></Col>
+                    <Col><Typography variant="h3" style={{ color: 'black' }}> Settings </Typography></Col>
                 </Row>
                 <Row>
-                  <Col><Typography variant="h3" style={{ color: 'black' }}> Schedule Privacy </Typography></Col>
+                  <Col><Typography variant="h5" style={{ color: 'black' }}> Schedule Privacy </Typography></Col>
                   <Form>
                     {['radio'].map((type) => (
                       <div key={`inline-${type}`} className="mb-3">
@@ -51,7 +51,7 @@ function Settings() {
                   </Form>
                 </Row>
                 <Row>
-                  <Col><Typography variant="h3" style={{ color: 'black' }}> Theme </Typography></Col>
+                  <Col><Typography variant="h5" style={{ color: 'black' }}> Theme </Typography></Col>
                   <Form>
                   {['radio'].map((type) => (
                     <div key={`inline-${type}`} className="mb-3">
@@ -74,7 +74,7 @@ function Settings() {
                   </Form>
                 </Row>
                 <Row>
-                  <Col><Typography variant="h3" style={{ color: 'black' }}> Account Settings </Typography></Col>
+                  <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
                   <ButtonToolbar aria-label="Toolbar">
                     <ButtonGroup aria-label="Group1">
                       <Button type="button" class="btn btn-primary">Change Username</Button>
