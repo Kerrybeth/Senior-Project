@@ -7,6 +7,8 @@ import Calendar from "../components/calendar"
 
 const Home = () => {
 
+  const { user } = useUserAuth();
+
   return (
     <>
       <div classname="App">
@@ -15,6 +17,7 @@ const Home = () => {
           {/*<div className="d-grid gap-2">*/}
             <div id="calendar">
               <Calendar />
+              {alert(user.uid)}
             </div>
           {/*</div>*/}
         </div>

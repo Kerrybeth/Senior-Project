@@ -4,7 +4,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import '../../App.css';
-
+import { useUserAuth } from '../auth/UserAuthContext';
+import { getDatabase, ref, set } from "firebase/database";
 
 export default class Calendar extends React.Component {
     state = {
@@ -25,17 +26,15 @@ export default class Calendar extends React.Component {
     }
 
     handleDateClick = (arg) => {
-        //eventadd(arg);
-        //this.handleRefresh();
-        // let calendarApi = arg.view.calendar;
-        // calendarApi.addEvent({
-        //     title: 'test',
-        //     start: arg.dateStr,
-        //     end: arg.dateStr,
-        //     allday: arg.allday
-        // });
-        //alert('clicked');
-        
+        let user = useUserAuth();
+        this.handleRefresh();   
+        const db = getDatabase();   
+        alert("clickerino");
+        set(ref(db, 'users/' + user.uid + '/events'), {
+            title: 'test',
+            start: arg.dateStr
+        });
+        alert("clickerino");
     }
 
     handleRefresh = () => {
@@ -55,16 +54,6 @@ function renderEventContent (eventInfo) {
         <>
             <b>{eventInfo.timeText}</b>
             <i>{eventInfo.title}</i>
-        </>
-    )
-}
-
-function eventadd (arg) {
-    return (
-        <>
-            <p>
-                testing
-            </p>
         </>
     )
 }
