@@ -73,9 +73,33 @@ function Settings() {
                 </Row>
                 <Row>
                     <Col><Typography variant="h3" style={{ color: 'black' }}> Account Settings </Typography></Col>
-                    <Button type="button" class="btn btn-primary">Change Username</Button>
-                    <Button type="button" class="btn btn-primary">Change Password</Button>
-                    <Button type="button" class="btn btn-primary">Delete Account</Button>
+                    <Form>
+      {['button'].map((type) => (
+        <div key={`inline-${type}`} className="mb-3">
+          <Form.Check
+            inline
+            label="Change Username"
+            name="group1"
+            type={type}
+            id={`inline-${type}-1`}
+          />
+          <Form.Check
+            inline
+            label="Change Password"
+            name="group1"
+            type={type}
+            id={`inline-${type}-2`}
+          />
+           <Form.Check
+            inline
+            label="Delete Account"
+            name="group1"
+            type={type}
+            id={`inline-${type}-3`}
+          />
+        </div>
+      ))}
+    </Form>
                 </Row>
               </Container>
             );
