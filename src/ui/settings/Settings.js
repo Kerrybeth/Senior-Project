@@ -13,9 +13,9 @@ function Settings() {
         <Tabs>
           <Tab eventKey="first" title="Account Settings">
             <div style={{padding:5}}>
-                <Button type="button" class="btn btn-outline-primary">Change Username</Button>
-                <Button type="button" class="btn btn-outline-primary">Change Password</Button>
-                <Button type="button" class="btn btn-outline-danger">Delete Account</Button>
+                <Button variant="primary">Change Username</Button>{' '}
+                <Button variant="primary">Change Password</Button>{' '}
+                <Button variant="danger">Delete Account</Button>
             </div>
           </Tab>
           <Tab eventKey="second" title="Schedule Privacy">
