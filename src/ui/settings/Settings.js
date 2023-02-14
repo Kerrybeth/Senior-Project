@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
-import class { form }
+import Form from 'react-bootstrap/Form'
 
 function Settings() {
             return (
@@ -13,39 +13,63 @@ function Settings() {
                 </Row>
                 <Row>
                     <Col><Typography variant="h3" style={{ color: 'black' }}> Schedule Privacy </Typography></Col>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                      <label class="form-check-label" for="inlineRadio1">Friends</label>
-                      </input>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                      <label class="form-check-label" for="inlineRadio2">Group Members</label>
-                      </input>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                      <label class="form-check-label" for="inlineRadio3">All Users</label>
-                      </input>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-                      <label class="form-check-label" for="inlineRadio4">Nobody</label>
-                      </input>
-                    </div>
+    <Form>
+      {['radio'].map((type) => (
+        <div key={`inline-${type}`} className="mb-3">
+          <Form.Check
+            inline
+            label="Friends"
+            name="group1"
+            type={type}
+            id={`inline-${type}-1`}
+          />
+          <Form.Check
+            inline
+            label="Group Members"
+            name="group1"
+            type={type}
+            id={`inline-${type}-2`}
+          />
+          <Form.Check
+            inline
+            label="All Users"
+            name="group1"
+            type={type}
+            id={`inline-${type}-3`}
+          />
+           <Form.Check
+            inline
+            label="Nobody"
+            name="group1"
+            type={type}
+            id={`inline-${type}-4`}
+          />
+        </div>
+      ))}
+    </Form>
                 </Row>
                 <Row>
                     <Col><Typography variant="h3" style={{ color: 'black' }}> Theme </Typography></Col>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                      <label class="form-check-label" for="flexSwitchCheckDefault">Dark</label>
-                      </input>
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                      <label class="form-check-label" for="flexSwitchCheckChecked">Light</label>
-                      </input>
-                    </div>
+                    <Form>
+      {['radio'].map((type) => (
+        <div key={`inline-${type}`} className="mb-3">
+          <Form.Check
+            inline
+            label="Light"
+            name="group1"
+            type={type}
+            id={`inline-${type}-1`}
+          />
+          <Form.Check
+            inline
+            label="Dark"
+            name="group1"
+            type={type}
+            id={`inline-${type}-2`}
+          />
+        </div>
+      ))}
+    </Form>
                 </Row>
                 <Row>
                     <Col><Typography variant="h3" style={{ color: 'black' }}> Account Settings </Typography></Col>
