@@ -25,16 +25,16 @@ export default class Calendar extends React.Component {
     }
 
     handleDateClick = (arg) => {
-        //eventadd(arg);
-        //this.handleRefresh();
-        // let calendarApi = arg.view.calendar;
-        // calendarApi.addEvent({
-        //     title: 'test',
-        //     start: arg.dateStr,
-        //     end: arg.dateStr,
-        //     allday: arg.allday
-        // });
-        //alert('clicked');
+        eventadd(arg);
+        this.handleRefresh();
+        let calendarApi = arg.view.calendar;
+        calendarApi.addEvent({
+            title: "Test",
+            start: arg.dateStr,
+            end: arg.dateStr,
+            allday: arg.allday
+        });
+        alert(arg.dateStr);
         
     }
 
