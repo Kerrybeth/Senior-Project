@@ -71,11 +71,9 @@ function Settings() {
       </Row>
       <Row>
         <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
-        <div class="d-grid gap-3">
-         <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
+          <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
           <Col><Button type="button" class="btn btn-outline-primary">Change Password</Button></Col>
           <Col><Button type="button" class="btn btn-outline-primary">Delete Account</Button></Col>
-        </div>
       </Row>
     </Container>
   );
