@@ -10,9 +10,6 @@ function Settings() {
   return (
     <Container>
       <Row>
-          <Col><Typography variant="h4" style={{ color: 'black' }}> Settings </Typography></Col>
-      </Row>
-      <Row>
         <Col><Typography variant="h5" style={{ color: 'black' }}> Schedule Privacy </Typography></Col>
         <Form>
           {['radio'].map((type) => (
