@@ -2,6 +2,7 @@ import Typography from '@mui/material/Typography';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button'
 
 function Settings() {
             return (
@@ -47,9 +48,9 @@ function Settings() {
                 </Row>
                 <Row>
                     <Col><Typography variant="h3" style={{ color: 'black' }}> Account Settings </Typography></Col>
-                    <button type="button" class="btn btn-primary">Change Username</button>
-                    <button type="button" class="btn btn-primary">Change Password</button>
-                    <button type="button" class="btn btn-primary">Delete Account</button>
+                    <Button type="button" class="btn btn-primary">Change Username</Button>
+                    <Button type="button" class="btn btn-primary">Change Password</Button>
+                    <Button type="button" class="btn btn-primary">Delete Account</Button>
                 </Row>
               </Container>
             );
