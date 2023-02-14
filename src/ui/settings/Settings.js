@@ -4,8 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+//import ButtonGroup from 'react-bootstrap/ButtonGroup';
+//import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 function Settings() {
   return (
@@ -75,17 +75,11 @@ function Settings() {
       </Row>
       <Row>
         <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
-        <ButtonToolbar aria-label="Toolbar" class="gap-3">
-          <ButtonGroup aria-label="Group1">
-            <Button type="button" class="btn btn-outline-primary">Change Username</Button>{' '}
-          </ButtonGroup>
-          <ButtonGroup aria-label="Group2">
-            <Button type="button" class="btn btn-outline-primary">Change Password</Button>{' '}
-          </ButtonGroup>
-          <ButtonGroup aria-label="Group3">
+        <div class="d-grid gap-3">
+            <Button type="button" class="btn btn-outline-primary">Change Username</Button>
+            <Button type="button" class="btn btn-outline-primary">Change Password</Button>
             <Button type="button" class="btn btn-outline-primary">Delete Account</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
+        </div>
       </Row>
     </Container>
   );
