@@ -71,6 +71,8 @@ function Settings() {
       </Row>
       <Row>
         <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
+      </Row>
+      <Row>
           <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
           <Col><Button type="button" class="btn btn-outline-primary">Change Password</Button></Col>
           <Col><Button type="button" class="btn btn-outline-primary">Delete Account</Button></Col>
