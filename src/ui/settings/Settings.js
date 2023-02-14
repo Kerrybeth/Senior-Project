@@ -10,14 +10,14 @@ import Tabs from 'react-bootstrap/Tabs';
 function Settings() {
   return (
     <Tabs>
-      <Tab eventKey={first} title="Account Settings">
+      <Tab eventKey="first" title="Account Settings">
         <Row>
             <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
             <Col><Button type="button" class="btn btn-outline-primary">Change Password</Button></Col>
             <Col><Button type="button" class="btn btn-outline-primary">Delete Account</Button></Col>
         </Row>
       </Tab>
-      <Tab eventKey={second} title="Schedule Privacy">
+      <Tab eventKey="second" title="Schedule Privacy">
         <Row>
           <Form>
             {['radio'].map((type) => (
@@ -55,7 +55,7 @@ function Settings() {
           </Form>
         </Row>
       </Tab>
-      <Tab eventKey={third} title="Theme">
+      <Tab eventKey="third" title="Theme">
         <Row>
           <Col><Typography variant="h5" style={{ color: 'black' }}> Theme </Typography></Col>
           <Form>
