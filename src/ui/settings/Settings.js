@@ -1,6 +1,3 @@
-import Typography from '@mui/material/Typography';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Tab from 'react-bootstrap/Tab';
@@ -9,16 +6,16 @@ import Tabs from 'react-bootstrap/Tabs';
 
 function Settings() {
   return (
+    <div className="pageLight">
     <Tabs>
       <Tab eventKey="first" title="Account Settings">
-        <Row>
-            <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
-            <Col><Button type="button" class="btn btn-outline-primary">Change Password</Button></Col>
-            <Col><Button type="button" class="btn btn-outline-primary">Delete Account</Button></Col>
-        </Row>
+        <div style={{padding:5}}>
+            <Button type="button" class="btn btn-outline-primary">Change Username</Button>
+            <Button type="button" class="btn btn-outline-primary">Change Password</Button>
+            <Button type="button" class="btn btn-outline-danger">Delete Account</Button>
+        </div>
       </Tab>
       <Tab eventKey="second" title="Schedule Privacy">
-        <Row>
           <Form>
             {['radio'].map((type) => (
               <div key={`inline-${type}`} className="mb-3">
@@ -53,11 +50,8 @@ function Settings() {
               </div>
             ))}
           </Form>
-        </Row>
       </Tab>
       <Tab eventKey="third" title="Theme">
-        <Row>
-          <Col><Typography variant="h5" style={{ color: 'black' }}> Theme </Typography></Col>
           <Form>
           {['radio'].map((type) => (
             <div key={`inline-${type}`} className="mb-3">
@@ -78,9 +72,9 @@ function Settings() {
             </div>
           ))}
           </Form>
-        </Row>
       </Tab>
     </Tabs>
+    </div>
   );
 }
 
