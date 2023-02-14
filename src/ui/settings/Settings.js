@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 
 function Settings() {
   return (
-    <Container class="d-flex justify-content-center">
+    <Container class="d-flex flex-column justify-content-center">
       <Row>
           <Col><Typography variant="h3" style={{ color: 'black' }}> Settings </Typography></Col>
       </Row>
