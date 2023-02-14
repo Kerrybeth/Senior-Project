@@ -75,15 +75,15 @@ function Settings() {
       </Row>
       <Row>
         <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
-        <ButtonToolbar aria-label="Toolbar">
+        <ButtonToolbar aria-label="Toolbar" class="gap-3">
           <ButtonGroup aria-label="Group1">
-            <Button type="button" class="btn btn-primary">Change Username</Button>{' '}
+            <Button type="button" class="btn btn-outline-primary">Change Username</Button>{' '}
           </ButtonGroup>
           <ButtonGroup aria-label="Group2">
-            <Button type="button" class="btn btn-primary">Change Password</Button>{' '}
+            <Button type="button" class="btn btn-outline-primary">Change Password</Button>{' '}
           </ButtonGroup>
           <ButtonGroup aria-label="Group3">
-            <Button type="button" class="btn btn-primary">Delete Account</Button>
+            <Button type="button" class="btn btn-outline-primary">Delete Account</Button>
           </ButtonGroup>
         </ButtonToolbar>
       </Row>
