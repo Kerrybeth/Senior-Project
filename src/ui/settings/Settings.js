@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+
 function Settings() {
   return (
     <Container>
@@ -73,9 +74,11 @@ function Settings() {
       </Row>
       <Row>
         <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
-        <Button type="button" class="btn btn-outline-primary gap-3">Change Username</Button>
-        <Button type="button" class="btn btn-outline-primary gap-3">Change Password</Button>
-        <Button type="button" class="btn btn-outline-primary gap-3">Delete Account</Button>
+        <div class="d-grid gap-3">
+          <Button type="button" class="btn btn-outline-primary">Change Username</Button>
+          <Button type="button" class="btn btn-outline-primary">Change Password</Button>
+          <Button type="button" class="btn btn-outline-primary">Delete Account</Button>
+        </div>
       </Row>
     </Container>
   );
