@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 
 function Settings() {
   return (
-    <Container>
+    <Container class="text-centered">
       <Row>
           <Col><Typography variant="h3" style={{ color: 'black' }}> Settings </Typography></Col>
       </Row>
