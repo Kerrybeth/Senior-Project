@@ -10,6 +10,14 @@ function Settings() {
   return (
     <Container>
       <Row>
+        <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
+      </Row>
+      <Row>
+          <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
+          <Col><Button type="button" class="btn btn-outline-primary">Change Password</Button></Col>
+          <Col><Button type="button" class="btn btn-outline-primary">Delete Account</Button></Col>
+      </Row>
+      <Row>
         <Col><Typography variant="h5" style={{ color: 'black' }}> Schedule Privacy </Typography></Col>
         <Form>
           {['radio'].map((type) => (
@@ -68,14 +76,6 @@ function Settings() {
           </div>
         ))}
         </Form>
-      </Row>
-      <Row>
-        <Col><Typography variant="h5" style={{ color: 'black' }}> Account Settings </Typography></Col>
-      </Row>
-      <Row>
-          <Col><Button type="button" class="btn btn-outline-primary">Change Username</Button></Col>
-          <Col><Button type="button" class="btn btn-outline-primary">Change Password</Button></Col>
-          <Col><Button type="button" class="btn btn-outline-primary">Delete Account</Button></Col>
       </Row>
     </Container>
   );
