@@ -67,14 +67,17 @@ const Notifications = () => {
             <Helmet>
                 <title>{title}</title>
             </Helmet>
-            <Typography variant="h5" sx={{p: 0.5}}>Here is a closer view of all your notifications</Typography>
             <Box
                 sx={{
-                    display: 'flex',
+                    display: 'grid',
                     justifyContent: 'center',
                     alignItems: 'center',
+                    marginTop: 2,
+                    width: '100%',
                 }}
             >
+                <Typography variant="h5" sx={{ p: 0.5, position: "flex" }}>Here is a closer view of all your notifications</Typography>
+
                 <List sx={{ width: '100%', bgcolor: 'background.paper', m: 2 }}>
                     <ListItemWrapper>
                         {/* one notification card */}

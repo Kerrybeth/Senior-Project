@@ -49,13 +49,16 @@ const Topbar = () => {
   return (
     <AppBar
       position="fixed"
+      elevation={8}
       sx={{
         width: `calc(100% - ${sizeConfigs.sidebar.width})`,
+        height: '80px',
         ml: sizeConfigs.sidebar.width,
         boxShadow: "unset",
         backgroundColor: colorConfigs.topbar.bg,
         color: colorConfigs.topbar.color
       }}
+      
     >
       <Toolbar>
         <IconButton
