@@ -53,7 +53,7 @@ const Error = () => {
                     <HomeIcon sx={{ mr: "10px" }} /> Go Home
                 </Button>
 
-                <Button component={Link} to="/" variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
+                <Button component={Link} to="/signup" variant="outlined" sx={{ backgroundColor: "", width: "fit-content", textAlign: "center" }} >
                     Logout
                 </Button>
             </Stack>

@@ -8,21 +8,36 @@ import Home from "./ui/home/Home";
 import { Container, Row, Col } from "react-bootstrap";
 import { UserAuthContextProvider } from './ui/auth/UserAuthContext';
 import Error from "./ui/components/Error";
+import User from "./ui/user/User";
+import Groups from "./ui/groups/Groups";
+import Events from "./ui/events/Events";
+import Contacts from "./ui/contacts/Contacts";
+import Settings from "./ui/settings/Settings";
+import Calendar from '../src/ui/components/calendar.js';
+import UserEdit from "./ui/user/UserEdit";
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme } from "./Theme";
 
 function App() {
   return (
     <UserAuthContextProvider>
+	<ThemeProvider theme={lightTheme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainLayout />}>
-            {routes}
+          <Route path="/" element={<MainLayout><Home /></MainLayout>}>
           </Route>
-          <Route path="*" element={<Error />} />
-
+          <Route path="/user" element={<MainLayout><User /></MainLayout>} />
+		  <Route path="/useredit" element={<MainLayout><UserEdit /></MainLayout>} />
+          <Route path="/groups" element={<MainLayout><Groups /></MainLayout>} />
+          <Route path="/events" element={<MainLayout><Events /></MainLayout>} />
+          <Route path="/contacts" element={<MainLayout><Contacts /></MainLayout>} />
+          <Route path="/settings" element={<MainLayout><Settings /></MainLayout>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
+	  </ThemeProvider>
     </UserAuthContextProvider>
   );
 }

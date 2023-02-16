@@ -1,50 +1,54 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
+import Image from 'react-bootstrap/Image';
+import ListGroup from 'react-bootstrap/Listgroup';
+import Button from '@mui/material/Button';
+import { lightTheme } from '../../Theme';
+import { useTheme } from '@mui/material/styles';
 
 const User = () => {
-    return (
+	const theme = useTheme();
+	return (
 		<div>
-			<Box component='button' style={{minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px'}}>
-				<image>
-				User Pic
-				</image>
+			<Box  component='button' style={{minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px'}}>
+				<Image src= "logo.svg" roundedCircle />
 			</Box>
-			<Box
-				sx={{
-					display: 'flex',
+			<ListGroup style={{display: 'flex',
 					minHeight: '100px',
 					maxWidth: '1000px',
-					border: 'solid',
 					position: 'fixed', 
 					top: '100px', 
 					right: '100px'
-				}}
-			>
-				<Typography variant="h3" style={{ 
-					color: 'black', 
-					justifyContent: 'left', 
-					alignItems: 'left'
-				}}>
-				Name: 
-				<br/>
-				<br/>
-				Bio:
-				<br/>
-				<br/>
-				Description:
-				<br/>
-				</Typography>
-				<Link to= "/UserEdit">
-					<button style={{maxHeight:'50px',}}>
-						<Typography variant ="h4" style={{ color: 'black', justifyContent: 'right', alignItems: 'right'}}>
-						Edit
-						</Typography>
-					</button>
-				</Link>
-			</Box>
+			}}>
+				<ListGroup.Item>
+					<Typography variant="h3" style={{ 
+						color: 'black', 
+						justifyContent: 'left', 
+						alignItems: 'left'
+					}}>
+					Name: 
+					<br/>
+					<br/>
+					Bio:
+					<br/>
+					<br/>
+					Description:
+					<br/>
+					</Typography>
+				</ListGroup.Item>
+				<ListGroup.Item>
+					<Link to= "/UserEdit">
+						<Button variant ="contained" theme="theme.palette.primary.main" sx={{maxHeight:'50px',}}>
+							<Typography variant ="h4" style={{  justifyContent: 'right', alignItems: 'right'}}>
+							Edit
+							</Typography>
+						</Button>
+					</Link>
+				</ListGroup.Item>
+			</ListGroup>
 			<Box>
-				<Typography variant ="h1" style={{ color: 'black', position: 'relative', top: '200px'}}>
+				<Typography variant ="h1" style={{ position: 'relative', top: '200px'}}>
 				Availability
 				</Typography>
 			</Box>

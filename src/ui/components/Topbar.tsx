@@ -19,12 +19,25 @@ import { Link } from 'react-router-dom'
 import SettingsIcon from '@mui/icons-material/Settings';
 import Settings from "@mui/icons-material/Settings";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../auth/UserAuthContext";
+
 const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
 
 const Topbar = () => {
 
+    const { logOut, user } = useUserAuth();
+   const navigate = useNavigate();
 
+   const handleLogout = async () => {
+     try {
+       await logOut();
+       navigate("/login");
+     } catch (error) {
+       console.log(error);
+     }
+   };
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -64,14 +77,14 @@ const Topbar = () => {
             component="div"
             sx={{ color: "green", ml: "5px"}}
           >
-            Welcome Stephane!
+            Welcome {user && user.email}!
           </Typography>
         </Typography>
         <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          <Button component={Link} to="/login" sx={{ color: 'red' }}>
+          <Button component={Link} to="/login" sx={{ color: 'red' }} onClick={handleLogout}>
             Logout
           </Button>
           <IconButton
