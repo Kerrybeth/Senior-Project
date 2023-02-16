@@ -5,12 +5,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import '../../App.css';
 import { useUserAuth } from '../auth/UserAuthContext';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, update, push } from "firebase/database";
+import { getAuth, currentUser } from 'firebase/auth';
+
+const events = [];
 
 export default class Calendar extends React.Component {
-    state = {
-        currentEvents: []
-    }
 
     render() {
         return (
@@ -19,18 +19,18 @@ export default class Calendar extends React.Component {
             initialView="dayGridMonth"
             dateClick={this.handleDateClick}
             editable={true}
-            eventContent={renderEventContent}
-            eventsSet={this.handleEvents}
+            // eventContent={renderEventContent}
+            events={events}
         />
     )
     }
 
     handleDateClick = (arg) => {
-        let user = useUserAuth();
+        const user = getAuth().currentUser;
         this.handleRefresh();   
         const db = getDatabase();   
         alert("clickerino");
-        set(ref(db, 'users/' + user.uid + '/events'), {
+        push(ref(db, 'users/' + user.uid + '/events'), {
             title: 'test',
             start: arg.dateStr
         });
@@ -40,20 +40,13 @@ export default class Calendar extends React.Component {
     handleRefresh = () => {
         this.setState({});
     }
-
-    handleEvents = (events) => {
-        this.setState({
-            currentEvents: events
-        })
-    }
-
 }
 
-function renderEventContent (eventInfo) {
-    return (
-        <>
-            <b>{eventInfo.timeText}</b>
-            <i>{eventInfo.title}</i>
-        </>
-    )
-}
+// function renderEventContent (eventInfo) {
+//     return (
+//         <>
+//             <b>{eventInfo.timeText}</b>
+//             <i>{eventInfo.title}</i>
+//         </>
+//     )
+// }
