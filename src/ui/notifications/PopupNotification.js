@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import {
     Avatar,
@@ -22,21 +20,14 @@ import {
 } from '@mui/material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { IconBell } from '@tabler/icons';
-
 import MainCard from '../components/MainCard';
-import Transitions from 'ui-component/extended/Transitions';
+import Transitions from '../components/Transations';
 import NotificationList from './NotificationList';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import IconButton from '@mui/material/IconButton';
 
 // notification status options
 const status = [
-    {
-        value: 'all',
-        label: 'All Notification'
-    },
-    {
-        value: 'new',
-        label: 'New'
-    },
     {
         value: 'unread',
         label: 'Unread'
@@ -53,6 +44,7 @@ const PopupNotification = () => {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
+
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
@@ -85,36 +77,21 @@ const PopupNotification = () => {
         <>
             <Box
                 sx={{
-                    ml: 2,
-                    mr: 3,
-                    [theme.breakpoints.down('md')]: {
-                        mr: 2
-                    }
+                    m: 1,
                 }}
             >
-                <ButtonBase sx={{ borderRadius: '12px' }}>
-                    <Avatar
-                        variant="rounded"
-                        sx={{
-                            ...theme.typography.commonAvatar,
-                            ...theme.typography.mediumAvatar,
-                            transition: 'all .2s ease-in-out',
-                            background: theme.palette.secondary.light,
-                            color: theme.palette.secondary.dark,
-                            '&[aria-controls="menu-list-grow"],&:hover': {
-                                background: theme.palette.secondary.dark,
-                                color: theme.palette.secondary.light
-                            }
-                        }}
-                        ref={anchorRef}
-                        aria-controls={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        onClick={handleToggle}
-                        color="inherit"
-                    >
-                        <IconBell stroke={1.5} size="1.3rem" />
-                    </Avatar>
-                </ButtonBase>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleToggle}
+                    sx={{ m: 2 }}
+                    ref={anchorRef}
+                    aria-controls={open ? 'menu-list-grow' : undefined}
+                    aria-haspopup="true"
+                >
+                    <NotificationsActiveIcon />
+                </IconButton>
             </Box>
             <Popper
                 placement={matchesXs ? 'bottom' : 'bottom-end'}
@@ -141,34 +118,12 @@ const PopupNotification = () => {
                                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
                                     <Grid container direction="column" spacing={2}>
                                         <Grid item xs={12}>
-                                            <Grid container alignItems="center" justifyContent="space-between" sx={{ pt: 2, px: 2 }}>
-                                                <Grid item>
-                                                    <Stack direction="row" spacing={2}>
-                                                        <Typography variant="subtitle1">All Notification</Typography>
-                                                        <Chip
-                                                            size="small"
-                                                            label="01"
-                                                            sx={{
-                                                                color: theme.palette.background.default,
-                                                                bgcolor: theme.palette.warning.dark
-                                                            }}
-                                                        />
-                                                    </Stack>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Typography component={Link} to="#" variant="subtitle2" color="primary">
-                                                        Mark as all read
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid item xs={12}>
                                             <PerfectScrollbar
                                                 style={{ height: '100%', maxHeight: 'calc(100vh - 205px)', overflowX: 'hidden' }}
                                             >
                                                 <Grid container direction="column" spacing={2}>
                                                     <Grid item xs={12}>
-                                                        <Box sx={{ px: 2, pt: 0.25 }}>
+                                                        <Box sx={{ px: 2, pt: 0.25, p: 2 }}>
                                                             <TextField
                                                                 id="outlined-select-currency-native"
                                                                 select
@@ -197,7 +152,7 @@ const PopupNotification = () => {
                                     </Grid>
                                     <Divider />
                                     <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                                        <Button size="small" disableElevation>
+                                        <Button size="small" disableElevation component={Link} to="/notifications" onClick={handleClose}>
                                             View All
                                         </Button>
                                     </CardActions>
@@ -211,4 +166,4 @@ const PopupNotification = () => {
     );
 };
 
-export default NotificationSection;
+export default PopupNotification;
