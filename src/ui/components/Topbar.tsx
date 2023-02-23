@@ -22,11 +22,19 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../auth/UserAuthContext";
 import PopupNotification from "../notifications/PopupNotification";
+import { useTheme } from "@mui/material";
+import { tokens, ColorModeContext } from "../../theme";
+import { useContext } from "react";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
 
 const Topbar = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
 
   const { logOut, user } = useUserAuth();
   const navigate = useNavigate();
@@ -54,7 +62,8 @@ const Topbar = () => {
         width: `calc(100% - ${sizeConfigs.sidebar.width})`,
         height: '80px',
         ml: sizeConfigs.sidebar.width,
-        backgroundColor: colorConfigs.topbar.bg,
+        boxShadow: "unset",
+        backgroundColor: colors.main[100],
         color: colorConfigs.topbar.color
       }}
       
@@ -83,6 +92,8 @@ const Topbar = () => {
             Welcome {user && user.email}!
           </Typography>
         </Typography>
+
+        {/* home, logout, icons */}
         <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
@@ -91,6 +102,14 @@ const Topbar = () => {
             Logout
           </Button>
           <PopupNotification />
+          
+          <IconButton onClick={colorMode.toggleColorMode} >
+            {theme.palette.mode === "dark" ? (
+              <DarkModeOutlinedIcon sx={{color: colors.yellow}} />
+            ) : (
+              <LightModeOutlinedIcon />
+            )}
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>
