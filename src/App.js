@@ -26,13 +26,21 @@ import { colorConfigs } from "./ui/components/configs";
 import { sizeConfigs } from "./ui/components/configs";
 import Sidebar from "./ui/components/Sidebar";
 import Topbar from "./ui/components/Topbar";
-
+import { Helmet } from 'react-helmet';
 
 function App() {
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
 
+  const title = "CalandarBoard"
   return (
+
+    <>
+      <Helmet>
+        <title>{title + "/home"}</title>
+        <meta name="description" content="App Description" />
+        <meta name="theme-color" content="#008f68" />
+      </Helmet>
     <UserAuthContextProvider>
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
@@ -78,6 +86,7 @@ function App() {
         </ThemeProvider>
       </ColorModeContext.Provider>
     </UserAuthContextProvider>
+    </>
   );
 }
 
