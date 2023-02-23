@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/Listgroup';
 import Button from '@mui/material/Button';
-import { lightTheme } from '../../Theme';
+import { lightTheme } from '../../theme';
 import { useTheme } from '@mui/material/styles';
 
 const User = () => {
