@@ -16,12 +16,6 @@ import Settings from "./ui/settings/Settings";
 import Calendar from '../src/ui/components/calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import PopupNotification from "./ui/notifications/PopupNotification";
-import User from "./ui/user/User";
-import Groups from "./ui/groups/Groups";
-import Events from "./ui/events/Events";
-import Contacts from "./ui/contacts/Contacts";
-import Settings from "./ui/settings/Settings";
-import Calendar from '../src/ui/components/calendar.js';
 import UserEdit from "./ui/user/UserEdit";
 import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from "@mui/material";

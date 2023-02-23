@@ -10,15 +10,10 @@ import { tokens } from "../../theme";
 export interface LayoutProps {
   children: React.ReactNode
 }
-const MainLayout = (props: LayoutProps) => {
+
+const MainLayout = (props:LayoutProps) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-
-export interface LayoutProps  { 
-  children: React.ReactNode
-}
-const MainLayout = (props:LayoutProps) => {
 
   return (
     <Box sx={{ display: "flex" }}>
