@@ -2,6 +2,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { Link } from "react-router-dom";
 
 import '../../App.css';
 
@@ -35,7 +36,7 @@ function Groups() {
             </Tab>
         </Tabs>
         </div>
-        <Button variant="secondary">Create group</Button>{' '}
+        <Link to="/CreateGroup"><Button variant="secondary">Create group</Button>{' '}</Link>
     </div>
     );
   }
