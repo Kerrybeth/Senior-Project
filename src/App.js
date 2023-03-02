@@ -76,6 +76,7 @@ function App() {
                   <Route path="/events" element={<Events />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/notifications" element={<Notifications />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="*" element={<Error />} />
