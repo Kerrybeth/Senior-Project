@@ -12,6 +12,7 @@ import Settings from "../settings/Settings";
 import Contacts from "../contacts/Contacts";
 import Events from "../events/Events";
 import Groups from "../groups/Groups";
+import CreateGroup from "../groups/CreateGroup";
 import Home from "../home/Home";
 import GroupIcon from '@mui/icons-material/Group';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
@@ -44,6 +45,10 @@ const appRoutes: RouteType[] = [
             icon: <Diversity1Icon />
         }
     }, {
+		path: "/creategroup",
+		element: <CreateGroup />,
+		state: "creategroup"
+	}, {
         path: "/events",
         element: <Events />,
         state: "events",

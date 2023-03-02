@@ -31,13 +31,26 @@ const CreateGroup = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Invite People: </Form.Label>
+						<Form.Select> 
+							<option>Select People</option>
+						</Form.Select>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Location:</Form.Label>
 						<Form.Control type="text" placeholder="Enter Location" />
 					</Form.Group>
+					<Button type="submit">Create Group</Button>
 					</Typography>
 				</Form>
+			</ListGroup.Item>
+			<ListGroup.Item>
+				<Link to= "/Groups">
+					<Button style={{maxHeight:'50px',}}>
+						<Typography variant ="h4" style={{ justifyContent: 'right', alignItems: 'right'}}>
+						Back
+						</Typography>
+					</Button>
+				</Link>
 			</ListGroup.Item>
 		</ListGroup>
 	</div>
