@@ -16,6 +16,7 @@ import Calendar from '../src/ui/components/calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import PopupNotification from "./ui/notifications/PopupNotification";
 import UserEdit from "./ui/user/UserEdit";
+import CreateGroup from "./ui/groups/CreateGroup";
 import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from "@mui/material";
 import { tokens } from "./theme";
@@ -73,6 +74,7 @@ function App() {
                   <Route path="/user" element={<User />} />
                   <Route path="/useredit" element={<UserEdit />} />
                   <Route path="/groups" element={<Groups />} />
+				  <Route path="/creategroup" element={<CreateGroup />} />
                   <Route path="/events" element={<Events />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/settings" element={<Settings />} />
