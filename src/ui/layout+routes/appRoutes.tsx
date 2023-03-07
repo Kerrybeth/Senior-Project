@@ -11,7 +11,9 @@ import Error from "../components/Error";
 import Settings from "../settings/Settings";
 import Contacts from "../contacts/Contacts";
 import Events from "../events/Events";
+import CreateEvents from "../events/CreateEvents";
 import Groups from "../groups/Groups";
+import CreateGroup from "../groups/CreateGroup";
 import Home from "../home/Home";
 import GroupIcon from '@mui/icons-material/Group';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
@@ -44,6 +46,10 @@ const appRoutes: RouteType[] = [
             icon: <Diversity1Icon />
         }
     }, {
+		path: "/creategroup",
+		element: <CreateGroup />,
+		state: "creategroup"
+	}, {
         path: "/events",
         element: <Events />,
         state: "events",
@@ -52,6 +58,10 @@ const appRoutes: RouteType[] = [
             icon: <EventAvailableIcon />
         }
     }, {
+		path: "/createevents",
+		element: <CreateEvents />,
+		state: "createevents"
+	}, {
         path: "/contacts",
         element: <Contacts />,
         state: "contacts",

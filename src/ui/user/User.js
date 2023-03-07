@@ -54,7 +54,7 @@ const User = () => {
 	);
 }
 
-const test = () => {
+/*const test = () => {
 
 	return (
 		<Box
@@ -70,5 +70,5 @@ const test = () => {
 		</Box>
 	)
 }
-
+*/
 export default User; 

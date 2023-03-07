@@ -83,7 +83,7 @@ const Topbar = () => {
           component="div"
           sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
         >
-          CalandarBoard
+          CalendarBoard
           <Typography
             variant="h6"
             component="div"

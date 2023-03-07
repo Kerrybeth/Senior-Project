@@ -16,6 +16,8 @@ import Calendar from '../src/ui/components/calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import PopupNotification from "./ui/notifications/PopupNotification";
 import UserEdit from "./ui/user/UserEdit";
+import CreateGroup from "./ui/groups/CreateGroup";
+import CreateEvents from "./ui/events/CreateEvents";
 import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from "@mui/material";
 import { tokens } from "./theme";
@@ -32,7 +34,7 @@ function App() {
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
   
-  const title = "CalandarBoard"
+  const title = "CalendarBoard"
   return (
 
     <>
@@ -73,7 +75,9 @@ function App() {
                   <Route path="/user" element={<User />} />
                   <Route path="/useredit" element={<UserEdit />} />
                   <Route path="/groups" element={<Groups />} />
+				  <Route path="/creategroup" element={<CreateGroup />} />
                   <Route path="/events" element={<Events />} />
+				  <Route path="/createevents" element={<CreateEvents />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/notifications" element={<Notifications />} />
