@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, createContext, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -10,8 +10,11 @@ import '../../App.css';
 
 const Settings = () => {
   const {user, logOut} = useUserAuth();
-  const [error, setError] = useState("");
+  const [mySettings, setMySettings, error, setError] = useState("");
   const navigate = useNavigate();
+  const handleChange = (event) => {
+    setMySettings(event.target.value)
+  }
 
   const del = async (e) => {
     e.preventDefault();
@@ -39,68 +42,22 @@ const Settings = () => {
         <div className="tabList">
           <Tabs>
             <Tab eventKey="first" title="Account Settings">
-              <div style={{padding:5}}>
+              <div style={{padding:10}}>
                   <Button variant="primary" type="submit" onClick={update}>Update Account</Button>{' '}
                   <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
               </div>
             </Tab>
             <Tab eventKey="second" title="Schedule Privacy">
+              <div style={{padding:10}}>
                 <Form>
-                  {['radio'].map((type) => (
-                    <div key={`inline-${type}`} className="mb-3">
-                      <Form.Check
-                        inline
-                        label="Friends"
-                        name="group1"
-                        type={type}
-                        id={`inline-${type}-1`}
-                      />
-                      <Form.Check
-                        inline
-                        label="Group Members"
-                        name="group1"
-                        type={type}
-                        id={`inline-${type}-2`}
-                      />
-                      <Form.Check
-                        inline
-                        label="All Users"
-                        name="group1"
-                        type={type}
-                        id={`inline-${type}-3`}
-                      />
-                        <Form.Check
-                        inline
-                        label="Nobody"
-                        name="group1"
-                        type={type}
-                        id={`inline-${type}-4`}
-                      />
-                    </div>
-                  ))}
+                  <select value={mySettings} onChange={handleChange}>
+                    <option value="Friends">Friends</option>
+                    <option value="Group Members">Group Members</option>
+                    <option value="All Users">All Users</option>
+                    <option value="Nobody">Nobody</option>
+                  </select>
                 </Form>
-            </Tab>
-            <Tab eventKey="third" title="Theme">
-              <Form>
-                {['radio'].map((type) => (
-                  <div key={`inline-${type}`} className="mb-3">
-                    <Form.Check
-                      inline
-                      label="Light"
-                      name="group1"
-                      type={type}
-                      id={`inline-${type}-1`}
-                    />
-                    <Form.Check
-                      inline
-                      label="Dark"
-                      name="group1"
-                      type={type}
-                      id={`inline-${type}-2`}
-                    />
-                  </div>
-                ))}
-              </Form>
+              </div>
             </Tab>
           </Tabs>
         </div>
