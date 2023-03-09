@@ -18,6 +18,7 @@ import PopupNotification from "./ui/notifications/PopupNotification";
 import UserEdit from "./ui/user/UserEdit";
 import CreateGroup from "./ui/groups/CreateGroup";
 import CreateEvents from "./ui/events/CreateEvents";
+import CreateGroupEvents from "./ui/events/CreateGroupEvents";
 import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from "@mui/material";
 import { tokens } from "./theme";
@@ -78,6 +79,7 @@ function App() {
 				  <Route path="/creategroup" element={<CreateGroup />} />
                   <Route path="/events" element={<Events />} />
 				  <Route path="/createevents" element={<CreateEvents />} />
+				  <Route path="/creategroupevents" element={<CreateGroupEvents />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/notifications" element={<Notifications />} />

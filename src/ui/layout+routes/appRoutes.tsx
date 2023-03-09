@@ -12,6 +12,7 @@ import Settings from "../settings/Settings";
 import Contacts from "../contacts/Contacts";
 import Events from "../events/Events";
 import CreateEvents from "../events/CreateEvents";
+import CreateGroupEvents from "../events/CreateGroupEvents";
 import Groups from "../groups/Groups";
 import CreateGroup from "../groups/CreateGroup";
 import Home from "../home/Home";
@@ -62,6 +63,10 @@ const appRoutes: RouteType[] = [
 		element: <CreateEvents />,
 		state: "createevents"
 	}, {
+		path: "/creategroupevents",
+		element: <CreateGroupEvents />,
+		state: "creategroupevents"
+	},{
         path: "/contacts",
         element: <Contacts />,
         state: "contacts",

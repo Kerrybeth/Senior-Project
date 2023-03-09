@@ -23,6 +23,13 @@ const Events = () => {
 					</Typography>
 				</Button>
 			</Link>
+			<Link to="/CreateGroupEvents">
+				<Button variant="contained" sx={{ maxHeight: '50px', }}>
+					<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
+						Create Group Event
+					</Typography>
+				</Button>
+			</Link>
         </Box>
     );
 }

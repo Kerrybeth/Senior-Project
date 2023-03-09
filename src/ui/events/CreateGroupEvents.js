@@ -6,12 +6,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 
-const CreateEvents = () => {
+const CreateGroupEvents = () => {
 	return (
 	<div>
 		<box>
 			<Typography variant = "h1" style={{ color: 'black', textDecoration: 'underline'}}>
-			Create Event
+			Create Group Event
 			</Typography>
 		</box>
 		<ListGroup>
@@ -28,10 +28,10 @@ const CreateEvents = () => {
 					</Form.Group>
 					<Form.Check type="switch" label="All-day"/>
 					<Form.Group>
-						<Form.Label> Start Date: </Form.Label> /*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/
+						<Form.Label> Start Date: </Form.Label>
 						<input type="date"></input>
 						<br/>
-						<Form.Label> End Date: </Form.Label> /*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/
+						<Form.Label> End Date: </Form.Label>
 						<input type="date"></input>
 						<br/>
 						<Form.Label> Start Time: </Form.Label>
@@ -53,16 +53,16 @@ const CreateEvents = () => {
 						</Form.Select>
 					</Form.Group>
 					<Form.Group>
-						<Form.Label> Invite People: </Form.Label>
+						<Form.Label> Invite Groups: </Form.Label>
 						<Form.Select> 
-							<option>Select People</option>
+							<option>Select Group</option>
 						</Form.Select>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Location:</Form.Label>
 						<Form.Control type="text" placeholder="Enter Location" />
 					</Form.Group>
-					<Button type="submit">Create Event</Button>
+					<Button type="submit">Create Group Event</Button>
 					</Typography>
 				</Form>
 			</ListGroup.Item>
@@ -80,4 +80,4 @@ const CreateEvents = () => {
 	);
 }
 
-export default CreateEvents;
+export default CreateGroupEvents;
