@@ -1,8 +1,33 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
+import { getDatabase, ref, set, update, push } from "firebase/database";
+import { getAuth, currentUser } from 'firebase/auth';
+import { useState } from "react";
 
 const UserEdit = () => {
+
+	const [namey, setNamey] = useState('');
+	const [bio, setBio] = useState('');
+
+	function handleSubmit (event) {
+		event.preventDefault();
+		
+		const user = getAuth().currentUser;  
+        const db = getDatabase();   
+        set(ref(db, 'users/' + user.uid + '/profile'), {
+            name: namey,
+            bio: bio
+        });
+
+		setNamey('');
+		setBio('');
+	};
+
+	// const handleChangeBio = (event) => {
+	// 	bio = event.target.value;
+	// };
+
     return (
 		<div>
 			<Box component='button' style={{minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px'}}>
@@ -26,23 +51,20 @@ const UserEdit = () => {
 					justifyContent: 'left', 
 					alignItems: 'left'
 				}}>
-				<label>
-					Name:
-					<input type="text" name="name"/>
-				</label>
-				<br/>
-				<br/>
-				<label>
-					Bio:
-					<input type="text" name="bio"/>
-				</label>
-				<br/>
-				<br/>
-				<label>
-					Description:
-					<input type="text" name="description"/>
-				</label>
-				<br/>
+					<form onSubmit={handleSubmit}>
+						<label>
+							Name:
+							<input type="text" value={namey} onChange={(event) => setNamey(event.target.value)}></input> 
+							<br></br>
+						</label>
+						<label>
+							Bio:
+							<input type="text" value={bio} onChange={(event) => setBio(event.target.value)}></input> 
+							<br></br>
+						</label>
+						<br></br>
+						<button type="submit">Submit</button>
+					</form>				
 				</Typography>
 				<Link to= "/User">
 					<button style={{maxHeight:'50px',}}>
@@ -53,9 +75,9 @@ const UserEdit = () => {
 				</Link>
 			</Box>
 			<Box>
-				<Typography variant ="h1" style={{ color: 'black', position: 'relative', top: '200px'}}>
+				{/* <Typography variant ="h1" style={{ color: 'black', position: 'relative', top: '200px'}}>
 				Availability
-				</Typography>
+				</Typography> */}
 			</Box>
 		</div>
     );

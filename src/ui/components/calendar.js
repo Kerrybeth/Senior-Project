@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import '../../App.css';
-import { useUserAuth } from '../auth/UserAuthContext';
+import { useUserAuth, UserAuthContextProvider } from '../auth/UserAuthContext';
 import { getDatabase, ref, set, update, push } from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 

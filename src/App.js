@@ -15,6 +15,7 @@ import Contacts from "./ui/contacts/Contacts";
 import Settings from "./ui/settings/Settings";
 import Calendar from '../src/ui/components/calendar.js'
 import Notifications from "./ui/notifications/Notifications";
+import UserEdit from "./ui/user/UserEdit";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<MainLayout><Home /></MainLayout>}>
           </Route>
           <Route path="/user" element={<MainLayout><User /></MainLayout>} />
+          <Route path="/useredit" element={<MainLayout><UserEdit /></MainLayout>} />
           <Route path="/groups" element={<MainLayout><Groups /></MainLayout>} />
           <Route path="/events" element={<MainLayout><Events /></MainLayout>} />
           <Route path="/contacts" element={<MainLayout><Contacts /></MainLayout>} />
