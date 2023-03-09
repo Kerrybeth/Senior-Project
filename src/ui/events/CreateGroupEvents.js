@@ -29,10 +29,10 @@ const CreateGroupEvents = () => {
 					<Form.Check type="switch" label="All-day"/>
 					<Form.Group>
 						<Form.Label> Start Date: </Form.Label>
-						<input type="date"></input>
+						<input type="date"></input> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<br/>
 						<Form.Label> End Date: </Form.Label>
-						<input type="date"></input>
+						<input type="date"></input> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<br/>
 						<Form.Label> Start Time: </Form.Label>
 						<input type="time"></input>

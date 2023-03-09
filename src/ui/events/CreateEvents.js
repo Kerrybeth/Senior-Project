@@ -28,10 +28,10 @@ const CreateEvents = () => {
 					</Form.Group>
 					<Form.Check type="switch" label="All-day"/>
 					<Form.Group>
-						<Form.Label> Start Date: </Form.Label> /*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/
+						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<input type="date"></input>
 						<br/>
-						<Form.Label> End Date: </Form.Label> /*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/
+						<Form.Label> End Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<input type="date"></input>
 						<br/>
 						<Form.Label> Start Time: </Form.Label>
