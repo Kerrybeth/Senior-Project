@@ -15,7 +15,7 @@ export const Calendar = () => {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        // firebase things (error with not being able to read user.uid currently)
+        // firebase things
         const db = getDatabase();  
         const dataRef = ref(db, 'users/' + user.user.uid + '/events');
 
@@ -24,16 +24,15 @@ export const Calendar = () => {
             snapshot.forEach(childSnapshot => {
                 let title = childSnapshot.val().title;
                 let start = childSnapshot.val().start;
+                let end = childSnapshot.val().end;
 
-                eventsTemp.push({"title": title, "start": start});
+                eventsTemp.push({"title": title, "start": start, "end": end});
             });
 
             setEvents(eventsTemp);
             eventsTemp = [];
         });
-
-
-    }, [user.user.uid]);
+    });
 
     const handleDateClick = (arg) => {
         const user = getAuth().currentUser;  
@@ -42,7 +41,8 @@ export const Calendar = () => {
         // push event into db
         push(ref(db, 'users/' + user.uid + '/events'), {
             title: 'test',
-            start: arg.dateStr
+            start: arg.dateStr,
+            end: '2023-03-10'
         });
     }
 
@@ -58,6 +58,11 @@ export const Calendar = () => {
 return (
     <FullCalendar 
     plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
+    headerToolbar= {{
+        left: "today prev,next",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
+    }}
     initialView="dayGridMonth"
     dateClick={handleDateClick}
     editable={true}
