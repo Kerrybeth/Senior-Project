@@ -9,8 +9,7 @@ import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
 const User = () => {
 
 	const user = useContext(userAuthContext);
-	const [namey, setNamey] = useState("");
-	const [bio, setBio] = useState("");
+	const [data, setData] = useState("");
 
     useEffect(() => {
 
@@ -18,12 +17,10 @@ const User = () => {
         const dataRef = ref(db, 'users/' + user.user.uid + '/profile');
 
         onValue(dataRef, (snapshot) => {
-            snapshot.forEach(childSnapshot => {
-                setNamey(childSnapshot.val().name);
-                setBio(childSnapshot.val().bio);
-            });
+            const data = snapshot.val();
+			setData(data);
         });
-    });
+    }, []);
 	
     return (
 		<div>
@@ -48,10 +45,10 @@ const User = () => {
 					justifyContent: 'left', 
 					alignItems: 'left'
 				}}>
-				Name: {namey + "gg"}
+				Name: {data.name}
 				<br/>
 				<br/>
-				Bio: {bio}
+				Bio: {data.bio}
 				<br/>
 				<br/>
 				</Typography>
