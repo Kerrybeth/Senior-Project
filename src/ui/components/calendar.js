@@ -11,7 +11,7 @@ import { getAuth, currentUser, onAuthStateChanged } from 'firebase/auth';
 
 export const Calendar = () => {
     const user = useContext(userAuthContext);
-    const eventsTemp = [];
+    let eventsTemp = [];
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
