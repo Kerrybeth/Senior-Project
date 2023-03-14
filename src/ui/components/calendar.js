@@ -32,7 +32,7 @@ export const Calendar = () => {
             setEvents(eventsTemp);
             eventsTemp = [];
         });
-    });
+    }, [user]);
 
     const handleDateClick = (arg) => {
         const user = getAuth().currentUser;  
