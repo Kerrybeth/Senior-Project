@@ -34,12 +34,11 @@ export const Calendar = () => {
         });
     }, [user]);
 
-    const handleDateClick = (arg) => {
-        const user = getAuth().currentUser;  
+    const handleDateClick = (arg) => { 
         const db = getDatabase();   
 
         // push event into db
-        push(ref(db, 'users/' + user.uid + '/events'), {
+        push(ref(db, 'users/' + user.user.uid + '/events'), {
             title: 'test',
             start: arg.dateStr,
             end: '2023-03-10'
