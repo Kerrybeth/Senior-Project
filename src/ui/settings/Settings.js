@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { deleteUser, getAuth, updateCurrentUser } from 'firebase/auth';
+import { deleteUser, getAuth, updateCurrentUser, updateEmail } from 'firebase/auth';
 import { useUserAuth } from "../auth/UserAuthContext";
 import '../../App.css';
 
@@ -29,19 +29,22 @@ const Settings = () => {
       setError(err.message);
     }
   };
+
   const updateUser = async (e) => {
-    e.preventDefault();
-    setError("");
+    //e.preventDefault();
+    //setError("");
+    alert(user.uid);
     try {
-      updateCurrentUser(user.user.uid, 
-        {
-          email: 'modifiedUser@example.com',
-         // emailVerified: true,
-          password: 'newPassword',
-         // displayName: 'Jane Doe',
-         // photoURL: 'http://www.example.com/12345678/photo.png',
-         // disabled: true,
-        });
+      updateEmail(user, "yes@tes.com");
+        // {
+        //   email: 'modifiedUser@example.com',
+        //  // emailVerified: true,
+        //   password: 'newPassword',
+        //  // displayName: 'Jane Doe',
+        //  // photoURL: 'http://www.example.com/12345678/photo.png',
+        //  // disabled: true,
+        // });
+      
       navigate("/user");
 
     } catch (err) {
