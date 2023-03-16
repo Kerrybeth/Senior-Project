@@ -4,13 +4,13 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { deleteUser, getAuth, updateCurrentUser, updateEmail } from 'firebase/auth';
+import { deleteUser, getAuth, updateCurrentUser, updateEmail, updatePassword } from 'firebase/auth';
 import { useUserAuth } from "../auth/UserAuthContext";
 import '../../App.css';
 
 const Settings = () => {
   const logOut = useUserAuth();
-  const user = getAuth().currentUser;
+  const user = useUserAuth().user;
   const [mySettings, setMySettings, setError] = useState("");
   const navigate = useNavigate();
 
@@ -35,15 +35,8 @@ const Settings = () => {
     //setError("");
     alert(user.uid);
     try {
-      updateEmail(user, "yes@tes.com");
-        // {
-        //   email: 'modifiedUser@example.com',
-        //  // emailVerified: true,
-        //   password: 'newPassword',
-        //  // displayName: 'Jane Doe',
-        //  // photoURL: 'http://www.example.com/12345678/photo.png',
-        //  // disabled: true,
-        // });
+      updateEmail(user, "yes@no.com");
+      //updatePassword();
       
       navigate("/user");
 
