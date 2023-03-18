@@ -5,10 +5,41 @@ import { sizeConfigs } from "./configs";
 import appRoutes from "../layout+routes/appRoutes";
 import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
-/*import Typography from "@mui/material";
-import { Box } from "@mui/system"; */
+import { Typography } from "@mui/material";
+// import { Box } from "@mui/system"; 
+import useTheme from "@mui/material/styles/useTheme";
+import { tokens } from "../../theme";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import * as React from 'react';
 
 const Sidebar = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const mode = theme.palette.mode;
+
+  const ligtht_colors = tokens('light');
+  const dark_clolors = tokens('dark');
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClose2 = () => {
+    window.open('https://github.com/anxelic/Senior-Project/tree/main', '_blank');
+    setOpen(false);
+  }
+
   return (
     <Drawer
       variant="permanent"
@@ -19,7 +50,7 @@ const Sidebar = () => {
           width: sizeConfigs.sidebar.width,
           boxSizing: "border-box",
           borderRight: "0px",
-          backgroundColor: colorConfigs.sidebar.bg,
+          backgroundColor: theme.palette.mode === 'dark' ? "#323639" : "#233044",
           color: colorConfigs.sidebar.color
         }
       }}
@@ -44,6 +75,34 @@ const Sidebar = () => {
           ) : null
         ))}
       </List>
+
+      {/* copy right + about us  */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"About"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This web app was made with a smile by Logan, David, Stephane, KarryBeth, and Chris. Please report 
+            any issues, and we hope it provided some value to you! 
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose2}>Source code</Button>
+          <Button onClick={handleClose} autoFocus>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Typography onClick={handleClickOpen} variant="caption" display="block" gutterBottom sx={{ p: 2, textAlign: 'center', cursor: 'pointer' }} >
+        CalandarBoard Beta v1.0.0
+      </Typography>
     </Drawer>
   );
 };
