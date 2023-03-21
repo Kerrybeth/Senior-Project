@@ -6,6 +6,19 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 const CreateGroup = () => {
+
+	const handleSubmit = (arg) => { 
+        const db = getDatabase();
+		user = 
+
+        // push event into db
+        push(ref(db, 'users/' + user.user.uid + '/events'), {
+            title: 'test',
+            start: arg.dateStr,
+            end: '2023-03-10'
+        });
+    }
+
 	return (
 	<div>
 		<Box>
@@ -15,7 +28,7 @@ const CreateGroup = () => {
 		</Box>
 		<ListGroup>
 			<ListGroup.Item>
-				<Form>
+				<Form onSubmit={handleSubmit}>
 					<Typography variant="h3" style={{ 
 							color: 'black', 
 							justifyContent: 'left', 
