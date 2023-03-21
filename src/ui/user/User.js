@@ -4,8 +4,27 @@ import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/Listgroup';
 import Button from '@mui/material/Button';
+import { getAuth, currentUser } from "firebase/auth";
+import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
+import { useEffect, useContext, useState } from 'react';
+import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
 
 const User = () => {
+
+	const user = useContext(userAuthContext);
+	const [data, setData] = useState("");
+
+    useEffect(() => {
+
+        const db = getDatabase();  
+        const dataRef = ref(db, 'users/' + user.user.uid + '/profile');
+
+        onValue(dataRef, (snapshot) => {
+            const data = snapshot.val();
+			setData(data);
+        });
+    }, []);
+
 	return (
 		<div>
 			<Box component='button' style={{ minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px' }}>
@@ -25,13 +44,11 @@ const User = () => {
 						justifyContent: 'left',
 						alignItems: 'left'
 					}}>
-						Name:
+						Name: {data.name}
 						<br />
 						<br />
-						Bio:
+						Bio: {data.bio}
 						<br />
-						<br />
-						Description:
 						<br />
 					</Typography>
 				</ListGroup.Item>
@@ -45,30 +62,12 @@ const User = () => {
 					</Link>
 				</ListGroup.Item>
 			</ListGroup>
-			<Box>
+			{/* <Box>
 				<Typography variant="h1" style={{ position: 'relative', top: '200px' }}>
 					Availability
 				</Typography>
-			</Box>
+			</Box> */}
 		</div>
 	);
 }
-
-/*const test = () => {
-
-	return (
-		<Box
-			sx={{
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				minHeight: '30vh',
-			}}
-
-		>
-			<Typography variant="3" sx={{ m: 3, color: "green" }}> Hi, I am the current replacement for user.</Typography>
-		</Box>
-	)
-}
-*/
 export default User; 
