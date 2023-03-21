@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ListGroup from 'react-bootstrap/Listgroup';
 import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
@@ -11,6 +11,7 @@ import { useState } from "react";
 
 const UserEdit = () => {
 
+	const navigate = useNavigate();
 	const [namey, setNamey] = useState('');
 	const [bio, setBio] = useState('');
 
@@ -27,6 +28,7 @@ const UserEdit = () => {
 
 		setNamey('');
 		setBio('');
+		navigate("/User")
 	};
 
     return (
