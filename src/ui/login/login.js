@@ -12,6 +12,10 @@ const Login = () => {
   const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
 
+  function writeUserData() {
+    
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");

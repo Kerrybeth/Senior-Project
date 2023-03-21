@@ -11,10 +11,11 @@ import {
     signOut,
     GoogleAuthProvider,
     signInWithPopup,
+
 } from "firebase/auth";
 import { auth } from "../../firebase";
 
-const userAuthContext = createContext();
+export const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
@@ -38,7 +39,7 @@ export function UserAuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth", currentuser);
+      console.log("Auth", currentuser, currentuser.uid);
       setUser(currentuser);
     });
 

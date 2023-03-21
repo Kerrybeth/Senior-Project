@@ -12,7 +12,7 @@ import Groups from "./ui/groups/Groups";
 import Events from "./ui/events/Events";
 import Contacts from "./ui/contacts/Contacts";
 import Settings from "./ui/settings/Settings";
-import Calendar from '../src/ui/components/calendar.js'
+import Calendar from './ui/components/calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import PopupNotification from "./ui/notifications/PopupNotification";
 import UserEdit from "./ui/user/UserEdit";
