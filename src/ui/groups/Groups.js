@@ -3,13 +3,46 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
+import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
+import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
+import { useContext, useState } from "react";
 
 import '../../App.css';
 
 function Groups() {
+    const user = useContext(userAuthContext);
 
-    function displayGroups() {
-        
+    function Groups() {
+        // firebase things
+        const db = getDatabase();  
+        const dataRef = ref(db, 'groups/');
+        let element;
+
+        onValue(dataRef, (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                //alert(childSnapshot.val().members[0]);
+
+                for (let i = 0; i < childSnapshot.val().members.length; i++) {
+                    //alert(childSnapshot.val().members[i]);
+
+                    if (user.user.uid == childSnapshot.val().members[i]) {
+                        alert("fired");
+                        element += (
+                            <ListGroup.Item>
+                                <div>
+                                <div className="fw-bold">{childSnapshot.val().name}</div>
+                                    {childSnapshot.val().desc}
+                                </div>
+                            </ListGroup.Item>
+    
+                        );
+                    }
+                }
+            });
+        });
+
+        alert(element);
+        return element;
     }
 
     return (
@@ -22,12 +55,7 @@ function Groups() {
         >
             <Tab eventKey="first" title="Groups">
             <ListGroup>
-                <ListGroup.Item>
-                <div>
-                <div className="fw-bold">Group 1</div>
-                    Group description
-                </div>
-                </ListGroup.Item>
+                <Groups />
             </ListGroup>
             </Tab>
             <Tab eventKey="second" title="Invites">
