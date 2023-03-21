@@ -1,26 +1,35 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ListGroup from 'react-bootstrap/Listgroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
 import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const CreateGroup = () => {
 	const user = useContext(userAuthContext);
+	const navigate = useNavigate();
 
-	const handleSubmit = (arg) => { 
-        const db = getDatabase();
-		alert(arg.name);
+	const [gname, setGName] = useState('');
+	const [desc, setDesc] = useState('');
 
-        // push event into db
-        push(ref(db, 'groups/'), {
-            name: arg.name,
-			owner: user.user.uid
+	function handleSubmit (event) {
+		console.log(gname);
+		event.preventDefault();
+
+        const db = getDatabase();   
+        push(ref(db, '/groups'), {
+            name: gname,
+            owner: user.user.uid,
+			admins: [user.user.uid],
+			members: [user.user.uid],
+			desc: desc
         });
-    }
+		
+		navigate("/Groups");
+	};
 
 	return (
 	<div>
@@ -37,21 +46,21 @@ const CreateGroup = () => {
 							justifyContent: 'left', 
 							alignItems: 'left'
 					}}>
-					<Form.Group controlId="name">
+					<Form.Group>
 						<Form.Label> Group Name:</Form.Label>
-						<Form.Control type="text" placeholder="Enter Name" />
+						<Form.Control type="text" placeholder="Enter Name" value={gname} onChange={(event) => setGName(event.target.value)} />
 					</Form.Group>
-					<Form.Group controlId="desc">
+					<Form.Group>
 						<Form.Label> Description: </Form.Label>
-						<Form.Control type="textarea" placeholder="Enter Description" style={{minHeight:'200px'}}/>
+						<Form.Control type="textarea" placeholder="Enter Description" value={desc} onChange={(event) => setDesc(event.target.value)} style={{minHeight:'200px'}}/>
 					</Form.Group>
-					<Form.Group controlId="inv">
+					<Form.Group>
 						<Form.Label> Invite People: </Form.Label>
 						<Form.Select> 
 							<option>Select People</option>
 						</Form.Select>
 					</Form.Group>
-					<Form.Group controlId="loc">
+					<Form.Group>
 						<Form.Label> Location:</Form.Label>
 						<Form.Control type="text" placeholder="Enter Location" />
 					</Form.Group>

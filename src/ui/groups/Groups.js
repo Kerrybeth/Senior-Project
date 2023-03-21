@@ -7,6 +7,11 @@ import { Link } from "react-router-dom";
 import '../../App.css';
 
 function Groups() {
+
+    function displayGroups() {
+        
+    }
+
     return (
     <div className="pageLight">
         <div className="tabList">
