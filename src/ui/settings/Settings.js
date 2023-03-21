@@ -11,12 +11,46 @@ import '../../App.css';
 const Settings = () => {
   const logOut = useUserAuth();
   const user = useUserAuth().user;
-  const [mySettings, setMySettings, setError] = useState("");
+  const [mySettings, setMySettings, setError, email, setEmail, password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (event) => {
     setMySettings(event.target.value)
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  function newEmail() {
+    return (
+      <form onSubmit={handleSubmit}>
+        <label>Enter a new email address:
+          <input
+            type="text" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </label>
+        <input type="submit" />
+      </form>
+    )
+  }
+
+  function newPassword() {
+    return (
+      <form onSubmit={handleSubmit}>
+        <label>Enter a new password:
+          <input
+            type="text" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <input type="submit" />
+      </form>
+    )
+  }
 
   const del = async (e) => {
     e.preventDefault();
@@ -33,10 +67,10 @@ const Settings = () => {
   const updateUser = async (e) => {
     //e.preventDefault();
     //setError("");
-    alert(user.uid);
+    //alert(user.uid);
     try {
-      updateEmail(user, "yes@no.com");
-      //updatePassword();
+      updateEmail(user, newEmail());
+      //updatePassword(user, newPassword(""));
       
       navigate("/user");
 
