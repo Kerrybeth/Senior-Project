@@ -10,12 +10,12 @@ const CreateGroup = () => {
 
 	const handleSubmit = (arg) => { 
         const db = getDatabase();
+		alert(arg.name);
 
         // push event into db
-        push(ref(db, 'users/' + user.user.uid + '/events'), {
-            title: 'test',
-            start: arg.dateStr,
-            end: '2023-03-10'
+        push(ref(db, 'groups/'), {
+            name: arg.name,
+			owner: user.user.uid
         });
     }
 
@@ -34,21 +34,21 @@ const CreateGroup = () => {
 							justifyContent: 'left', 
 							alignItems: 'left'
 					}}>
-					<Form.Group>
+					<Form.Group controlId="name">
 						<Form.Label> Group Name:</Form.Label>
 						<Form.Control type="text" placeholder="Enter Name" />
 					</Form.Group>
-					<Form.Group>
+					<Form.Group controlId="desc">
 						<Form.Label> Description: </Form.Label>
 						<Form.Control type="textarea" placeholder="Enter Description" style={{minHeight:'200px'}}/>
 					</Form.Group>
-					<Form.Group>
+					<Form.Group controlId="inv">
 						<Form.Label> Invite People: </Form.Label>
 						<Form.Select> 
 							<option>Select People</option>
 						</Form.Select>
 					</Form.Group>
-					<Form.Group>
+					<Form.Group controlId="loc">
 						<Form.Label> Location:</Form.Label>
 						<Form.Control type="text" placeholder="Enter Location" />
 					</Form.Group>
