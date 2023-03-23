@@ -1,13 +1,36 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ListGroup from 'react-bootstrap/Listgroup';
 import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
+import { getDatabase, ref, set, update, push } from "firebase/database";
+import { getAuth, currentUser } from 'firebase/auth';
+import { useState } from "react";
 
 const UserEdit = () => {
+
+	const navigate = useNavigate();
+	const [namey, setNamey] = useState('');
+	const [bio, setBio] = useState('');
+
+	function handleSubmit (event) {
+		console.log("test")
+		event.preventDefault();
+		
+		const user = getAuth().currentUser;  
+        const db = getDatabase();   
+        set(ref(db, 'users/' + user.uid + '/profile'), {
+            name: namey,
+            bio: bio
+        });
+
+		setNamey('');
+		setBio('');
+		navigate("/User")
+	};
+
     return (
 		<div>
 			<Box component='button' style={{minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px'}}>
@@ -22,7 +45,7 @@ const UserEdit = () => {
 					right: '100px'
 			}}>
 				<ListGroup.Item>
-					<Form>
+					<Form onSubmit={handleSubmit}>
 						<Typography variant="h3" style={{ 
 							color: 'black', 
 							justifyContent: 'left', 
@@ -30,15 +53,11 @@ const UserEdit = () => {
 						}}>
 							<Form.Group> {/* Place controlId here */}
 								<Form.Label> Name: </Form.Label>
-								<Form.Control type="text" placeholder="Enter Name" />
+								<Form.Control type="text" value={namey} onChange={(event) => setNamey(event.target.value)}/>
 							</Form.Group>
 							<Form.Group>
 								<Form.Label> Bio: </Form.Label>
-								<Form.Control type="text" placeholder="Enter Bio" />
-							</Form.Group>
-							<Form.Group>
-								<Form.Label> Description: </Form.Label>
-								<Form.Control type="textarea" placeholder="Enter Description" style={{minHeight:'200px'}}/>
+								<Form.Control type="text" value={bio} onChange={(event) => setBio(event.target.value)}/>
 							</Form.Group>
 						</Typography>
 						<br/>
@@ -55,11 +74,11 @@ const UserEdit = () => {
 					</Link>
 				</ListGroup.Item>
 			</ListGroup>
-			<Box>
+			{/* <Box>
 				<Typography variant ="h1" style={{ color: 'black', position: 'relative', top: '200px'}}>
 				Availability
 				</Typography>
-			</Box>
+			</Box> */}
 		</div>
     );
 }
