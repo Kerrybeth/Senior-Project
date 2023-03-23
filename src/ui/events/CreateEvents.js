@@ -28,7 +28,7 @@ const CreateEvents = () => {
 		console.log("test");
 		const user = getAuth().currentUser;  
         const db = getDatabase();  
-		set(ref(db, 'users/' + user.uid + '/events'), {
+		push(ref(db, 'users/' + user.uid + '/events'), {
             title: title,
 			allday: allday,
             start: start,
