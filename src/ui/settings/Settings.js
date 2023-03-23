@@ -1,17 +1,17 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { deleteUser, getAuth, updateCurrentUser, updateEmail, updatePassword } from 'firebase/auth';
+import { deleteUser, updateEmail, updatePassword } from 'firebase/auth';
 import { useUserAuth } from "../auth/UserAuthContext";
 import '../../App.css';
 
 const Settings = () => {
   const logOut = useUserAuth();
   const user = useUserAuth().user;
-  const [mySettings, setMySettings, setError, email, setEmail, password, setPassword] = useState("");
+  const [mySettings, setMySettings, setError, newEmail, setEmail, newPassword, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -21,36 +21,6 @@ const Settings = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
-
-  function newEmail() {
-    return (
-      <form onSubmit={handleSubmit}>
-        <label>Enter a new email address:
-          <input
-            type="text" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <input type="submit" />
-      </form>
-    )
-  }
-
-  function newPassword() {
-    return (
-      <form onSubmit={handleSubmit}>
-        <label>Enter a new password:
-          <input
-            type="text" 
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <input type="submit" />
-      </form>
-    )
-  }
 
   const del = async (e) => {
     e.preventDefault();
@@ -64,27 +34,25 @@ const Settings = () => {
     }
   };
 
-  const updateUser = async (e) => {
+//  const updateUser = async (e) => {
     //e.preventDefault();
     //setError("");
     //alert(user.uid);
-    try {
-      updateEmail(user, newEmail());
-      //updatePassword(user, newPassword(""));
-      
-      navigate("/user");
+ //   try {
+  //    updateEmail(user, newEmail);
+   //   updatePassword(user, newPassword);
 
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+ //   } catch (err) {
+  //    setError(err.message);
+ //   }
+ // };
     return (
       <div className="pageLight">
         <div className="tabList">
           <Tabs>
             <Tab eventKey="first" title="Account Settings">
               <div style={{padding:10}}>
-                  <Button variant="primary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
+                  <Button variant="primary" type="submit" onClick={navigate("/UpdateUser")}>Update Account</Button>{' '}
                   <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
               </div>
             </Tab>

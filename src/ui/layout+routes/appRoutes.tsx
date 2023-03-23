@@ -13,6 +13,7 @@ import Contacts from "../contacts/Contacts";
 import Events from "../events/Events";
 import Groups from "../groups/Groups";
 import Home from "../home/Home";
+import UpdateUser from "../settings/UpdateUser";
 import GroupIcon from '@mui/icons-material/Group';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
@@ -67,6 +68,7 @@ const appRoutes: RouteType[] = [
             displayText: "Settings",
             icon: <SettingsIcon />
         }
+        
     },
 ];
 
