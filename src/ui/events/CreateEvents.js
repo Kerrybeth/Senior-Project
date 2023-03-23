@@ -4,9 +4,24 @@ import { Link } from "react-router-dom";
 import ListGroup from 'react-bootstrap/Listgroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../auth/UserAuthContext";
 
 
 const CreateEvents = () => {
+	const { user } = useUserAuth();
+	const navigate = useNavigate();
+  
+	const auth = getAuth();
+	onAuthStateChanged(auth, (user) => {
+	  if (user) {
+		const uid = user.uid;
+	  } else {
+		navigate("/login")
+	  }
+	});
+
 	return (
 	<div>
 		<box>

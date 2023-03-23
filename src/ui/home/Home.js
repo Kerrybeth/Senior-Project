@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { useUserAuth } from "../auth/UserAuthContext";
 import EventCarousel from "./EventCarousel";
 import { Calendar } from "../components/calendar";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../auth/UserAuthContext";
 
 const Home = () => {
 

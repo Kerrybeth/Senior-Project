@@ -4,14 +4,28 @@ import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/Listgroup';
 import Button from '@mui/material/Button';
-import { getAuth, currentUser } from "firebase/auth";
+import { getAuth, currentUser, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
 import { useEffect, useContext, useState } from 'react';
 import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
+import { useNavigate } from "react-router-dom";
 
 const User = () => {
-
 	const user = useContext(userAuthContext);
+	//const { user } = useUserAuth();
+	const navigate = useNavigate();
+  
+	const auth = getAuth();
+	onAuthStateChanged(auth, (user) => {
+	  if (user) {
+		const uid = user.uid;
+	  } else {
+		navigate("/login")
+	  }
+	});
+	
+
+	
 	const [data, setData] = useState("");
 
     useEffect(() => {

@@ -6,10 +6,25 @@ import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 import Offcanvas from 'react-bootstrap/Offcanvas'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../auth/UserAuthContext";
 
 import '../../App.css';
 
 function Contacts() {
+    const { user } = useUserAuth();
+	const navigate = useNavigate();
+  
+	const auth = getAuth();
+	onAuthStateChanged(auth, (user) => {
+	  if (user) {
+		const uid = user.uid;
+	  } else {
+		navigate("/login")
+	  }
+	});
+    
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);

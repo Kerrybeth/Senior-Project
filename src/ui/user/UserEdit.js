@@ -6,12 +6,23 @@ import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { getDatabase, ref, set, update, push } from "firebase/database";
-import { getAuth, currentUser } from 'firebase/auth';
+import { getAuth, currentUser, onAuthStateChanged } from 'firebase/auth';
 import { useState } from "react";
+import { useUserAuth } from "../auth/UserAuthContext";
 
 const UserEdit = () => {
-
+	const { user } = useUserAuth();
 	const navigate = useNavigate();
+  
+	const auth = getAuth();
+	onAuthStateChanged(auth, (user) => {
+	  if (user) {
+		const uid = user.uid;
+	  } else {
+		navigate("/login")
+	  }
+	});
+
 	const [namey, setNamey] = useState('');
 	const [bio, setBio] = useState('');
 
