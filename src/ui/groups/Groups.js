@@ -5,44 +5,65 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
 import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
 import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import '../../App.css';
 
-function Groups() {
+const Groups = () => {
     const user = useContext(userAuthContext);
+    let groupsTemp = [];
+    let descsTemp = [];
 
-    function Groups() {
+    const [groups, setGroups] = useState([]);
+    const [descs, setDescs] = useState([]);
+
+    useEffect(() => {
         // firebase things
         const db = getDatabase();  
         const dataRef = ref(db, 'groups/');
-        let element;
 
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                //alert(childSnapshot.val().members[0]);
-
                 for (let i = 0; i < childSnapshot.val().members.length; i++) {
-                    //alert(childSnapshot.val().members[i]);
-
                     if (user.user.uid == childSnapshot.val().members[i]) {
-                        alert("fired");
-                        element += (
-                            <ListGroup.Item>
-                                <div>
-                                <div className="fw-bold">{childSnapshot.val().name}</div>
-                                    {childSnapshot.val().desc}
-                                </div>
-                            </ListGroup.Item>
-    
-                        );
+                        let name = childSnapshot.val().name;
+                        let desc = childSnapshot.val().desc;
+                        
+                        groupsTemp.push(name);
+                        descsTemp.push(desc);
                     }
                 }
             });
+
+            setGroups(groupsTemp);
+            setDescs(descsTemp);
+            groupsTemp = [];
+            descsTemp = [];
         });
 
-        alert(element);
-        return element;
+    }, [user]);
+
+    function GroupDisplay() {
+        if (groups == []) {
+            return (
+                <ListGroup.Item>
+                    <div>You aren't in any groups yet!</div>
+                </ListGroup.Item>
+            );
+        } else {
+            return (
+                <div>
+                    {groups.map((name, i) => (
+                        <ListGroup.Item>
+                        <div>
+                            <div className="fw-bold">{name}</div>
+                            <div>{descs[i]}</div>
+                        </div>
+                        </ListGroup.Item>
+                    ))}
+                </div>
+            );
+        }
     }
 
     return (
@@ -55,7 +76,7 @@ function Groups() {
         >
             <Tab eventKey="first" title="Groups">
             <ListGroup>
-                <Groups />
+                <GroupDisplay />
             </ListGroup>
             </Tab>
             <Tab eventKey="second" title="Invites">
