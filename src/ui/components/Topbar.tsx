@@ -66,7 +66,7 @@ const Topbar = () => {
         backgroundColor: colors.main[100],
         color: colorConfigs.topbar.color
       }}
-
+      
     >
       <Toolbar>
         <IconButton
@@ -102,10 +102,10 @@ const Topbar = () => {
             Logout
           </Button>
           <PopupNotification />
-
+          
           <IconButton onClick={colorMode.toggleColorMode} >
             {theme.palette.mode === "dark" ? (
-              <DarkModeOutlinedIcon sx={{ color: colors.yellow }} />
+              <DarkModeOutlinedIcon sx={{color: colors.yellow}} />
             ) : (
               <LightModeOutlinedIcon />
             )}

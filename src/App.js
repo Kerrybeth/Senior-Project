@@ -34,7 +34,7 @@ import { Helmet } from 'react-helmet';
 function App() {
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
-
+  
   const title = "CalendarBoard"
   return (
 
@@ -44,55 +44,55 @@ function App() {
         <meta name="description" content="App Description" />
         <meta name="theme-color" content="#008f68" />
       </Helmet>
-      <UserAuthContextProvider>
-        <ColorModeContext.Provider value={colorMode}>
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              <Box sx={{ display: "flex" }}>
-                <Topbar />
-                <Box
-                  component="nav"
-                  sx={{
-                    width: sizeConfigs.sidebar.width,
-                    flexShrink: 0
-                  }}
-                >
-                  <Sidebar />
-                </Box>
-                <Box
-                  component="main"
-                  sx={{
-                    flexGrow: 1,
-                    p: 1,
-                    width: `calc(100% - ${sizeConfigs.sidebar.width})`,
-                    minHeight: "100vh",
-                    backgroundColor: colors.main[100]
-                  }}
-                >
-                  <Toolbar />
-                  <Routes>
-                    <Route path="/" element={<Home />}>
-                    </Route>
-                    <Route path="/user" element={<User />} />
-                    <Route path="/useredit" element={<UserEdit />} />
-                    <Route path="/groups" element={<Groups />} />
-                    <Route path="/creategroup" element={<CreateGroup />} />
-                    <Route path="/events" element={<Events />} />
-                    <Route path="/createevents" element={<CreateEvents />} />
-                    <Route path="/creategroupevents" element={<CreateGroupEvents />} />
-                    <Route path="/contacts" element={<Contacts />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/notifications" element={<Notifications />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="*" element={<Error />} />
-                  </Routes>
-                </Box>
+    <UserAuthContextProvider>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Box sx={{ display: "flex" }}>
+              <Topbar />
+              <Box
+                component="nav"
+                sx={{
+                  width: sizeConfigs.sidebar.width,
+                  flexShrink: 0
+                }}
+              >
+                <Sidebar />
               </Box>
-            </BrowserRouter>
-          </ThemeProvider>
-        </ColorModeContext.Provider>
-      </UserAuthContextProvider>
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                  p: 1,
+                  width: `calc(100% - ${sizeConfigs.sidebar.width})`,
+                  minHeight: "100vh",
+                  backgroundColor: colors.main[100]
+                }}
+              >
+                <Toolbar />
+                <Routes>
+                  <Route path="/" element={<Home />}>
+                  </Route>
+                  <Route path="/user" element={<User />} />
+                  <Route path="/useredit" element={<UserEdit />} />
+                  <Route path="/groups" element={<Groups />} />
+				  <Route path="/creategroup" element={<CreateGroup />} />
+                  <Route path="/events" element={<Events />} />
+				  <Route path="/createevents" element={<CreateEvents />} />
+				  <Route path="/creategroupevents" element={<CreateGroupEvents />} />
+                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/notifications" element={<Notifications />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="*" element={<Error />} />
+                </Routes>
+              </Box>
+            </Box>
+          </BrowserRouter>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </UserAuthContextProvider>
     </>
   );
 }
