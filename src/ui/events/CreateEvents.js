@@ -46,7 +46,7 @@ const CreateEvents = () => {
 		setRepeatlevel('');
 		setInvite('');
 		setLocation('');
-		navigate("/Events")
+		navigate("/Events");
 		
 		/*const form = event.currentTarget;
 		if (form.checkValidity() === false){
@@ -66,7 +66,12 @@ const CreateEvents = () => {
 		</Box>
 		<ListGroup>
 			<ListGroup.Item>
-				<Form>
+				<Form onSubmit={handleSubmit}>
+					<Typography variant="h3" style={{ 
+							color: 'black', 
+							justifyContent: 'left', 
+							alignItems: 'left'
+					}}>
 					<Form.Group>
 						<Form.Label> Event Name:</Form.Label>
 						<Form.Control type="text" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name" />
@@ -101,7 +106,8 @@ const CreateEvents = () => {
 						<Form.Label> Location:</Form.Label>
 						<Form.Control type="text" value={location} onChange={(event) => setLocation(event.target.value)} placeholder="Enter Location" />
 					</Form.Group>
-					<Button type="submit" onSubmit={handleSubmit}>Create Event</Button>
+					<Button type="submit">Create Event</Button>
+					</Typography>
 				</Form>
 			</ListGroup.Item>
 			<ListGroup.Item>
