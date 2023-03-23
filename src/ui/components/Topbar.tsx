@@ -27,11 +27,14 @@ import { tokens, ColorModeContext } from "../../theme";
 import { useContext } from "react";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import Cookies from "universal-cookie";
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
 
 const Topbar = () => {
+  const cookies = new Cookies();
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -43,6 +46,7 @@ const Topbar = () => {
     try {
       await logOut();
       navigate("/login");
+      cookies.remove("auth-token");
     } catch (error) {
       console.log(error);
     }
