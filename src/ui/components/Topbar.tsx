@@ -28,16 +28,24 @@ import { useContext } from "react";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import Cookies from "universal-cookie";
+import { useDispatch } from "react-redux";
+import { userLoggedIn, userLoggedOut } from "../../redux/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
 
+
 const Topbar = () => {
   const cookies = new Cookies();
-
+  const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+
+  const isAuth = useSelector((state: RootState) => state.user.value);
+
 
   const { logOut, user } = useUserAuth();
   const navigate = useNavigate();
@@ -45,8 +53,7 @@ const Topbar = () => {
   const handleLogout = async () => {
     try {
       await logOut();
-      navigate("/login");
-      cookies.remove("auth-token");
+      dispatch(userLoggedOut());
     } catch (error) {
       console.log(error);
     }
@@ -93,7 +100,8 @@ const Topbar = () => {
             component="div"
             sx={{ color: "green", ml: "5px" }}
           >
-            Welcome {user && user.email}!
+            {isAuth ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
+
           </Typography>
         </Typography>
 
@@ -102,7 +110,7 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          <Button component={Link} to="/login" sx={{ color: 'red' }} onClick={handleLogout}>
+          <Button sx={{ color: 'red' }} onClick={handleLogout}>
             Logout
           </Button>
           <PopupNotification />

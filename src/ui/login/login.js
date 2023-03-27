@@ -5,6 +5,9 @@ import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { UserAuthContextProvider, useUserAuth } from "../auth/UserAuthContext";
 import { Cookies } from "react-cookie";
+import { userLoggedIn, userLoggedOut } from "../../redux/userSlice";
+import { useDispatch } from "react-redux";
+import styled from "@emotion/styled";
 
 const Login = () => {
   const cookies = new Cookies();
@@ -13,9 +16,10 @@ const Login = () => {
   const [error, setError] = useState("");
   const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function writeUserData() {
-    
+
   }
 
   const handleSubmit = async (e) => {
@@ -24,6 +28,7 @@ const Login = () => {
     try {
       const result = await logIn(email, password);
       navigate("/");
+      dispatch(userLoggedIn());
       cookies.set("auth-token", result.user.refreshToken);
     } catch (err) {
       setError(err.message);
@@ -35,13 +40,25 @@ const Login = () => {
     try {
       await googleSignIn();
       navigate("/");
+      dispatch(userLoggedIn());
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  const Div = styled('div')(({ theme }) => ({
+    ...theme.typography.button,
+    padding: theme.spacing(1),
+    textAlign: "center",
+  }));
+
+  function TypographyTheme() {
+    return <Div>{"CalandarBoard"}</Div>;
+  }
+
   return (
     <>
+      <TypographyTheme />
       <div className="chunk">
         <div className="loginbody">
           <div className="p-4 box">
