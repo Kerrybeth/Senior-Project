@@ -14,7 +14,7 @@ This is our senior project and we will spend our entire senior year making it co
 
 Here is a quick sneak peak of our on-going `dev` branch. 
 
-![Demo](CalandarBoard - Mobile Demo - 3_20_23.gif)
+![Demo](CalandarBoard&#32;-&#32;Mobile Demo&#32;-&#32;3_20_23.gif)
 
 ## ➡️Running the project
 
@@ -30,7 +30,7 @@ Here is all the lovely people that help put this together, and a few words on co
 
 ### Authors 
 
-[authors](https://contrib.rocks/image?repo=anxelic/CalendarBoard)
+![authors](https://contrib.rocks/image?repo=anxelic/CalendarBoard)
 
 [Stephane K](https://github.com/stephaneK123)
 
