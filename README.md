@@ -12,9 +12,9 @@ This is our senior project and we will spend our entire senior year making it co
 
 ## ➡️Latest Demo
 
-Here is a quick sneak peak of our on-going `dev` branch. 
+Here is a quick sneak peak of our on-going `dev` branch. Although the web app is optimized for desktop we are making efforts to make it as mobile friendly as possible. 
 
-![Demo](CalandarBoard&#32;-&#32;Mobile Demo&#32;-&#32;3_20_23.gif)
+![Demo](CalandarBoard-MobileDemo-3_20_23.gif)
 
 ## ➡️Running the project
 
