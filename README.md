@@ -38,9 +38,9 @@ Here is all the lovely people that help put this together, and a few words on co
 
 [Logan](https://github.com/alumnu) 
 
-[Christ](https://github.com/anxelic)
+[Chris](https://github.com/anxelic)
 
-[KerryBeth](https://github.com/gerrykorman)
+[Kerrybeth](https://github.com/gerrykorman)
 
 ### Copyright
 
