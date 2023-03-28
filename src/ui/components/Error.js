@@ -1,7 +1,6 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Button, Stack, Paper } from "@mui/material";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Divider from '@mui/material/Divider';
 import { styled } from "@mui/material/styles";
 import { Link } from 'react-router-dom'

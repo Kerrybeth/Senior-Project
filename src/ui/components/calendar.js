@@ -1,70 +1,75 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import '../../App.css';
+import { userAuthContext } from '../auth/UserAuthContext';
+import { getDatabase, ref, push, onValue} from "firebase/database";
 
+export const Calendar = () => {
+    const user = useContext(userAuthContext);
+    let eventsTemp = [];
+    const [events, setEvents] = useState([]);
 
-export default class Calendar extends React.Component {
-    state = {
-        currentEvents: []
+    useEffect(() => {
+        // firebase things
+        const db = getDatabase();  
+        const dataRef = ref(db, 'users/' + user.user.uid + '/events');
+
+        // populate array with event information, called every time the db updates
+        if (user != null) {
+            onValue(dataRef, (snapshot) => {
+                snapshot.forEach(childSnapshot => {
+                    let title = childSnapshot.val().title;
+                    let start = childSnapshot.val().start;
+                    let end = childSnapshot.val().end;
+    
+                    eventsTemp.push({"title": title, "start": start, "end": end});
+                });
+    
+                setEvents(eventsTemp);
+                eventsTemp = [];
+            });
+        }
+    }, [user]);
+
+    const handleDateClick = (arg) => { 
+        const db = getDatabase();   
+
+        // push event into db
+        push(ref(db, 'users/' + user.user.uid + '/events'), {
+            title: 'test',
+            start: arg.dateStr,
+            end: '2023-03-10'
+        });
     }
 
-    render() {
-        return (
-        <FullCalendar 
-            plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
-            initialView="dayGridMonth"
-            dateClick={this.handleDateClick}
-            editable={true}
-            eventContent={renderEventContent}
-            eventsSet={this.handleEvents}
-        />
-    )
-    }
+// function renderEventContent (eventInfo) {
+//     return (
+//         <>
+//             <b>{eventInfo.timeText}</b>
+//             <i>{eventInfo.title}</i>
+//         </>
+//     )
+// }
 
-    handleDateClick = (arg) => {
-        //eventadd(arg);
-        //this.handleRefresh();
-        // let calendarApi = arg.view.calendar;
-        // calendarApi.addEvent({
-        //     title: 'test',
-        //     start: arg.dateStr,
-        //     end: arg.dateStr,
-        //     allday: arg.allday
-        // });
-        //alert('clicked');
-        
-    }
+return (
+    <FullCalendar 
+    plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
+    headerToolbar= {{
+        left: "today prev,next",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
+    }}
+    initialView="dayGridMonth"
+    dateClick={handleDateClick}
+    editable={true}
+    selectable
+    // eventContent={renderEventContent}
+    events={events}
+    />
+);
 
-    handleRefresh = () => {
-        this.setState({});
-    }
-
-    handleEvents = (events) => {
-        this.setState({
-            currentEvents: events
-        })
-    }
-
-}
-
-function renderEventContent (eventInfo) {
-    return (
-        <>
-            <b>{eventInfo.timeText}</b>
-            <i>{eventInfo.title}</i>
-        </>
-    )
-}
-
-function eventadd (arg) {
-    return (
-        <>
-            <p>
-                testing
-            </p>
-        </>
-    )
-}
+};

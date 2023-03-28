@@ -1,17 +1,14 @@
 import { RouteType } from "../components/configs";
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import User from "../user/User";
 import UserEdit from "../user/UserEdit";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import Error from "../components/Error";
 import Settings from "../settings/Settings";
 import Contacts from "../contacts/Contacts";
 import Events from "../events/Events";
+import CreateEvents from "../events/CreateEvents";
+import CreateGroupEvents from "../events/CreateGroupEvents";
 import Groups from "../groups/Groups";
+import CreateGroup from "../groups/CreateGroup";
 import Home from "../home/Home";
 import UpdateUser from "../settings/UpdateUser";
 import GroupIcon from '@mui/icons-material/Group';
@@ -45,6 +42,10 @@ const appRoutes: RouteType[] = [
             icon: <Diversity1Icon />
         }
     }, {
+		path: "/creategroup",
+		element: <CreateGroup />,
+		state: "creategroup"
+	}, {
         path: "/events",
         element: <Events />,
         state: "events",
@@ -53,6 +54,14 @@ const appRoutes: RouteType[] = [
             icon: <EventAvailableIcon />
         }
     }, {
+		path: "/createevents",
+		element: <CreateEvents />,
+		state: "createevents"
+	}, {
+		path: "/creategroupevents",
+		element: <CreateGroupEvents />,
+		state: "creategroupevents"
+	},{
         path: "/contacts",
         element: <Contacts />,
         state: "contacts",
