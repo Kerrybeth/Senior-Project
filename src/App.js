@@ -43,7 +43,8 @@ function App() {
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
 
-  const title = "CalendarBoard"
+  const title = "CalendarBoard";
+  const test = "fff";
 
   return (
     <>
