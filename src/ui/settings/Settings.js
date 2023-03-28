@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { deleteUser, updateEmail, updatePassword } from 'firebase/auth';
+import { deleteUser } from 'firebase/auth';
 import { useUserAuth } from "../auth/UserAuthContext";
 import '../../App.css';
 
@@ -16,10 +16,6 @@ const Settings = () => {
 
   const handleChange = (event) => {
     setMySettings(event.target.value)
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
   };
 
   const del = async (e) => {
@@ -36,13 +32,8 @@ const Settings = () => {
 
   const updateUser = async (e) => {
     e.preventDefault();
-    //setError("");
     try {
       navigate("/UpdateUser");
-      updateEmail(user, newEmail);
-      updatePassword(user, newPassword);
-      alert(user.uid);
-
     } catch (err) {
       setError(err.message);
     }
