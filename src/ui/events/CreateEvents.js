@@ -24,10 +24,10 @@ const CreateEvents = () => {
 	
 	
 	
-	function handleSubmit(event){
+	function handleSubmit(event){ {/* Need to figure out how to get default values to not be "".*/}
 		console.log("test");
 		const user = getAuth().currentUser;  
-        const db = getDatabase();  
+        const db = getDatabase(); 
 		push(ref(db, 'users/' + user.uid + '/events'), {
             title: title,
 			allday: allday,
@@ -76,7 +76,7 @@ const CreateEvents = () => {
 						<Form.Label> Event Name:</Form.Label>
 						<Form.Control type="text" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name" />
 					</Form.Group>
-					<Form.Check type="switch" value={allday} onChange={(event) => setAllday(event.target.value)} label="All-day"/>
+					<Form.Check type="switch" id="allday-switch" checked={allday} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> {/*Change into a boolean.*/}
 					<Form.Group>
 						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<input type="datetime-local" value={start} onChange={(event) => setStart(event.target.value)}></input>
