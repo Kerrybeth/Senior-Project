@@ -11,9 +11,11 @@ import '../../App.css';
 
 const Groups = () => {
     const user = useContext(userAuthContext);
+
+    // using 2 separate useStates for both group names and descriptions
+    // can't figure out another way to do it so this works for now
     let groupsTemp = [];
     let descsTemp = [];
-
     const [groups, setGroups] = useState([]);
     const [descs, setDescs] = useState([]);
 
