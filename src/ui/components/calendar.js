@@ -1,46 +1,50 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import '../../App.css';
-import { useUserAuth, UserAuthContextProvider } from '../auth/UserAuthContext';
-import { getDatabase, ref, set, update, push } from "firebase/database";
-import { getAuth, currentUser } from 'firebase/auth';
+import { userAuthContext } from '../auth/UserAuthContext';
+import { getDatabase, ref, push, onValue} from "firebase/database";
 
-const events = [];
+export const Calendar = () => {
+    const user = useContext(userAuthContext);
+    let eventsTemp = [];
+    const [events, setEvents] = useState([]);
 
-export default class Calendar extends React.Component {
+    useEffect(() => {
+        // firebase things
+        const db = getDatabase();  
+        const dataRef = ref(db, 'users/' + user.user.uid + '/events');
 
-    render() {
-        return (
-        <FullCalendar 
-            plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
-            initialView="dayGridMonth"
-            dateClick={this.handleDateClick}
-            editable={true}
-            // eventContent={renderEventContent}
-            events={events}
-        />
-    )
-    }
+        // populate array with event information, called every time the db updates
+        if (user != null) {
+            onValue(dataRef, (snapshot) => {
+                snapshot.forEach(childSnapshot => {
+                    let title = childSnapshot.val().title;
+                    let start = childSnapshot.val().start;
+                    let end = childSnapshot.val().end;
+    
+                    eventsTemp.push({"title": title, "start": start, "end": end});
+                });
+    
+                setEvents(eventsTemp);
+                eventsTemp = [];
+            });
+        }
+    }, [user]);
 
-    handleDateClick = (arg) => {
-        const user = getAuth().currentUser;
-        this.handleRefresh();   
+    const handleDateClick = (arg) => { 
         const db = getDatabase();   
-        alert("clickerino");
-        push(ref(db, 'users/' + user.uid + '/events'), {
-            title: 'test',
-            start: arg.dateStr
-        });
-        alert("clickerino");
-    }
 
-    handleRefresh = () => {
-        this.setState({});
+        // push event into db
+        push(ref(db, 'users/' + user.user.uid + '/events'), {
+            title: 'test',
+            start: arg.dateStr,
+            end: '2023-03-10'
+        });
     }
-}
 
 // function renderEventContent (eventInfo) {
 //     return (
@@ -50,3 +54,22 @@ export default class Calendar extends React.Component {
 //         </>
 //     )
 // }
+
+return (
+    <FullCalendar 
+    plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
+    headerToolbar= {{
+        left: "today prev,next",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
+    }}
+    initialView="dayGridMonth"
+    dateClick={handleDateClick}
+    editable={true}
+    selectable
+    // eventContent={renderEventContent}
+    events={events}
+    />
+);
+
+};

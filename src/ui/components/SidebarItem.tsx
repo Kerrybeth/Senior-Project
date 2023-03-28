@@ -1,8 +1,6 @@
 import { ListItemButton, ListItemIcon } from "@mui/material";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { colorConfigs } from "./configs";
-import { RootState } from "../../redux/store";
 import { RouteType } from "./configs";
 
 type Props = {
@@ -10,7 +8,7 @@ type Props = {
 };
 
 const SidebarItem = ({ item }: Props) => {
-  const { appState } = useSelector((state: RootState) => state.appState);
+  /*const { appState } = useSelector((state: RootState) => state.appState);*/
 
   return (
     item.sidebarProps && item.path ? (
@@ -21,7 +19,7 @@ const SidebarItem = ({ item }: Props) => {
           "&: hover": {
             backgroundColor: colorConfigs.sidebar.hoverBg
           },
-          backgroundColor: appState === item.state ? colorConfigs.sidebar.activeBg : "unset",
+          /*backgroundColor: appState === item.state ? colorConfigs.sidebar.activeBg : "unset",*/
           paddingY: "12px",
           paddingX: "24px"
         }}

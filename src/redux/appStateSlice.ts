@@ -5,7 +5,7 @@ type appState = {
 };
 
 const initialState: appState = {
-  appState: ""
+  appState: "light"
 };
 
 export const appStateSlice = createSlice({
