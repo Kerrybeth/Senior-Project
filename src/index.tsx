@@ -6,7 +6,8 @@ import App from './App';
 import { store } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import './App.css';
-
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme } from "./theme";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
