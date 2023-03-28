@@ -3,10 +3,74 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
+import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
+import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
+import { useContext, useEffect, useState } from "react";
 
 import '../../App.css';
 
-function Groups() {
+const Groups = () => {
+    const user = useContext(userAuthContext);
+
+    // using 2 separate useStates for both group names and descriptions
+    // can't figure out another way to do it so this works for now
+    let groupsTemp = [];
+    let descsTemp = [];
+    const [groups, setGroups] = useState([]);
+    const [descs, setDescs] = useState([]);
+
+    useEffect(() => {
+        // firebase things
+        const db = getDatabase();  
+        const dataRef = ref(db, 'groups/');
+
+        onValue(dataRef, (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                for (let i = 0; i < childSnapshot.val().members.length; i++) {
+                    if (user.user.uid == childSnapshot.val().members[i]) {
+                        let name = childSnapshot.val().name;
+                        let desc = childSnapshot.val().desc;
+                        
+                        groupsTemp.push(name);
+                        descsTemp.push(desc);
+                    }
+                }
+            });
+
+            setGroups(groupsTemp);
+            setDescs(descsTemp);
+            groupsTemp = [];
+            descsTemp = [];
+        });
+
+    }, [user]);
+
+    /**
+     * @returns a list of groups the current user is a part of, or a message if in no groups
+     */
+    function GroupDisplay() {
+        if (groups == []) {
+            return (
+                <ListGroup.Item>
+                    <div>You aren't in any groups yet!</div>
+                </ListGroup.Item>
+            );
+        } else {
+            return (
+                <div>
+                    {groups.map((name, i) => (
+                        <ListGroup.Item>
+                        <div>
+                            <div className="fw-bold">{name}</div>
+                            <div>{descs[i]}</div>
+                        </div>
+                        </ListGroup.Item>
+                    ))}
+                </div>
+            );
+        }
+    }
+
     return (
     <div className="pageLight">
         <div className="tabList">
@@ -17,12 +81,7 @@ function Groups() {
         >
             <Tab eventKey="first" title="Groups">
             <ListGroup>
-                <ListGroup.Item>
-                <div>
-                <div className="fw-bold">Group 1</div>
-                    Group description
-                </div>
-                </ListGroup.Item>
+                <GroupDisplay />
             </ListGroup>
             </Tab>
             <Tab eventKey="second" title="Invites">
