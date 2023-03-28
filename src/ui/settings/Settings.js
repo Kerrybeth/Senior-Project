@@ -34,25 +34,26 @@ const Settings = () => {
     }
   };
 
-//  const updateUser = async (e) => {
-    //e.preventDefault();
+  const updateUser = async (e) => {
+    e.preventDefault();
     //setError("");
-    //alert(user.uid);
- //   try {
-  //    updateEmail(user, newEmail);
-   //   updatePassword(user, newPassword);
+    try {
+      navigate("/UpdateUser");
+      updateEmail(user, newEmail);
+      updatePassword(user, newPassword);
+      alert(user.uid);
 
- //   } catch (err) {
-  //    setError(err.message);
- //   }
- // };
+    } catch (err) {
+      setError(err.message);
+    }
+  };
     return (
       <div className="pageLight">
         <div className="tabList">
           <Tabs>
             <Tab eventKey="first" title="Account Settings">
               <div style={{padding:10}}>
-                  <Button variant="primary" type="submit" onClick={navigate("/UpdateUser")}>Update Account</Button>{' '}
+                  <Button variant="primary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
                   <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
               </div>
             </Tab>
