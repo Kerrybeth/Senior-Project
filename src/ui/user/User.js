@@ -19,8 +19,20 @@ const User = () => {
         const dataRef = ref(db, 'users/' + user.user.uid + '/profile');
 
         onValue(dataRef, (snapshot) => {
-            const data = snapshot.val();
-			setData(data);
+			if (data.name == null) {
+				let namey = "";
+				set(ref(db, 'users/' + user.uid + '/profile'), {
+					name: namey
+				});
+			} else if (data.bio == null) {
+				let bio = "";
+				set(ref(db, 'users/' + user.uid + '/profile'), {
+					bio: bio
+				});
+			} else {
+				const data = snapshot.val();
+				setData(data);
+			}
         });
     }, []);
 
