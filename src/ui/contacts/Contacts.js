@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
@@ -6,14 +6,49 @@ import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 import Offcanvas from 'react-bootstrap/Offcanvas'
+import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
+import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
 
 import '../../App.css';
 
-function Contacts() {
+const Contacts = () => {
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const user = useContext(userAuthContext);
+
+    let contactsTemp = [];
+    const [contacts, setContacts] = useState([]);
+
+    useEffect(() => {
+        onValue(dataRef, (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                for (let i = 0; i < childSnapshot.val().contacts.length; i++) {
+                    if (user.user.uid == childSnapshot.val().contacts[i]) {
+                        let name = childSnapshot.val().name;
+                        //let email = childSnapshot.val().email;
+                        
+                        contactsTemp.push(name);
+                        //emailsTemp.push(email);
+                    }
+                }
+            });
+    
+            setContacts(contactsTemp);
+            //setEmails(descsTemp);
+            contactsTemp = [];
+            //descsTemp = [];
+        });
+    });
+
+    function contactDisplay() {
+
+    }
+
+    function search() {
+
+    }
 
     return (
     <div className="pageLight">
