@@ -43,6 +43,9 @@ const Groups = () => {
 
     }, [user]);
 
+    /**
+     * @returns a list of groups the current user is a part of, or a message if in no groups
+     */
     function GroupDisplay() {
         if (groups == []) {
             return (
