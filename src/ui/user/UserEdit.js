@@ -5,8 +5,8 @@ import ListGroup from 'react-bootstrap/Listgroup';
 import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { getDatabase, ref, set, update, push } from "firebase/database";
-import { getAuth, currentUser } from 'firebase/auth';
+import { getDatabase, ref, set } from "firebase/database";
+import { getAuth } from 'firebase/auth';
 import { useState } from "react";
 
 const UserEdit = () => {

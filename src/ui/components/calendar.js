@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import '../../App.css';
-import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
-import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
-import { getAuth, currentUser, onAuthStateChanged } from 'firebase/auth';
+import { userAuthContext } from '../auth/UserAuthContext';
+import { getDatabase, ref, push, onValue} from "firebase/database";
 
 export const Calendar = () => {
     const user = useContext(userAuthContext);

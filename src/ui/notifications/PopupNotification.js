@@ -2,24 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import {
-    Avatar,
     Box,
     Button,
-    ButtonBase,
     CardActions,
-    Chip,
     ClickAwayListener,
     Divider,
     Grid,
     Paper,
     Popper,
-    Stack,
     TextField,
-    Typography,
     useMediaQuery
 } from '@mui/material';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { IconBell } from '@tabler/icons';
 import MainCard from '../components/MainCard';
 import Transitions from '../components/Transations';
 import NotificationList from './NotificationList';

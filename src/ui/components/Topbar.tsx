@@ -29,7 +29,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
-import { userLoggedIn, userLoggedOut } from "../../redux/userSlice";
+import { userLoggedOut } from "../../redux/userSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 

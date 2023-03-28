@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/Listgroup';
 import Button from '@mui/material/Button';
-import { getAuth, currentUser } from "firebase/auth";
 import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
 import { useEffect, useContext, useState } from 'react';
-import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
+import { userAuthContext } from '../auth/UserAuthContext';
 
 const User = () => {
 
