@@ -20,18 +20,20 @@ export const Calendar = () => {
         const dataRef = ref(db, 'users/' + user.user.uid + '/events');
 
         // populate array with event information, called every time the db updates
-        onValue(dataRef, (snapshot) => {
-            snapshot.forEach(childSnapshot => {
-                let title = childSnapshot.val().title;
-                let start = childSnapshot.val().start;
-                let end = childSnapshot.val().end;
-
-                eventsTemp.push({"title": title, "start": start, "end": end});
+        if (user != null) {
+            onValue(dataRef, (snapshot) => {
+                snapshot.forEach(childSnapshot => {
+                    let title = childSnapshot.val().title;
+                    let start = childSnapshot.val().start;
+                    let end = childSnapshot.val().end;
+    
+                    eventsTemp.push({"title": title, "start": start, "end": end});
+                });
+    
+                setEvents(eventsTemp);
+                eventsTemp = [];
             });
-
-            setEvents(eventsTemp);
-            eventsTemp = [];
-        });
+        }
     }, [user]);
 
     const handleDateClick = (arg) => { 
