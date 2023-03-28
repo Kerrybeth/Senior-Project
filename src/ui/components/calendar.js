@@ -10,6 +10,8 @@ import { getDatabase, ref, push, onValue} from "firebase/database";
 
 export const Calendar = () => {
     const user = useContext(userAuthContext);
+    
+    // local event storage
     let eventsTemp = [];
     const [events, setEvents] = useState([]);
 
@@ -39,11 +41,13 @@ export const Calendar = () => {
         const db = getDatabase();   
 
         // push event into db
-        push(ref(db, 'users/' + user.user.uid + '/events'), {
-            title: 'test',
-            start: arg.dateStr,
-            end: '2023-03-10'
-        });
+        if (user != null) {
+            push(ref(db, 'users/' + user.user.uid + '/events'), {
+                title: 'test',
+                start: arg.dateStr,
+                end: '2023-03-10'
+            }); 
+        }
     }
 
 // function renderEventContent (eventInfo) {
