@@ -12,7 +12,7 @@ import { getAuth, currentUser } from 'firebase/auth';
 
 const CreateEvents = () => {
 	const navigate = useNavigate();
-	/*const [validate, setValidated] = useState(false);*/
+	const [validated, setValidated] = useState(false);
 	const [events, setEvents] = useState('');
 	const [title, setTitle] = useState('');
 	const [allday, setAllday] = useState('');
@@ -28,6 +28,13 @@ const CreateEvents = () => {
 		console.log("test");
 		const user = getAuth().currentUser;  
         const db = getDatabase(); 
+		const form = event.currentTarget;
+		if (form.checkValidity() === false){
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		
+		setValidated(true);
 		push(ref(db, 'users/' + user.uid + '/events'), {
             title: title,
 			allday: allday,
@@ -46,15 +53,8 @@ const CreateEvents = () => {
 		setRepeatlevel('');
 		setInvite('');
 		setLocation('');
+		event.preventDefault();
 		navigate("/Events");
-		
-		/*const form = event.currentTarget;
-		if (form.checkValidity() === false){
-			event.preventDefault();
-			event.stopPropagation();
-		}
-		
-		setValidated(true);*/
 	};
 	
 	return (
@@ -66,7 +66,7 @@ const CreateEvents = () => {
 		</Box>
 		<ListGroup>
 			<ListGroup.Item>
-				<Form onSubmit={handleSubmit}>
+				<Form noValidate validated={validated} onSubmit={handleSubmit}>
 					<Typography variant="h3" style={{ 
 							color: 'black', 
 							justifyContent: 'left', 
@@ -74,27 +74,31 @@ const CreateEvents = () => {
 					}}>
 					<Form.Group>
 						<Form.Label> Event Name:</Form.Label>
-						<Form.Control type="text" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name" />
+						<Form.Control type="text" value={title} onChange={(event) => setTitle(event.target.value)} required placeholder="Enter Name"/>
+						<Form.Control.Feedback type="invalid">Please input a name.</Form.Control.Feedback>
 					</Form.Group>
 					<Form.Check type="switch" id="allday-switch" checked={allday} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> {/*Change into a boolean.*/}
 					<Form.Group>
 						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-						<input type="datetime-local" value={start} onChange={(event) => setStart(event.target.value)}></input>
+						<input type="datetime-local" value={start} onChange={(event) => setStart(event.target.value)} required></input>
+						<Form.Control.Feedback type="invalid">Please input a start date and time.</Form.Control.Feedback>
 						<br/>
 						<Form.Label> End Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-						<input type="datetime-local" value={end} onChange={(event) => setEnd(event.target.value)}></input>
+						<input type="datetime-local" value={end} onChange={(event) => setEnd(event.target.value)} required></input>
+						<Form.Control.Feedback type="invalid">Please input a end date and time.</Form.Control.Feedback>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>
 							Repeatability:
 						</Form.Label>
-						<Form.Select value={repeatlevel} onChange={(event) => setRepeatlevel(event.target.value)}> 
-							<option>Does not repeat</option>
+						<Form.Select value={repeatlevel} onChange={(event) => setRepeatlevel(event.target.value)} required> 
+							<option defaultValue >Does not repeat</option>
 							<option>Every day</option>
 							<option>Every week</option>
 							<option>Every month</option>
 							<option>Every year</option>
 						</Form.Select>
+						<Form.Control.Feedback type="invalid">Please choose an option.</Form.Control.Feedback>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Invite People: </Form.Label>
