@@ -8,6 +8,8 @@ import { Cookies } from "react-cookie";
 import { userLoggedIn } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
 import styled from "@emotion/styled";
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, set, update } from "firebase/database";
 
 const Login = () => {
   const cookies = new Cookies();
@@ -19,7 +21,11 @@ const Login = () => {
   const dispatch = useDispatch();
 
   function writeUserData() {
-
+    const user = getAuth().currentUser;
+    const db = getDatabase();   
+        update(ref(db, 'users/' + user.uid + '/profile'), {
+            email: user.email
+        });
   }
 
   const handleSubmit = async (e) => {
@@ -27,6 +33,7 @@ const Login = () => {
     setError("");
     try {
       const result = await logIn(email, password);
+      writeUserData();
       navigate("/");
       dispatch(userLoggedIn());
       cookies.set("auth-token", result.user.refreshToken);
@@ -39,6 +46,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await googleSignIn();
+      writeUserData();
       navigate("/");
       dispatch(userLoggedIn());
     } catch (error) {

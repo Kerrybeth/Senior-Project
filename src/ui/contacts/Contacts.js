@@ -21,8 +21,10 @@ const Contacts = () => {
     let contactsTemp = [];
     const [contacts, setContacts] = useState([]);
 
+    const db = getDatabase();
+
     useEffect(() => {
-        onValue(dataRef, (snapshot) => {
+        onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
                 for (let i = 0; i < childSnapshot.val().contacts.length; i++) {
                     if (user.user.uid == childSnapshot.val().contacts[i]) {
@@ -40,15 +42,26 @@ const Contacts = () => {
             contactsTemp = [];
             //descsTemp = [];
         });
-    });
+    }, [user]);
 
     function contactDisplay() {
 
     }
 
     function search() {
-
+        
     }
+
+    const [data, setData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchInputChange = (event) => {
+        setSearchQuery(event.target.value);
+    }
+
+    const filteredData = data.filter((item) => {
+        return item.name.toLowercase.includes(searchQuery.toLowerCase());
+    });
 
     return (
     <div className="pageLight">
