@@ -4,7 +4,7 @@
 
 
 
-**CalendarBoard** is a lightweight, personal planner that allows users to manage their own schedule, compare schedules with other users, and manage privacy settings. Users can also create organizations/groups, schedule meetings within it, and manage the privacy and permissions of it. The app is meant to be a rich environment for specific people - say students, faculty, gamers, friends, and more to quickly see what's going on and get connected. You can come here to see whatever group or organization you're part of is up to and get resources on the spot. 
+**CalendarBoard** is a lightweight, personal planner that allows users to manage their own schedule, compare schedules with other users, and manage privacy settings. Users can also create organizations/groups, schedule meetings within it, and manage the privacy and permissions of it. The app is meant to be a rich environment for specific people - say students, faculty, gamers, friends, and more to quickly see what's going on and get connected. You can come here to see whatever group or organization you're part of is up to and get resources on the spot. Check the project [live](https://calendarboard-e84ef.web.app/), and it's our `main` branch your looking at which could be behind `dev` (constantly updated). 
 
 ## ➡️Timeline + Context 
 
