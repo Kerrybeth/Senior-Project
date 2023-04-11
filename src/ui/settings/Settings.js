@@ -20,7 +20,6 @@ const Settings = () => {
 
   const del = async (e) => {
     e.preventDefault();
-    setError("");
     try {
       deleteUser(user.uid);
       await logOut();
