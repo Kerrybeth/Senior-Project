@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './ui/login/login';
 import Signup from './ui/login/signup';
 import Home from "./ui/home/Home";
-import { UserAuthContextProvider } from './ui/auth/UserAuthContext';
+import { UserAuthContextProvider, useUserAuth } from './ui/auth/UserAuthContext';
 import Error from "./ui/components/Error";
 import User from "./ui/user/User";
 import Groups from "./ui/groups/Groups";
@@ -25,9 +25,12 @@ import Topbar from "./ui/components/Topbar";
 import { Helmet } from 'react-helmet';
 import Cookies from "universal-cookie";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
   const isAuth = useSelector((state) => state.user.value);
+  // const { user } = useUserAuth() || {};
+  const user = undefined;
 
   const cookies = new Cookies();
 
@@ -37,19 +40,23 @@ function App() {
   const title = "CalendarBoard";
   const test = "fff";
 
-  return (
-    <>
-      <Helmet>
-        <title>{title + "/home"}</title>
-        <meta name="description" content="App Description" />
-        <meta name="theme-color" content="#008f68" />
-      </Helmet>
-      <UserAuthContextProvider>
-        <ColorModeContext.Provider value={colorMode}>
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              {isAuth ? (
+  if (user == undefined || user == null || user == ''){
+    return(
+      <Login />
+    );
+  }
 
+    return (
+      <>
+        <Helmet>
+          <title>{title + "/home"}</title>
+          <meta name="description" content="App Description" />
+          <meta name="theme-color" content="#008f68" />
+        </Helmet>
+        <UserAuthContextProvider>
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+              <BrowserRouter>
                 <Box sx={{ display: "flex" }}>
                   <Topbar />
                   <Box
@@ -90,18 +97,14 @@ function App() {
                       <Route path="/login" element={<Login />} />
                       <Route path="*" element={<Error />} />
                     </Routes>
-
                   </Box>
                 </Box>
-
-              ) :
-                (<Login />)}
-            </BrowserRouter>
-          </ThemeProvider>
-        </ColorModeContext.Provider>
-      </UserAuthContextProvider>
-    </>
-  );
+              </BrowserRouter>
+            </ThemeProvider>
+          </ColorModeContext.Provider>
+        </UserAuthContextProvider>
+      </>
+    );
 }
 
 export default App;

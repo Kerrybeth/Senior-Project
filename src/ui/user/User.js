@@ -10,19 +10,22 @@ import { userAuthContext } from '../auth/UserAuthContext';
 
 const User = () => {
 
-	const user = useContext(userAuthContext);
+	const isUser = useContext(userAuthContext);
 	const [data, setData] = useState("");
 
-    useEffect(() => {
+	useEffect(() => {
+		const user = isUser.user || null;
 
-        const db = getDatabase();  
-        const dataRef = ref(db, 'users/' + user.user.uid + '/profile');
+		if (user != null && user != undefined) {
+			const db = getDatabase();
+			const dataRef = ref(db, 'users/' + user.user.uid + '/profile');
 
-        onValue(dataRef, (snapshot) => {
-            const data = snapshot.val();
-			setData(data);
-        });
-    }, []);
+			onValue(dataRef, (snapshot) => {
+				const data = snapshot.val() || '';
+				setData(data);
+			});
+		}
+	}, []);
 
 	return (
 		<div>

@@ -1,16 +1,16 @@
-import { 
-    createContext, 
-    useContext, 
-    useEffect, 
-    useState 
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState
 } from "react";
 import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut,
-    GoogleAuthProvider,
-    signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 
 } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -19,7 +19,6 @@ export const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
-  
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -32,7 +31,7 @@ export function UserAuthContextProvider({ children }) {
   function logOut() {
     return signOut(auth);
   }
-  
+
   function googleSignIn() {
     const googleAuthProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleAuthProvider);
@@ -40,8 +39,12 @@ export function UserAuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      if(currentuser) console.log("Auth", currentuser, currentuser.uid);
-      setUser(currentuser);
+      if (currentuser !== undefined && currentuser !== null) {
+        console.log("Auth", currentuser, currentuser.uid);
+        setUser(currentuser);
+      } else {
+        setUser(null);
+      }
     });
 
     return () => {
@@ -59,5 +62,11 @@ export function UserAuthContextProvider({ children }) {
 }
 
 export function useUserAuth() {
-  return useContext(userAuthContext);
+  const ctx = useContext(userAuthContext);
+
+  if (!ctx); {
+    throw new Error("tried to create userContext but failed");
+  }
+
+  return ctx;
 }

@@ -7,8 +7,12 @@ import { store } from './redux/store';
 import { Card, CssBaseline } from '@mui/material';
 import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Button } from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom';
 
 function ErrorFallback({ error }) {
+
+
   return (
     <>
       <Card sx={{ m: 1, p: 2 }} elevation={1}>

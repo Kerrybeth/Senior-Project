@@ -2,12 +2,7 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import { sizeConfigs } from "./configs";
 import { colorConfigs } from "./configs";
 import * as React from 'react';
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -33,10 +28,6 @@ import { userLoggedOut } from "../../redux/userSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-const drawerWidth = 240;
-const navItems = ['Home', 'Settings', 'Log out'];
-
-
 const Topbar = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
@@ -51,11 +42,15 @@ const Topbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      await logOut();
-      dispatch(userLoggedOut());
-    } catch (error) {
-      console.log(error);
+    if (user == undefined) {
+
+    } else {
+      try {
+        await logOut();
+        dispatch(userLoggedOut());
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -100,7 +95,7 @@ const Topbar = () => {
             component="div"
             sx={{ color: "green", ml: "5px" }}
           >
-            {isAuth ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
+            {user !== '' ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
 
           </Typography>
         </Typography>
@@ -110,9 +105,12 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          <Button sx={{ color: 'red' }} onClick={handleLogout}>
+          {user !== '' ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
             Logout
-          </Button>
+          </Button>) : (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+            Login
+          </Button>)}
+
           <PopupNotification />
 
           <IconButton onClick={colorMode.toggleColorMode} >
@@ -124,7 +122,7 @@ const Topbar = () => {
           </IconButton>
         </Box>
       </Toolbar>
-    </AppBar>
+    </AppBar >
   );
 };
 
