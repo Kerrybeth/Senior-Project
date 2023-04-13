@@ -19,6 +19,7 @@ const User = () => {
         const dataRef = ref(db, 'users/' + user.user.uid + '/profile');
 
         onValue(dataRef, (snapshot) => {
+			const data = snapshot.val();
 			if (data.name == null) {
 				let namey = "";
 				set(ref(db, 'users/' + user.uid + '/profile'), {
@@ -30,7 +31,6 @@ const User = () => {
 					bio: bio
 				});
 			} else {
-				const data = snapshot.val();
 				setData(data);
 			}
         });
@@ -57,9 +57,7 @@ const User = () => {
 					}}>
 						Name: {data.name}
 						<br />
-						<br />
 						Bio: {data.bio}
-						<br />
 						<br />
 					</Typography>
 				</ListGroup.Item>

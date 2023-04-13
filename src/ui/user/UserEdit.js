@@ -16,7 +16,7 @@ const UserEdit = () => {
 	const [bio, setBio] = useState('');
 
 	function handleSubmit (event) {
-		console.log("test")
+		
 		event.preventDefault();
 		
 		const user = getAuth().currentUser;  
