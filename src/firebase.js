@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getStorage, getStream } from "firebase/storage"; 
 
 
 const firebaseConfig = {
@@ -11,10 +12,12 @@ const firebaseConfig = {
   messagingSenderId: "781535264774",
   appId: "1:781535264774:web:299e78c42b8ecd349e8387",
   measurementId: "G-N8BGMQZ568",
-  databaseURL: "https://calendarboard-e84ef-default-rtdb.firebaseio.com/"
+  databaseURL: "https://calendarboard-e84ef-default-rtdb.firebaseio.com/",
+  storageBucket: "gs://calendarboard-e84ef.appspot.com/"
 };
 
 const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 export const auth = getAuth(app);
 auth.setPersistence('local');
 const database = getDatabase(app);
