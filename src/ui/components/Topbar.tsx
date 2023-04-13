@@ -27,6 +27,7 @@ import { tokens, ColorModeContext } from "../../theme";
 import { useContext } from "react";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import '../../App.css';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Settings', 'Log out'];
@@ -68,6 +69,7 @@ const Topbar = () => {
       }}
 
     >
+      <div className="pageLightLeft">
       <Toolbar>
         <IconButton
           color="inherit"
@@ -87,7 +89,7 @@ const Topbar = () => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ color: "green", ml: "5px" }}
+            sx={{ color: "black", ml: "5px" }}
           >
             Welcome {user && user.email}!
           </Typography>
@@ -98,7 +100,7 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          <Button component={Link} to="/login" sx={{ color: 'red' }} onClick={handleLogout}>
+          <Button component={Link} to="/login" sx={{ color: 'white' }} onClick={handleLogout}>
             Logout
           </Button>
           <PopupNotification />
@@ -112,6 +114,8 @@ const Topbar = () => {
           </IconButton>
         </Box>
       </Toolbar>
+      </div>
+
     </AppBar>
   );
 };

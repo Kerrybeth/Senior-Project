@@ -88,7 +88,7 @@ const Sidebar = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            This web app was made with a smile by Logan, David, Stephane, KarryBeth, and Chris. Please report 
+            This web app was made with a smile by Logan, David, Stephane, Kerrybeth, and Chris. Please report 
             any issues, and we hope it provided some value to you! 
           </DialogContentText>
         </DialogContent>
@@ -101,7 +101,7 @@ const Sidebar = () => {
       </Dialog>
 
       <Typography onClick={handleClickOpen} variant="caption" display="block" gutterBottom sx={{ p: 2, textAlign: 'center', cursor: 'pointer' }} >
-        CalandarBoard Beta v1.0.0
+        CalendarBoard Beta v1.0.0
       </Typography>
     </Drawer>
   );
