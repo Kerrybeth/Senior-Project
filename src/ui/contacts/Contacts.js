@@ -57,6 +57,7 @@ const Contacts = () => {
 
     const handleSearchInputChange = (event) => {
         setSearchQuery(event.target.value);
+        //alert(event.target.value);
     }
 
     const filteredData = data.filter((item) => {
@@ -98,7 +99,7 @@ const Contacts = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
                 {/* Query the users database to find contact based on search input */}
-                <input type="text" placeholder="Search" />
+                <input type="text" placeholder="Search" onChange={handleSearchInputChange} />
             </Offcanvas.Body>
         </Offcanvas>
         </>
