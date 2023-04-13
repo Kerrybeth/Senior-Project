@@ -4,15 +4,17 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { deleteUser } from 'firebase/auth';
+import { deleteUser, reauthenticateWithCredential } from 'firebase/auth';
 import { useUserAuth } from "../auth/UserAuthContext";
 import '../../App.css';
+import { getDatabase, remove, ref } from "@firebase/database";
 
 const Settings = () => {
   const logOut = useUserAuth();
   const user = useUserAuth().user;
   const [mySettings, setMySettings, setError, newEmail, setEmail, newPassword, setPassword] = useState("");
   const navigate = useNavigate();
+  const db = getDatabase();
 
   const handleChange = (event) => {
     setMySettings(event.target.value)
@@ -21,8 +23,10 @@ const Settings = () => {
   const del = async (e) => {
     e.preventDefault();
     try {
-      deleteUser(user.uid);
-      await logOut();
+      reauthenticateWithCredential();
+      remove(ref(db, "users/" + user.uid));
+      deleteUser(user);
+      // await logOut();
       navigate("/login");
     } catch (err) {
       setError(err.message);

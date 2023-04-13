@@ -1,44 +1,69 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateEmail, updatePassword } from 'firebase/auth';
+import { updateEmail, updatePassword, reauthenticateWithCredential } from 'firebase/auth';
 import { useUserAuth } from "../ui/auth/UserAuthContext";
 import Button from 'react-bootstrap/Button'
 import '../App.css';
 
 const UpdateUser = () => {
-    const [newEmail, setEmail, newPassword, setPassword] = useState("");
+    const [newEmail, setEmail] = useState("");
+    const [newPassword, setPassword] = useState("");
     const navigate = useNavigate();
     const user = useUserAuth().user;
     
-    const handleChange = (event) => {
+    const handlePassChange = (event) => {
         event.preventDefault();
-        navigate("/");
+        setPassword(event.target.value);
     };
+    
+    const handleEmailChange = (event) => {
+        event.preventDefault();
+        setEmail(event.target.value);
+    };
+
+    const handlePassSubmit = (e) => {
+        reauthenticateWithCredential();
+        updatePassword(user, newPassword);
+        navigate("/");
+    }
+
+    const handleEmailSubmit = (e) => {
+        reauthenticateWithCredential();
+        updateEmail(user, newEmail);
+        navigate("/");
+    }
 
     return (
         <div className="pageLight">
           <div className="tabList">
-            <form onSubmit={handleChange}>
+            <h2>Change Password</h2>
+            <form onSubmit={handlePassSubmit}>
                 <div style={{padding:5}}>
                     <label>Enter a new password:{'    '}   
                         <input
-                            type="text" 
+                            type="password" 
                             value={newPassword}
-                            onChange={updateEmail(user, newEmail)}
+                            onChange={handlePassChange}
                         />
                     </label>
                 </div>
+                <div style={{padding:5}}>
+                    <Button varient="danger" type="submit">Submit</Button>
+                </div>
+            </form>
+            <h2 style={{paddingTop:40}}>Change Email</h2>
+            <form onSubmit={handleEmailSubmit}>
                 <div style={{padding:5}}>
                     <label>Enter a new email address:{'    '}
                         <input
                             type="text" 
                             value={newEmail}
-                            onChange={updatePassword(user, newPassword)}
+                            onChange={handleEmailChange}
                         />
                     </label>
                 </div>
                 <div style={{padding:5}}>
-                    <Button varient="danger" type="submit" onClick={handleChange}>Submit</Button>
+                    <Button varient="danger" type="submit">Submit</Button>
                 </div>
             </form>
           </div>
