@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
-import { UserAuthContextProvider, useUserAuth } from "../auth/UserAuthContext";
+import { useUserAuth } from "../auth/UserAuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -1,14 +1,9 @@
 import { Box } from "@mui/system";
-import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useLayoutEffect } from 'react';
-import NotificationList from "./NotificationList";
 import { ListItemWrapper } from "./NotificationList";
 import {
     Avatar,
     Button,
-    Card,
-    CardContent,
     Chip,
     Divider,
     Grid,
@@ -17,12 +12,11 @@ import {
     ListItemAvatar,
     ListItemSecondaryAction,
     ListItemText,
-    Stack,
     Typography
 } from '@mui/material';
-import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from "@tabler/icons";
+import { IconBrandTelegram, IconBuildingStore, IconMailbox } from "@tabler/icons";
 import User1 from "../../assets/images/person_icon.jpg";
-import { useTheme, styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
 
 const OneItem = () => {

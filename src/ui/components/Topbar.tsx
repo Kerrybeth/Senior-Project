@@ -2,23 +2,11 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import { sizeConfigs } from "./configs";
 import { colorConfigs } from "./configs";
 import * as React from 'react';
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
-import SettingsIcon from '@mui/icons-material/Settings';
-import Settings from "@mui/icons-material/Settings";
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../auth/UserAuthContext";
 import PopupNotification from "../notifications/PopupNotification";

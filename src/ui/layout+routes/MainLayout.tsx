@@ -1,6 +1,4 @@
-import { Outlet } from "react-router-dom";
 import { Box, Toolbar } from "@mui/material";
-import { colorConfigs } from "../components/configs";
 import { sizeConfigs } from "../components/configs";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";

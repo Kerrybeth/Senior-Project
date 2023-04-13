@@ -1,10 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import routes from "./ui/layout+routes/Routes"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './ui/login/login';
 import Signup from './ui/login/signup';
 import Home from "./ui/home/Home";
-import { Container, Row, Col } from "react-bootstrap";
 import { UserAuthContextProvider } from './ui/auth/UserAuthContext';
 import Error from "./ui/components/Error";
 import User from "./ui/user/User";
@@ -12,20 +10,15 @@ import Groups from "./ui/groups/Groups";
 import Events from "./ui/events/Events";
 import Contacts from "./ui/contacts/Contacts";
 import Settings from "./ui/settings/Settings";
-import Calendar from '../src/ui/components/calendar.js'
 import Notifications from "./ui/notifications/Notifications";
-import PopupNotification from "./ui/notifications/PopupNotification";
 import UserEdit from "./ui/user/UserEdit";
 import CreateGroup from "./ui/groups/CreateGroup";
 import CreateEvents from "./ui/events/CreateEvents";
 import CreateGroupEvents from "./ui/events/CreateGroupEvents";
 import { ThemeProvider } from '@mui/material/styles';
-import { useTheme } from "@mui/material";
 import { tokens } from "./theme";
 import { ColorModeContext, useMode } from "./theme"
-import { Outlet } from "react-router-dom";
 import { Box, Toolbar } from "@mui/material";
-import { colorConfigs } from "./ui/components/configs";
 import { sizeConfigs } from "./ui/components/configs";
 import Sidebar from "./ui/components/Sidebar";
 import Topbar from "./ui/components/Topbar";
