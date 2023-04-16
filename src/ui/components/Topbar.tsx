@@ -15,7 +15,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Settings from "@mui/icons-material/Settings";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from "react-router-dom";
-import { useUserAuth } from "../auth/UserAuthContext";
 import PopupNotification from "../notifications/PopupNotification";
 import { useTheme } from "@mui/material";
 import { tokens, ColorModeContext } from "../../theme";
@@ -23,10 +22,12 @@ import { useContext } from "react";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import Cookies from "universal-cookie";
-import { useDispatch } from "react-redux";
 import { userLoggedOut } from "../../redux/userSlice";
-import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { logOut } from "../../firebase";
+import { useDispatch, useSelector } from 'react-redux'
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import userSlice from "../../redux/userSlice";
 
 const Topbar = () => {
   const cookies = new Cookies();
@@ -35,21 +36,26 @@ const Topbar = () => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
-  const isAuth = useSelector((state: RootState) => state.user.value);
+  // const {uid, email} = useSelector((state: RootState) => state.user.value);
 
-
-  const { logOut, user } = useUserAuth();
   const navigate = useNavigate();
+  const userToken = localStorage.getItem('userToken')
+    ? localStorage.getItem('userToken')
+    : null
+
+  const { user, error, sucess } = useSelector(
+    (state: any) => state.user
+  )
 
   const handleLogout = async () => {
-    if (user == undefined) {
+    if (user == '') {
 
     } else {
       try {
         await logOut();
         dispatch(userLoggedOut());
       } catch (error) {
-        console.log(error);
+        console.log("could not logout : " + error);
       }
     }
   };
@@ -95,7 +101,7 @@ const Topbar = () => {
             component="div"
             sx={{ color: "green", ml: "5px" }}
           >
-            {user !== '' ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
+            {user.uid !== '' ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
 
           </Typography>
         </Typography>

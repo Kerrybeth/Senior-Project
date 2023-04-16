@@ -1,19 +1,64 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { googleSignIn } from '../firebase';
+
+const registerUser = createAsyncThunk(
+    'user/register',
+    async (user, { rejectWithValue }) => {
+        try {
+            const result = await googleSignIn();
+            return result;
+        } catch (error) {
+            // return custom error message from backend if present
+            if (error.response && error.response.data.message) {
+                return rejectWithValue("could not registerUser : " + error.response.data.message)
+            } else {
+                return rejectWithValue(error.message)
+            }
+        }
+    }
+)
 
 export const userSlice = createSlice({
     name: 'isUserLoggedIn',
     initialState: {
-        value: false,
+        loading: false,
+        guest: false,
+        user: {},
+        userToken: null,
+        error: null,
+        sucess: false,
     },
     reducers: {
-        userLoggedIn: (state) => {
-            state.value = true;
+        guestUserLoggedin: (state) => {
+            state.guest = true
+        },
+        userLoggedIn: (state, { payload }) => {
+            state.guest = false
+            state.sucess = true
+            state.user = payload
         },
         userLoggedOut: (state) => {
-            state.value = false;
+            state.sucess = false
+        },
+    },
+    extraReducers: {
+        // register user
+        [registerUser.pending]: (state) => {
+            state.loading = true
+            state.error = null
+        },
+        [registerUser.fulfilled]: (state, { payload }) => {
+            state.loading = false
+            state.success = true // registration successful
+            state.user = payload
+        },
+        [registerUser.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
         },
     },
 });
-export const { userLoggedIn, userLoggedOut } = userSlice.actions;
+export const { guestUserLoggedin, userLoggedIn, userLoggedOut } = userSlice.actions;
 
 export default userSlice.reducer;

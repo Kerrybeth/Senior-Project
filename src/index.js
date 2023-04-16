@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Button } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 function ErrorFallback({ error }) {
 
@@ -26,12 +27,14 @@ function ErrorFallback({ error }) {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ErrorBoundary FallbackComponent={ErrorFallback}>
-    <React.StrictMode>
-      <Provider store={store}>
-        <CssBaseline enableColorScheme />
-        <App />
-      </Provider>
-    </React.StrictMode>
+    <BrowserRouter>
+      <React.StrictMode>
+        <Provider store={store}>
+          <CssBaseline enableColorScheme />
+          <App />
+        </Provider>
+      </React.StrictMode>
+    </BrowserRouter>
   </ErrorBoundary>
 );
 
