@@ -22,12 +22,13 @@ import { useContext } from "react";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import Cookies from "universal-cookie";
-import { userLoggedOut } from "../../redux/userSlice";
+import { guestUserLoggedin, userLoggedOut } from "../../redux/userSlice";
 import { RootState } from "../../redux/store";
 import { logOut } from "../../firebase";
 import { useDispatch, useSelector } from 'react-redux'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import userSlice from "../../redux/userSlice";
+import { guestUserLoggedOut } from "../../redux/userSlice";
 
 const Topbar = () => {
   const cookies = new Cookies();
@@ -43,13 +44,14 @@ const Topbar = () => {
     ? localStorage.getItem('userToken')
     : null
 
-  const { user, error, sucess } = useSelector(
+  const { user, error, sucess, guest } = useSelector(
     (state: any) => state.user
   )
 
   const handleLogout = async () => {
-    if (user == '') {
-
+    if (guest) {
+      dispatch(guestUserLoggedOut);
+      navigate("/");
     } else {
       try {
         await logOut();
@@ -101,7 +103,7 @@ const Topbar = () => {
             component="div"
             sx={{ color: "green", ml: "5px" }}
           >
-            {user.uid !== '' ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
+            {(guest == false || guest != undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
 
           </Typography>
         </Typography>
@@ -111,9 +113,9 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          {user !== '' ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+          {guest ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
             Logout
-          </Button>) : (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+          </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
             Login
           </Button>)}
 

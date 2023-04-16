@@ -56,11 +56,12 @@ function App() {
     ? localStorage.getItem('userToken')
     : null
 
-  const { user, error, sucess } = useSelector(
+  const { user, error, sucess, guest } = useSelector(
     (state) => state.user
   )
 
-  if (user == undefined || user == null || user == '') {
+  const checkForInvalidUser = user == undefined || user == null || user == '' || guest == undefined || guest == false;
+  if (checkForInvalidUser) {
     return (
       <Login />
     );

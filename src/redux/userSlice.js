@@ -32,6 +32,9 @@ export const userSlice = createSlice({
     reducers: {
         guestUserLoggedin: (state) => {
             state.guest = true
+        }, 
+        guestUserLoggedOut: (state) => {
+            state.guest = false
         },
         userLoggedIn: (state, { payload }) => {
             state.guest = false
@@ -59,6 +62,6 @@ export const userSlice = createSlice({
         },
     },
 });
-export const { guestUserLoggedin, userLoggedIn, userLoggedOut } = userSlice.actions;
+export const { guestUserLoggedin, guestUserLoggedOut, userLoggedIn, userLoggedOut } = userSlice.actions;
 
 export default userSlice.reducer;
