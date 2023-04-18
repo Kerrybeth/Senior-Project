@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { userAuthContext } from '../auth/UserAuthContext';
 import { getDatabase, ref, set, update, push } from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
@@ -15,30 +14,24 @@ const CreateEvents = () => {
 	const navigate = useNavigate();
 	const [validated, setValidated] = useState(false);
 	const [events, setEvents] = useState('');
-	const [title, setTitle] = useState('');
-	const [allday, setAllday] = useState('');
-	const [start, setStart] = useState('');
-	const [end, setEnd] = useState('');
-	const [repeatlevel, setRepeatlevel] = useState('');
-	const [invite, setInvite] = useState('');
-	const [location, setLocation] = useState('');
-	const {register, errors, handleSubmit} = useForm({defaultValues: {title: null, start: null, end: null, allday: false, repeatlevel: 'Does not repeat', invite: null, location: null},});
+	const [title, setTitle] = useState(null);
+	const [allday, setAllday] = useState(false);
+	const [start, setStart] = useState(null);
+	const [end, setEnd] = useState(null);
+	const [repeatlevel, setRepeatlevel] = useState('Does not repeat');
+	const [invite, setInvite] = useState('Select People');
+	const [location, setLocation] = useState(null);
+	const {register, errors, handleSubmit} = useForm();
 	const onSubmit = data => { alert(JSON.stringify(data)); };
 	console.log(errors);
 	
 	
 	
-	function submitForm(event){ {/* Need to figure out how to get default values to not be "".*/}
+	function submitForm(event){ 
 		console.log("test");
 		const user = getAuth().currentUser;  
         const db = getDatabase(); 
-		const form = event.currentTarget;
-		/* if (form.checkValidity() === false){
-			event.preventDefault();
-			event.stopPropagation();
-		} */
 		
-		setValidated(true);
 		push(ref(db, 'users/' + user.uid + '/events'), {
             title: title,
 			allday: allday,
@@ -57,7 +50,6 @@ const CreateEvents = () => {
 		setRepeatlevel('');
 		setInvite('');
 		setLocation('');
-		//event.preventDefault();
 		navigate("/Events");
 	};
 	
@@ -70,7 +62,7 @@ const CreateEvents = () => {
 		</Box>
 		<ListGroup>
 			<ListGroup.Item>
-				<Form noValidate validated={validated} onSubmit={handleSubmit(submitForm)}>
+				<Form onSubmit={handleSubmit(submitForm)}>
 					<Typography variant="h3" style={{ 
 							color: 'black', 
 							justifyContent: 'left', 
@@ -78,24 +70,24 @@ const CreateEvents = () => {
 					}}>
 					<Form.Group>
 						<Form.Label> Event Name:</Form.Label>
-						<Form.Control type="text" {...register('title', { required: true, maxLength: 20})} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name"/>
+						<Form.Control type="text" {...register('title', { required: true, maxLength: 20})} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name"/>
 						<Form.Control.Feedback type="invalid">Please input a name.</Form.Control.Feedback>
 					</Form.Group>
-					<Form.Check type="switch" {...register('allday')} checked={allday} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> {/*Change into a boolean.*/}
+					<Form.Check type="switch" {...register('allday')} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> {/*Change into a boolean.*/}
 					<Form.Group>
 						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-						<input type="datetime-local" {...register('start', { required: true})} value={start} onChange={(event) => setStart(event.target.value)}></input>
+						<input type="datetime-local"  {...register('start', { required: true})} onChange={(event) => setStart(event.target.value)}></input>
 						<Form.Control.Feedback type="invalid">Please input a start date and time.</Form.Control.Feedback>
 						<br/>
 						<Form.Label> End Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-						<input type="datetime-local" {...register('end', { required: true})} value={end} onChange={(event) => setEnd(event.target.value)}></input>
+						<input type="datetime-local" {...register('end', { required: true})} onChange={(event) => setEnd(event.target.value)}></input>
 						<Form.Control.Feedback type="invalid">Please input a end date and time.</Form.Control.Feedback>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>
 							Repeatability:
 						</Form.Label>
-						<Form.Select {...register('repeatlevel', { required: true})} value={repeatlevel} onChange={(event) => setRepeatlevel(event.target.value)}> 
+						<Form.Select  {...register('repeatlevel')} onChange={(event) => setRepeatlevel(event.target.value)}> 
 							<option>Does not repeat</option>
 							<option>Every day</option>
 							<option>Every week</option>
@@ -106,13 +98,13 @@ const CreateEvents = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Invite People: </Form.Label>
-						<Form.Select {...register('invite')} value={invite} onChange={(event) => setInvite(event.target.value)}> 
+						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> 
 							<option>Select People</option>
 						</Form.Select>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Location:</Form.Label>
-						<Form.Control {...register('location', {maxLength: 20})} type="text" value={location} onChange={(event) => setLocation(event.target.value)} placeholder="Enter Location" />
+						<Form.Control type="text" {...register('location', {maxLength: 20})} onChange={(event) => setLocation(event.target.value)} placeholder="Enter Location" />
 					</Form.Group>
 					<Button type="submit">Create Event</Button>
 					</Typography>
