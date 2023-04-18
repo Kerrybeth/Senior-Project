@@ -10,9 +10,8 @@ import { useForm } from 'react-hook-form';
 import { getDatabase, ref, set, update, push } from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
-const CreateEvents = () => {
+const CreateEvents = () => { {/* If we have time, getting form validation to work would be nice.*/}
 	const navigate = useNavigate();
-	const [validated, setValidated] = useState(false);
 	const [events, setEvents] = useState('');
 	const [title, setTitle] = useState(null);
 	const [allday, setAllday] = useState(false);
@@ -21,10 +20,7 @@ const CreateEvents = () => {
 	const [repeatlevel, setRepeatlevel] = useState('Does not repeat');
 	const [invite, setInvite] = useState('Select People');
 	const [location, setLocation] = useState(null);
-	const {register, errors, handleSubmit} = useForm();
-	const onSubmit = data => { alert(JSON.stringify(data)); };
-	console.log(errors);
-	
+	const {register, handleSubmit} = useForm();
 	
 	
 	function submitForm(event){ 
@@ -71,17 +67,20 @@ const CreateEvents = () => {
 					<Form.Group>
 						<Form.Label> Event Name:</Form.Label>
 						<Form.Control type="text" {...register('title', { required: true, maxLength: 20})} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name"/>
-						<Form.Control.Feedback type="invalid">Please input a name.</Form.Control.Feedback>
+							{//<Form.Control.Feedback type="invalid">Please input a name.</Form.Control.Feedback>
+							}
 					</Form.Group>
 					<Form.Check type="switch" {...register('allday')} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> {/*Change into a boolean.*/}
 					<Form.Group>
 						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<input type="datetime-local"  {...register('start', { required: true})} onChange={(event) => setStart(event.target.value)}></input>
-						<Form.Control.Feedback type="invalid">Please input a start date and time.</Form.Control.Feedback>
+							{//<Form.Control.Feedback type="invalid">Please input a start date and time.</Form.Control.Feedback>
+							}
 						<br/>
 						<Form.Label> End Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<input type="datetime-local" {...register('end', { required: true})} onChange={(event) => setEnd(event.target.value)}></input>
-						<Form.Control.Feedback type="invalid">Please input a end date and time.</Form.Control.Feedback>
+							{//<Form.Control.Feedback type="invalid">Please input a end date and time.</Form.Control.Feedback>
+							}
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>
@@ -94,11 +93,12 @@ const CreateEvents = () => {
 							<option>Every month</option>
 							<option>Every year</option>
 						</Form.Select>
-						<Form.Control.Feedback type="invalid">Please choose an option.</Form.Control.Feedback>
+						{//<Form.Control.Feedback type="invalid">Please choose an option.</Form.Control.Feedback>
+						}
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Invite People: </Form.Label>
-						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> 
+						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
 							<option>Select People</option>
 						</Form.Select>
 					</Form.Group>

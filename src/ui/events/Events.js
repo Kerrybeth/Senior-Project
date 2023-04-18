@@ -6,20 +6,22 @@ import Button from 'react-bootstrap/Button';
 import { lightTheme } from '../../theme';
 import { useTheme } from '@mui/material/styles';
 import { useContext, useState, useEffect } from 'react';
-import { userAuthContext } from '../auth/UserAuthContext';
-import { getDatabase, ref, query, set, push, onValue} from "firebase/database";
+import { getDatabase, ref, query, set, push, onValue, orderByChild} from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
 
 const Events = () => {
 	const theme = useTheme(); 
-	const user = useContext(userAuthContext) || '';
+	const date = new Date();
+	const day = date.getDate();
+	const user = getAuth().currentUser; 
 	let eventsTemp = [];
     const [events, setEvents] = useState([]);
+	let newEvents = []; {/* Recent events array*/}
 
     useEffect(() => {
         const db = getDatabase();  
-        const dataRef = ref(db, 'users/' + user.user.uid + '/events');
+        const dataRef = query(ref(db, 'users/' + user.uid + '/events'), orderByChild('start'));
 		
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
@@ -34,7 +36,9 @@ const Events = () => {
             setEvents(eventsTemp);
             eventsTemp = [];
         });
+	
     }, [user]);
+	newEvents = events.filter(events => events.start !== day);
 	
     return (
         <div className="pageLight">
@@ -46,7 +50,7 @@ const Events = () => {
 				>
 					<Tab eventKey="first" title="Recent"> {/* Got it to display the recieved data, need to implement recent, weekly, and monthly settings. */}
 						<ListGroup>
-							{events.map((events) => {
+							{newEvents.map((newEvents) => {
 								return(
 								<ListGroup.Item>
 									<div>
