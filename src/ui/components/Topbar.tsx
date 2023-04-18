@@ -103,7 +103,7 @@ const Topbar = () => {
             component="div"
             sx={{ color: "green", ml: "5px" }}
           >
-            {(guest == false || guest != undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest!</>)}
+            {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
 
           </Typography>
         </Typography>
@@ -113,7 +113,7 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          {guest ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+          {guest == true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
             Logout
           </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
             Login

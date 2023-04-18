@@ -45,22 +45,22 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      const result = await logIn(email, password);
-      dispatch(userLoggedIn());
-      navigate("/");
-      cookies.set("auth-token", result.user.refreshToken);
-    } catch (err) {
-      setError("could not handle submit: " + err.message);
-    }
+    logIn(email, password).then((res) => {
+      if (res.success) {
+        dispatch(userLoggedIn(res.user));
+        navigate("/");
+      } else {
+        setError(res.error);
+      }
+    })
   };
 
   const handleGoogleSignIn = async (e) => {
     e.preventDefault();
     try {
-      await googleSignIn();
+      const result = await googleSignIn();
+      dispatch(userLoggedIn(result.user));
       navigate("/")
-      dispatch(userLoggedIn());
     } catch (error) {
       console.log("could not sign in with google: " + error.message);
     }
@@ -78,15 +78,13 @@ const Login = () => {
         <Typography variant="h1" sx={{ textAlign: "center" }}>
           CalandarBoard
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          A personal planner that allows users to manage their own schedule, compare schedules with other users, and see what's going on
-          . Users can also create organizations/groups, schedule meetings within
-          it, and manage the privacy and permissions of it.
+        <Typography variant="subtitle1" gutterBottom sx={{ m: 1, p: 1 }}>
+          A lightweight personal planner and social web app. Allows users to manage their schedules, avaialbity, compare schedules, and get connected to their communities. Users can also create organizations/groups, schedule meetings within it, and manage the privacy and permissions of it. Overall, the main goal is to seamlessly integratate into your exists community and give a place to discover and communicate. It gives rich options to integrate a user's calandar, contacts, emails, events, and more!
         </Typography>
 
         {_error && <Alert variant="danger">{_error}</Alert>}
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} sx={{ m: 2, p: 1 }}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               type="email"
@@ -95,7 +93,10 @@ const Login = () => {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicPassword" style={{
+            marg
+              : 5, padding: 2
+          }}>
             <Form.Control
               type="password"
               placeholder="Password"
@@ -103,7 +104,7 @@ const Login = () => {
             />
           </Form.Group>
         </Form>
-        <Button variant="primary" type="Submit" sx={{}}>
+        <Button variant="primary" size="small" type="Submit" onClick={handleSubmit} sx={{ m: 2, p: 1, }}>
           Log In
         </Button>
       </Box>

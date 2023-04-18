@@ -24,16 +24,41 @@ const firebaseConfig = {
 };
 
 export function logIn(email, password) {
+  auth.setPersistence(browserSessionPersistence);
   return signInWithEmailAndPassword(auth, email, password).then((res) => {
-
-  }).catch((err) => {
-    return { success: false, error: "could not login : " + err.message }
-  })
+    return {
+      sucess: true,
+      error: null
+    }
+  }).catch((error) => {
+    if (email === '' || password === '') {
+      return {
+        success: false,
+        error: "Please fill out both Email and Password"
+      }
+    }
+    if (error.code === "auth/wrong-password") {
+      return {
+        success: false,
+        error: "Email or Password is Incorrect"
+      }
+    }
+    if (error.code === "auth/user-not-found") {
+      return {
+        success: false,
+        error: "Email or Password is Incorrect"
+      }
+    }
+    return {
+      success: false,
+      error: "could not login : " + error.message
+    }
+  });
 }
 
 export function signUp(email, password) {
   return createUserWithEmailAndPassword(auth, email, password).then((res) => {
-    
+
   }).catch((err) => {
     return { success: false, error: "could not login : " + err.message }
   })
@@ -45,6 +70,7 @@ export function logOut() {
 
 export function googleSignIn() {
   const googleAuthProvider = new GoogleAuthProvider();
+  auth.setPersistence(browserSessionPersistence);
   return signInWithPopup(auth, googleAuthProvider).then((res) => {
 
   }).catch((err) => {
@@ -54,7 +80,8 @@ export function googleSignIn() {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-firebase.setPersistence(auth, browserSessionPersistence);
+// firebase.setPersistence(auth, browserSessionPersistence);
+// auth.setPersistence(browserSessionPersistence);
 const database = getDatabase(app);
 
 export default app;

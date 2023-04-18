@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Signup from "./ui/login/Signup";
+import { getAuth, browserLocalPersistence, setPersistence, browserSessionPersistence } from 'firebase/auth'
 
 function App() {
   const cookies = new Cookies();
@@ -35,13 +36,21 @@ function App() {
   const colors = tokens(theme.palette.mode);
 
   const title = "CalendarBoard";
-  const test = "fff";
+
+  const userToken = localStorage.getItem('userToken')
+    ? localStorage.getItem('userToken')
+    : null
+
+  const { user, error, sucess, guest, rememberMe } = useSelector(
+    (state) => state.user
+  )
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       if (currentuser !== undefined && currentuser !== null) {
         console.log("Auth", currentuser, currentuser.uid);
         localStorage.setItem('userToken', currentuser.uid)
+        auth.setPersistence(rememberMe == true ? browserLocalPersistence : browserSessionPersistence)
       } else {
         localStorage.setItem('userToken', '')
       }
@@ -51,14 +60,6 @@ function App() {
       unsubscribe();
     };
   }, []);
-
-  const userToken = localStorage.getItem('userToken')
-    ? localStorage.getItem('userToken')
-    : null
-
-  const { user, error, sucess, guest } = useSelector(
-    (state) => state.user
-  )
 
   const checkForInvalidUser = user == undefined || user == null || user == '' || guest == undefined || guest == false;
   if (checkForInvalidUser) {
@@ -123,5 +124,4 @@ function App() {
     </>
   );
 }
-
 export default App;

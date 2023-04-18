@@ -15,8 +15,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const { user, guest } = useSelector(
+    (state: any) => state.user
+  )
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const mode = theme.palette.mode;
@@ -50,8 +55,9 @@ const Sidebar = () => {
           boxSizing: "border-box",
           borderRight: "0px",
           backgroundColor: theme.palette.mode === 'dark' ? "#323639" : "#233044",
-          color: colorConfigs.sidebar.color
-        }
+          color: colorConfigs.sidebar.color,
+        },
+        pointerEvents: guest == true ? "none" : "unset"
       }}
     >
       <List disablePadding>
@@ -87,8 +93,8 @@ const Sidebar = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            This web app was made with a smile by Logan, David, Stephane, KarryBeth, and Chris. Please report 
-            any issues, and we hope it provided some value to you! 
+            This web app was made with a smile by Logan, David, Stephane, KarryBeth, and Chris. Please report
+            any issues, and we hope it provided some value to you!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
