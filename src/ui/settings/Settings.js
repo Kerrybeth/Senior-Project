@@ -4,14 +4,14 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { deleteUser, reauthenticateWithCredential } from 'firebase/auth';
-import { useUserAuth } from "../auth/UserAuthContext";
+import { deleteUser, reauthenticateWithCredential, getAuth } from 'firebase/auth';
+//import { useUserAuth } from "../auth/UserAuthContext";
 import '../../App.css';
 import { getDatabase, remove, ref } from "@firebase/database";
 
 const Settings = () => {
-  const logOut = useUserAuth();
-  const user = useUserAuth().user;
+  //const logOut = useUserAuth();
+  const user = getAuth().currentUser;
   const [mySettings, setMySettings, setError, newEmail, setEmail, newPassword, setPassword] = useState("");
   const navigate = useNavigate();
   const db = getDatabase();

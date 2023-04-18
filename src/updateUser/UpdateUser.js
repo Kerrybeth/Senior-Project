@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateEmail, updatePassword, reauthenticateWithCredential } from 'firebase/auth';
-import { useUserAuth } from "../ui/auth/UserAuthContext";
+import { updateEmail, updatePassword, reauthenticateWithCredential, getAuth } from 'firebase/auth';
+//import { useUserAuth } from "../ui/auth/UserAuthContext";
 import Button from 'react-bootstrap/Button'
 import '../App.css';
 
@@ -9,7 +9,8 @@ const UpdateUser = () => {
     const [newEmail, setEmail] = useState("");
     const [newPassword, setPassword] = useState("");
     const navigate = useNavigate();
-    const user = useUserAuth().user;
+    //const user = useUserAuth().user;
+    const user = getAuth().currentUser;
     
     const handlePassChange = (event) => {
         event.preventDefault();
