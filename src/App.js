@@ -8,6 +8,8 @@ import Groups from "./ui/groups/Groups";
 import Events from "./ui/events/Events";
 import Contacts from "./ui/contacts/Contacts";
 import Settings from "./ui/settings/Settings";
+import UpdateUser from "./updateUser/UpdateUser";
+import Calendar from '../src/ui/components/calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import UserEdit from "./ui/user/UserEdit";
 import CreateGroup from "./ui/groups/CreateGroup";
@@ -112,6 +114,7 @@ function App() {
                 <Route path="/creategroupevents" element={<CreateGroupEvents />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/settings" element={<Settings />} />
+                      <Route path="/updateUser" element={<UpdateUser />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />

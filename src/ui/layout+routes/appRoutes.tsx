@@ -10,6 +10,7 @@ import CreateGroupEvents from "../events/CreateGroupEvents";
 import Groups from "../groups/Groups";
 import CreateGroup from "../groups/CreateGroup";
 import Home from "../home/Home";
+import UpdateUser from "../../updateUser/UpdateUser";
 import GroupIcon from '@mui/icons-material/Group';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
@@ -76,6 +77,7 @@ const appRoutes: RouteType[] = [
             displayText: "Settings",
             icon: <SettingsIcon />
         }
+        
     },
 ];
 
