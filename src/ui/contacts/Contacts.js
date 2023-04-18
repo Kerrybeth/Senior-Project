@@ -10,17 +10,24 @@ import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
 import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
 
 import '../../App.css';
+import { getAuth } from 'firebase/auth';
 
 const Contacts = () => {
+    // offcanvas stuff
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const user = useContext(userAuthContext);
+    // auth
+    const user = getAuth().currentUser;
 
+    // storage for db results
     let contactsTemp = [];
+    let emailsTemp = [];
     const [contacts, setContacts] = useState([]);
+    const [emails, setEmails] = useState([]);
 
+    // db
     const db = getDatabase();
 
     useEffect(() => {
@@ -29,40 +36,84 @@ const Contacts = () => {
                 for (let i = 0; i < childSnapshot.val().contacts.length; i++) {
                     if (user.user.uid == childSnapshot.val().contacts[i]) {
                         let name = childSnapshot.val().name;
-                        //let email = childSnapshot.val().email;
                         
                         contactsTemp.push(name);
-                        //emailsTemp.push(email);
                     }
                 }
             });
     
             setContacts(contactsTemp);
-            //setEmails(descsTemp);
             contactsTemp = [];
-            //descsTemp = [];
         });
     }, [user]);
 
+    /**
+     * @returns listgroup of contacts
+     */
     function contactDisplay() {
-
+        return (
+            <div>
+                {contacts.map((em) => (
+                    <ListGroup.Item>
+                    <div style={{padding:5}}>
+                        <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                        {' '}{em}
+                    </div>
+                    </ListGroup.Item>
+                ))}
+            </div>
+        );
     }
 
-    function search() {
-        
-    }
-
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
+    /**
+     * deals with the search functionality of the add contact area
+     * pulls from database a user email when query matches data in db
+     * @param {*} event 
+     */
     const handleSearchInputChange = (event) => {
-        setSearchQuery(event.target.value);
-        //alert(event.target.value);
+        setSearchQuery(event.target.value.toLowerCase());
+
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (event.target.value.toLowerCase() == childSnapshot.child("profile").child("email").val()) {
+                    let email = childSnapshot.child("profile").child("email").val();
+                    
+                    emailsTemp.push(email);
+                }
+            });
+
+            setEmails(emailsTemp);
+            emailsTemp = [];
+        });
     }
 
-    const filteredData = data.filter((item) => {
-        return item.name.toLowercase.includes(searchQuery.toLowerCase());
-    });
+    /**
+     * 
+     * @returns a listgroup of matching emails (technically should only be one in the current configuration)
+     */
+    function DisplayResults() {
+        return (
+            <div>
+                {emails.map((em) => (
+                    <ListGroup.Item>
+                    <div style={{padding:5}}>
+                        <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                        {' '}{em}
+                        <Button style={{float:'right', marginTop:-6}}>Add</Button>
+                    </div>
+                    </ListGroup.Item>
+                ))}
+            </div>
+        );
+    }
+    
+
+    // const filteredData = data.filter((item) => {
+    //     return item.name.toLowercase.includes(searchQuery.toLowerCase());
+    // });
 
     return (
     <div className="pageLight">
@@ -99,7 +150,10 @@ const Contacts = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
                 {/* Query the users database to find contact based on search input */}
-                <input type="text" placeholder="Search" onChange={handleSearchInputChange} />
+                <input type="text" placeholder="Search" style={{marginTop:20}}onChange={handleSearchInputChange} />
+                <ListGroup style={{marginTop:15}}>
+                    <DisplayResults />
+                </ListGroup>
             </Offcanvas.Body>
         </Offcanvas>
         </>
