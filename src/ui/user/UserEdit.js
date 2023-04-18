@@ -28,7 +28,7 @@ const UserEdit = () => {
 
 		setNamey('');
 		setBio('');
-		navigate("/User")
+		navigate("/User");
 	};
 
     return (
