@@ -59,8 +59,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await googleSignIn();
-      dispatch(userLoggedIn(result.user));
-      navigate("/")
+      if (result.success) {
+        navigate("/")
+      } else {
+
+      }
+
     } catch (error) {
       console.log("could not sign in with google: " + error.message);
     }

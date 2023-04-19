@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useFetcher } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './ui/login/Login';
 import Home from "./ui/home/Home";
@@ -9,7 +9,7 @@ import Events from "./ui/events/Events";
 import Contacts from "./ui/contacts/Contacts";
 import Settings from "./ui/settings/Settings";
 import UpdateUser from "./updateUser/UpdateUser";
-import Calendar from '../src/ui/components/calendar.js'
+import Calendar from '../src/ui/components/Calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import UserEdit from "./ui/user/UserEdit";
 import CreateGroup from "./ui/groups/CreateGroup";
@@ -24,12 +24,30 @@ import Sidebar from "./ui/components/Sidebar";
 import Topbar from "./ui/components/Topbar";
 import { Helmet } from 'react-helmet';
 import Cookies from "universal-cookie";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Signup from "./ui/login/Signup";
 import { getAuth, browserLocalPersistence, setPersistence, browserSessionPersistence } from 'firebase/auth'
+import { Navigate } from "react-router-dom";
+import { guestUserLoggedin } from "./redux/userSlice";
+import Reset from "./ui/components/Reset";
+import { connectAuthEmulator } from "firebase/auth";
+import { Outlet } from "react-router-dom";
+import Typography from "@mui/material/Typography/Typography";
+
+const ProtectedRoute = ({
+  isAllowed,
+  redirectPath = '/login',
+  children,
+}) => {
+  if (!isAllowed) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return children ? children : <Outlet />;
+};
 
 function App() {
   const cookies = new Cookies();
@@ -47,14 +65,19 @@ function App() {
     (state) => state.user
   )
 
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       if (currentuser !== undefined && currentuser !== null) {
+        if (process.env.NODE_ENV === 'development') {
+          connectAuthEmulator(auth, "http://localhost:9099");
+        }
         console.log("Auth", currentuser, currentuser.uid);
         localStorage.setItem('userToken', currentuser.uid)
         auth.setPersistence(rememberMe == true ? browserLocalPersistence : browserSessionPersistence)
       } else {
         localStorage.setItem('userToken', '')
+        console.log("current user is null : ", currentuser);
       }
     });
 
@@ -62,13 +85,6 @@ function App() {
       unsubscribe();
     };
   }, []);
-
-  const checkForInvalidUser = user == undefined || user == null || user == '' || guest == undefined || guest == false;
-  if (checkForInvalidUser) {
-    return (
-      <Login />
-    );
-  }
 
   return (
     <>
@@ -100,24 +116,26 @@ function App() {
                 backgroundColor: colors.main[100]
               }}
             >
-              <Toolbar />
+              {sucess == true ? (<Toolbar />) : (<Typography>CalandarBoard</Typography>)}
 
               <Routes>
-                <Route path="/" element={<Home />}>
+                <Route element={<ProtectedRoute isAllowed={sucess} />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/user" element={<User />} />
+                  <Route path="/useredit" element={<UserEdit />} />
+                  <Route path="/groups" element={<Groups />} />
+                  <Route path="/creategroup" element={<CreateGroup />} />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/createevents" element={<CreateEvents />} />
+                  <Route path="/creategroupevents" element={<CreateGroupEvents />} />
+                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/updateUser" element={<UpdateUser />} />
+                  <Route path="/notifications" element={<Notifications />} />
                 </Route>
-                <Route path="/user" element={<User />} />
-                <Route path="/useredit" element={<UserEdit />} />
-                <Route path="/groups" element={<Groups />} />
-                <Route path="/creategroup" element={<CreateGroup />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/createevents" element={<CreateEvents />} />
-                <Route path="/creategroupevents" element={<CreateGroupEvents />} />
-                <Route path="/contacts" element={<Contacts />} />
-                <Route path="/settings" element={<Settings />} />
-                      <Route path="/updateUser" element={<UpdateUser />} />
-                <Route path="/notifications" element={<Notifications />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/reset" element={<Reset />} />
                 <Route path="*" element={<Error />} />
               </Routes>
             </Box>

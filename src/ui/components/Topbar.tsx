@@ -28,6 +28,7 @@ import { logOut } from "../../firebase";
 import { useDispatch, useSelector } from 'react-redux'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import userSlice from "../../redux/userSlice";
+import { Dispatch } from "@reduxjs/toolkit";
 import { guestUserLoggedOut } from "../../redux/userSlice";
 
 const Topbar = () => {
@@ -50,12 +51,13 @@ const Topbar = () => {
 
   const handleLogout = async () => {
     if (guest) {
-      dispatch(guestUserLoggedOut);
+      dispatch(guestUserLoggedOut());
       navigate("/");
     } else {
       try {
         await logOut();
         dispatch(userLoggedOut());
+        navigate("/");
       } catch (error) {
         console.log("could not logout : " + error);
       }
@@ -113,7 +115,7 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          {guest == true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+          {sucess == true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
             Logout
           </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
             Login

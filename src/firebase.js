@@ -9,8 +9,12 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  connectAuthEmulator
 
 } from "firebase/auth";
+import { Dispatch } from "redux";
+import { userLoggedIn } from "./redux/userSlice";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHOddbvXPb8w9-VtVgI0iStfZgqmuQKnc",
@@ -22,6 +26,8 @@ const firebaseConfig = {
   measurementId: "G-N8BGMQZ568",
   databaseURL: "https://calendarboard-e84ef-default-rtdb.firebaseio.com/"
 };
+
+
 
 export function logIn(email, password) {
   auth.setPersistence(browserSessionPersistence);
@@ -68,11 +74,16 @@ export function logOut() {
   return signOut(auth);
 }
 
+export const sendPasswordReset = async (email) => {
+  return await sendPasswordResetEmail(auth, email)
+}
+
 export function googleSignIn() {
+
   const googleAuthProvider = new GoogleAuthProvider();
   auth.setPersistence(browserSessionPersistence);
   return signInWithPopup(auth, googleAuthProvider).then((res) => {
-
+    return res.user;
   }).catch((err) => {
     return { success: false, error: "could not sign in with google : " + err.message }
   });
