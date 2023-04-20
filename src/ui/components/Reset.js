@@ -17,11 +17,6 @@ function Reset() {
 
   }
 
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if (user) navigate("/");
-  // }, [user, loading]);
-
   return (
     <Box mb="30px">
       <Typography variant="h1" sx={{ textAlign: "center", p: 1, m: 1 }}>

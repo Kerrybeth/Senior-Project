@@ -28,7 +28,7 @@ export const userSlice = createSlice({
         userToken: null,
         error: null,
         sucess: false,
-        rememberMe: false,
+        rememberMe: "false",
     },
     reducers: {
         guestUserLoggedin: (state) => {
@@ -50,10 +50,10 @@ export const userSlice = createSlice({
             state.user = {}
         },
         userLoggedInAndSetRememberMe: (state) => {
-            state.rememberMe = true
+            state.rememberMe = "true"
         },
         userLoggedInAndNotSetRememberMe: (state) => {
-            state.rememberMe = false
+            state.rememberMe = "false"
         }
     },
     extraReducers: {
@@ -73,6 +73,6 @@ export const userSlice = createSlice({
         },
     },
 });
-export const { guestUserLoggedin, guestUserLoggedOut, userLoggedIn, userLoggedOut } = userSlice.actions;
+export const { guestUserLoggedin, guestUserLoggedOut, userLoggedIn, userLoggedOut, userLoggedInAndSetRememberMe, userLoggedInAndNotSetRememberMe } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { Cookies } from "react-cookie";
-import { guestUserLoggedin, userLoggedIn } from "../../redux/userSlice";
+import { guestUserLoggedin, userLoggedIn, userLoggedInAndNotSetRememberMe, userLoggedInAndSetRememberMe } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
@@ -28,6 +28,7 @@ const Login = () => {
   const cookies = new Cookies();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState("false");
   const [_error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,6 +36,14 @@ const Login = () => {
   function writeUserData() {
 
   }
+
+  useEffect(() => {
+    if (rememberMe == "true") {
+      dispatch(userLoggedInAndSetRememberMe())
+    } else if (rememberMe == "false") {
+      dispatch(userLoggedInAndNotSetRememberMe())
+    }
+  }, [rememberMe]);
 
   const handleGuestSignIn = () => {
     // signInAnonymously(auth).catch(alert);
@@ -77,7 +86,7 @@ const Login = () => {
       }}
     >
       <Box display={"grid"} alignContent={"center"}>
-        <Typography variant="h1" sx={{ textAlign: "center" }}>
+        <Typography variant="h1" sx={{ textAlign: "center", m: 1, p: 1 }}>
           CalandarBoard
         </Typography>
         <Typography variant="subtitle1" gutterBottom sx={{ m: 1, p: 1 }}>
@@ -124,14 +133,14 @@ const Login = () => {
 
       <Box p={1} m={1} textAlign={"center"} sx={{ backgroundColor: "lightgrey" }}>
         <h6>Rememeber Me</h6>
-        <FormControl>
+        <FormControl defaultValue="no">
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
+            defaultValue="false"
             name="radio-buttons-group"
           >
-            <FormControlLabel value="no" control={<Radio />} label="Yes" />
-            <FormControlLabel value="yes" control={<Radio />} label="No" defaultChecked={"true"} />
+            <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="true" control={<Radio />} label="Yes" />
+            <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="false" control={<Radio />} label="No" defaultChecked={"true"} />
           </RadioGroup>
         </FormControl>
       </Box>
