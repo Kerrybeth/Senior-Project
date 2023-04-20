@@ -60,16 +60,20 @@ export function signUp(email, password) {
   return createUserWithEmailAndPassword(auth, email, password).then((res) => {
 
   }).catch((err) => {
-    return { success: false, error: "could not login : " + err.message }
+    return { success: false, error: "could not signup : " + err.message }
   })
 }
 
 export function logOut() {
-  return signOut(auth);
+  return signOut(auth).catch((err) => {
+    return {success: false, error: "could not logout : " + err.message}
+  });
 }
 
 export const sendPasswordReset = async (email) => {
-  return await sendPasswordResetEmail(auth, email)
+  return await sendPasswordResetEmail(auth, email).catch((err) => {
+    return {success: false, error: "could not "}
+  })
 }
 
 export function googleSignIn() {

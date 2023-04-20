@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Typography, Box, useTheme, Button } from "@mui/material";
 
 function Reset() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ function Reset() {
 
   const sendPasswordReset = (email) => {/** to do later */
     console.log(email)
+
   }
 
   // useEffect(() => {
@@ -21,24 +23,25 @@ function Reset() {
   // }, [user, loading]);
 
   return (
-    <div className="reset">
-      <div className="reset__container">
+    <Box mb="30px">
+      <Typography variant="h1" sx={{ textAlign: "center", p: 1, m: 1 }}>
+        CalandarBoard
+      </Typography>
+      <Typography variant="h3" sx={{ textAlign: "center", p: 1, m: 1 }}> Reset Your Password</Typography>
+      <Box display={"grid"}>
         <input
           type="text"
           className="reset__textBox"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
+          style={{width: "75%", margin: 3}}
         />
-        <button className="reset__btn" onClick={() => sendPasswordReset(email)}>
-          Send password reset email
-        </button>
+        <Button variant="contained" color="success" size="medium" sx={{ textAlign: "center", p: 1, width: "70%" }} onClick={() => navigate("/signup")}> Send password reset email</Button>
 
-        <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
-        </div>
-      </div>
-    </div>
+        <Button variant="primary" onClick={() => navigate("/signup")} sx={{ textAlign: "center", p: 1, m: 1 }}> Need An Account? Sign up</Button>
+      </Box>
+    </Box>
   );
 }
 
