@@ -12,9 +12,10 @@ import {
   connectAuthEmulator
 
 } from "firebase/auth";
-import { Dispatch } from "redux";
+
 import { userLoggedIn } from "./redux/userSlice";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { useDispatch } from "react-redux";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHOddbvXPb8w9-VtVgI0iStfZgqmuQKnc",
@@ -27,16 +28,9 @@ const firebaseConfig = {
   databaseURL: "https://calendarboard-e84ef-default-rtdb.firebaseio.com/"
 };
 
-
-
 export function logIn(email, password) {
   auth.setPersistence(browserSessionPersistence);
-  return signInWithEmailAndPassword(auth, email, password).then((res) => {
-    return {
-      sucess: true,
-      error: null
-    }
-  }).catch((error) => {
+  return signInWithEmailAndPassword(auth, email, password).catch((error) => {
     if (email === '' || password === '') {
       return {
         success: false,
@@ -79,11 +73,10 @@ export const sendPasswordReset = async (email) => {
 }
 
 export function googleSignIn() {
-
   const googleAuthProvider = new GoogleAuthProvider();
   auth.setPersistence(browserSessionPersistence);
   return signInWithPopup(auth, googleAuthProvider).then((res) => {
-    return res.user;
+    return res;
   }).catch((err) => {
     return { success: false, error: "could not sign in with google : " + err.message }
   });

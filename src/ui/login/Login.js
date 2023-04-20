@@ -46,7 +46,7 @@ const Login = () => {
     e.preventDefault();
     setError("");
     logIn(email, password).then((res) => {
-      if (res.success) {
+      if (res) {
         dispatch(userLoggedIn(res.user));
         navigate("/");
       } else {
@@ -59,12 +59,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await googleSignIn();
-      if (result.success) {
+      if (result) {
+        dispatch(userLoggedIn(result.user))
         navigate("/")
-      } else {
-
       }
-
     } catch (error) {
       console.log("could not sign in with google: " + error.message);
     }
@@ -139,8 +137,8 @@ const Login = () => {
       </Box>
 
       <Box display={"flex"} justifyContent={"space-evenly"} alignContent={"center"}>
-        <Button component={Link} to="/signup" variant="outlined"> Need An Account? Sign up</Button>
-        <Button component={Link} to="/signup" variant="outlined"> Reset Password</Button>
+        <Button variant="text" onClick={() => navigate("/signup")}> Need An Account? Sign up</Button>
+        <Button variant="text" onClick={() => navigate("/reset")}> Reset Password</Button>
       </Box>
     </Box >
   );

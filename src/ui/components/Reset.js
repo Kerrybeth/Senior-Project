@@ -15,10 +15,10 @@ function Reset() {
     console.log(email)
   }
 
-  useEffect(() => {
-    if (loading) return;
-    if (user) navigate("/");
-  }, [user, loading]);
+  // useEffect(() => {
+  //   if (loading) return;
+  //   if (user) navigate("/");
+  // }, [user, loading]);
 
   return (
     <div className="reset">

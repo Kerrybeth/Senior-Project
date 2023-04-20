@@ -65,15 +65,14 @@ function App() {
     (state) => state.user
   )
 
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       if (currentuser !== undefined && currentuser !== null) {
-        if (process.env.NODE_ENV === 'development') {
-          connectAuthEmulator(auth, "http://localhost:9099");
-        }
+        // if (process.env.NODE_ENV === 'development') {
+        //   connectAuthEmulator(auth, "http://localhost:9099");
+        // }
         console.log("Auth", currentuser, currentuser.uid);
-        localStorage.setItem('userToken', currentuser.uid)
+        localStorage.setItem('userToken', currentuser.uid);
         auth.setPersistence(rememberMe == true ? browserLocalPersistence : browserSessionPersistence)
       } else {
         localStorage.setItem('userToken', '')
@@ -96,15 +95,15 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <Box sx={{ display: "flex" }}>
-            <Topbar />
+            {sucess == true ? (<Topbar />) : (<></>)}
             <Box
               component="nav"
               sx={{
-                width: sizeConfigs.sidebar.width,
+                width: sucess == true ? sizeConfigs.sidebar.width : 0,
                 flexShrink: 0
               }}
             >
-              <Sidebar />
+              {sucess == true ? (<Sidebar />) : (<></>)}
             </Box>
             <Box
               component="main"
@@ -116,9 +115,13 @@ function App() {
                 backgroundColor: colors.main[100]
               }}
             >
-              {sucess == true ? (<Toolbar />) : (<Typography>CalandarBoard</Typography>)}
+              <Toolbar />
 
               <Routes>
+                <Route path="*" element={<Error />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/reset" element={<Reset />} />
+                <Route path="/login" element={<Login />} />
                 <Route element={<ProtectedRoute isAllowed={sucess} />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/user" element={<User />} />
@@ -133,10 +136,6 @@ function App() {
                   <Route path="/updateUser" element={<UpdateUser />} />
                   <Route path="/notifications" element={<Notifications />} />
                 </Route>
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/reset" element={<Reset />} />
-                <Route path="*" element={<Error />} />
               </Routes>
             </Box>
           </Box>
