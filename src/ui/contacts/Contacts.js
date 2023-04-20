@@ -109,6 +109,10 @@ const Contacts = () => {
         );
     }
 
+    /**
+     * ability to send request to other user **BREAKING CURRENTLY
+     * @param {*} em 
+     */
     function addContact(em) {
         onValue(ref(db, 'users/'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
@@ -124,6 +128,11 @@ const Contacts = () => {
         });
     }
     
+    /**
+     * **ALSO BREAKING CURRENTLY
+     * @param {*} uid 
+     * @returns false if request already exists in database, true otherwise
+     */
     function reqCheck(uid) {
         onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
