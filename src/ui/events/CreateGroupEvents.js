@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from "react-router-dom";
 import ListGroup from 'react-bootstrap/Listgroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { userAuthContext } from '../auth/UserAuthContext';
-import { getDatabase, ref, set, update, push } from "firebase/database";
+import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
 const CreateGroupEvents = () => {
@@ -21,39 +19,69 @@ const CreateGroupEvents = () => {
 	const [invite, setInvite] = useState('Select People');
 	const [location, setLocation] = useState(null);
 	const {register, handleSubmit} = useForm();
+	let groupsTemp = [];
+    const [groups, setGroups] = useState([]);
+	const user = getAuth().currentUser;  
+    const db = getDatabase(); 
 	
-	function submitForm(event){ {/* Need to figure out how to get default values to not be "".*/}
+	function submitForm(event){ /*Create an event under the group db.*/
 		console.log("test");
-		const user = getAuth().currentUser;  
-        const db = getDatabase(); {/*Do not use form until this is filled out*/}
-		// push(ref(db, ), { 
-            // title: title,
-			// allday: allday,
-            // start: start,
-            // end: end,
-			// repeat: repeatlevel,
-			// invite: invite,
-			// location: location
-        // });
+		/*Do not use form until this is filled out*/
+			/*push(ref(db, 'groups/' + + '/events'){ 
+             title: title,
+			 allday: allday,
+             start: start,
+             end: end,
+			 repeat: repeatlevel,
+			 invite: invite,
+			 location: location
+         });
 		
-		// setEvents('');
-		// setTitle('');
-		// setAllday('');
-		// setStart('');
-		// setEnd('');
-		// setRepeatlevel('');
-		// setInvite('');
-		// setLocation('');
-		// navigate("/Events");
+		 setEvents('');
+		 setTitle('');
+		 setAllday('');
+		 setStart('');
+		 setEnd('');
+		 setRepeatlevel('');
+		 setInvite('');
+		 setLocation('');
+		 navigate("/Events");*/
 	};
+	
+	useEffect(() => {
+        // firebase things
+        const db = getDatabase();  
+        const dataRef = ref(db, 'groups/');
+
+        onValue(dataRef, (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                for (let i = 0; i < childSnapshot.val().members.length; i++) {
+                    if (user.uid === childSnapshot.val().members[i]) {
+                        let name = childSnapshot.val().name;
+                        
+                        groupsTemp.push(name);
+                    }
+                }
+            });
+
+            setGroups(groupsTemp);
+            groupsTemp = [];
+			
+        });
+
+    }, [user]);
+
+function makeItem(x){
+	return <option>{x}</option>
+};
 	
 	return (
 	<div>
-		<box>
+		<Box>
 			<Typography variant = "h1" style={{ color: 'black', textDecoration: 'underline'}}>
 			Create Group Event
 			</Typography>
-		</box>
+		</Box>
 		<ListGroup>
 			<ListGroup.Item>
 				<Form onSubmit={handleSubmit(submitForm)}>
@@ -90,6 +118,7 @@ const CreateGroupEvents = () => {
 						<Form.Label> Invite Groups: </Form.Label>
 						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
 							<option>Select Group</option>
+							{groups.map(makeItem(name))}
 						</Form.Select>
 					</Form.Group>
 					<Form.Group>

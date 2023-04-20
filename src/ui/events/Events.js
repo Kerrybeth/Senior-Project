@@ -5,19 +5,19 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { lightTheme } from '../../theme';
 import { useTheme } from '@mui/material/styles';
-import { useContext, useState, useEffect } from 'react';
-import { getDatabase, ref, query, set, push, onValue, orderByChild} from "firebase/database";
+import { useState, useEffect } from 'react';
+import { getDatabase, ref, query, onValue, orderByChild} from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
 
 const Events = () => {
 	const theme = useTheme(); 
-	const date = new Date();
-	const day = date.getDate();
+	//const date = new Date();
+	//const day = date.getDate();
 	const user = getAuth().currentUser; 
 	let eventsTemp = [];
     const [events, setEvents] = useState([]);
-	{/*let newEvents = [];  Recent events array */}
+	/*let newEvents = [];  Recent events array */
 
     useEffect(() => {
         const db = getDatabase();  
@@ -38,7 +38,7 @@ const Events = () => {
         });
 	
     }, [user]);
-	{/*newEvents = events.filter(events => events.start !== day);*/}
+	/*newEvents = events.filter(events => events.start !== day);*/
 	
     return (
         <div className="pageLight">
