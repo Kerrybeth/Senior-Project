@@ -17,7 +17,7 @@ const Events = () => {
 	const user = getAuth().currentUser; 
 	let eventsTemp = [];
     const [events, setEvents] = useState([]);
-	let newEvents = []; {/* Recent events array*/}
+	{/*let newEvents = [];  Recent events array */}
 
     useEffect(() => {
         const db = getDatabase();  
@@ -38,7 +38,7 @@ const Events = () => {
         });
 	
     }, [user]);
-	newEvents = events.filter(events => events.start !== day);
+	{/*newEvents = events.filter(events => events.start !== day);*/}
 	
     return (
         <div className="pageLight">
@@ -48,9 +48,9 @@ const Events = () => {
 				id="events-tabs"
 				className="mb-3"
 				>
-					<Tab eventKey="first" title="Recent"> {/* Got it to display the recieved data, need to implement recent, weekly, and monthly settings. */}
+					<Tab eventKey="first" title="All Events"> {/* Got it to display the recieved data, need to implement recent, weekly, and monthly settings. */}
 						<ListGroup>
-							{newEvents.map((newEvents) => {
+							{events.map((events) => {
 								return(
 								<ListGroup.Item>
 									<div>
@@ -66,7 +66,7 @@ const Events = () => {
 							})}
 						</ListGroup>
 					</Tab>
-					<Tab eventKey="second" title="Weekly">
+					{/*<Tab eventKey="second" title="Weekly">
 						<ListGroup>
 							{events.map((events) => {
 								return(
@@ -101,7 +101,7 @@ const Events = () => {
 								)
 							})}
 						</ListGroup>
-					</Tab>
+					</Tab>*/}
 				</Tabs>
 			</div>
 			<Link to="/CreateEvents"> {/* Tried and failed to implement the theme on the buttons in this page. Did not like Mui buttons being used. */}
