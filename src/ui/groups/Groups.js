@@ -3,8 +3,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
-import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
-import { useContext, useEffect, useState } from "react";
+import { getDatabase, ref, onValue } from "firebase/database";
+import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import '../../App.css';
 
@@ -28,7 +28,7 @@ const Groups = () => {
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
                 for (let i = 0; i < childSnapshot.val().members.length; i++) {
-                    if (user.user.uid == childSnapshot.val().members[i]) {
+                    if (user.uid == childSnapshot.val().members[i]) {
                         let name = childSnapshot.val().name;
                         let desc = childSnapshot.val().desc;
 

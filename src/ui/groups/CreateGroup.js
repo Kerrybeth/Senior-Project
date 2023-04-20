@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useSelector } from "react-redux";
 import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 const CreateGroup = () => {
 
@@ -25,9 +25,9 @@ const CreateGroup = () => {
 		const db = getDatabase();
 		push(ref(db, '/groups'), {
 			name: gname,
-			owner: user.user.uid,
-			admins: [user.user.uid],
-			members: [user.user.uid],
+			owner: user.uid,
+			admins: [user.uid],
+			members: [user.uid],
 			desc: desc
 		});
 

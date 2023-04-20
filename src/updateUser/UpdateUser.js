@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateEmail, updatePassword, reauthenticateWithCredential, getAuth } from 'firebase/auth';
-//import { useUserAuth } from "../ui/auth/UserAuthContext";
 import Button from 'react-bootstrap/Button'
 import '../App.css';
 
