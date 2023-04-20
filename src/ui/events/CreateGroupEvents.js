@@ -12,14 +12,14 @@ import { getAuth, currentUser } from 'firebase/auth';
 
 const CreateGroupEvents = () => {
 	const navigate = useNavigate();
-	const [events, setEvents] = useState('');
-	const [title, setTitle] = useState('');
-	const [allday, setAllday] = useState('');
-	const [start, setStart] = useState('');
-	const [end, setEnd] = useState('');
-	const [repeatlevel, setRepeatlevel] = useState('');
-	const [invite, setInvite] = useState('');
-	const [location, setLocation] = useState('');
+	const [title, setTitle] = useState(null);
+	const [allday, setAllday] = useState(false);
+	const [start, setStart] = useState(null);
+	const [end, setEnd] = useState(null);
+	const [repeatlevel, setRepeatlevel] = useState('Does not repeat');
+	const [invite, setInvite] = useState('Select People');
+	const [location, setLocation] = useState(null);
+	const {register, handleSubmit} = useForm();
 	
 	function handleSubmit(event){ {/* Need to figure out how to get default values to not be "".*/}
 		console.log("test");
@@ -55,7 +55,7 @@ const CreateGroupEvents = () => {
 		</box>
 		<ListGroup>
 			<ListGroup.Item>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(submitForm)}>
 					<Typography variant="h3" style={{ 
 							color: 'black', 
 							justifyContent: 'left', 
@@ -63,21 +63,20 @@ const CreateGroupEvents = () => {
 					}}>
 					<Form.Group>
 						<Form.Label> Event Name:</Form.Label>
-						<Form.Control type="text" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name" />
+						<Form.Control type="text" {...register('title', { required: true, maxLength: 20})} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name"/>
 					</Form.Group>
-					<Form.Check type="switch" id="allday-switch" checked={allday} onChange={(event) => setAllday(event.target.checked)} label="All-day"/>
-					<Form.Group>
+					<Form.Check type="switch" {...register('allday')} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> 
 						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-						<input type="datetime-local" value={start} onChange={(event) => setStart(event.target.value)}></input>
+						<input type="datetime-local"  {...register('start', { required: true})} onChange={(event) => setStart(event.target.value)}></input>
 						<br/>
 						<Form.Label> End Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-						<input type="datetime-local" value={end} onChange={(event) => setEnd(event.target.value)}></input>
+						<input type="datetime-local" {...register('end', { required: true})} onChange={(event) => setEnd(event.target.value)}></input>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>
 							Repeatability:
 						</Form.Label>
-						<Form.Select value={repeatlevel} onChange={(event) => setRepeatlevel(event.target.value)}> 
+						<Form.Select  {...register('repeatlevel')} onChange={(event) => setRepeatlevel(event.target.value)}> 
 							<option>Does not repeat</option>
 							<option>Every day</option>
 							<option>Every week</option>
@@ -87,13 +86,13 @@ const CreateGroupEvents = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Label> Invite Groups: </Form.Label>
-						<Form.Select value={invite} onChange={(event) => setInvite(event.target.value)}> 
+						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
 							<option>Select Group</option>
 						</Form.Select>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label value={location} onChange={(event) => setLocation(event.target.value)}> Location:</Form.Label>
-						<Form.Control type="text" placeholder="Enter Location" />
+						<Form.Control type="text" {...register('location', {maxLength: 20})} onChange={(event) => setLocation(event.target.value)} placeholder="Enter Location" />
 					</Form.Group>
 					<Button type="submit">Create Group Event</Button>
 					</Typography>

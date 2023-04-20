@@ -70,7 +70,7 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 							{//<Form.Control.Feedback type="invalid">Please input a name.</Form.Control.Feedback>
 							}
 					</Form.Group>
-					<Form.Check type="switch" {...register('allday')} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> {/*Change into a boolean.*/}
+					<Form.Check type="switch" {...register('allday')} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> 
 					<Form.Group>
 						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
 						<input type="datetime-local"  {...register('start', { required: true})} onChange={(event) => setStart(event.target.value)}></input>
