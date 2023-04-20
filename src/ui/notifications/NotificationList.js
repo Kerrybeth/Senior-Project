@@ -2,8 +2,6 @@ import { useTheme, styled } from '@mui/material/styles';
 import {
     Avatar,
     Button,
-    Card,
-    CardContent,
     Chip,
     Divider,
     Grid,
@@ -12,7 +10,6 @@ import {
     ListItemAvatar,
     ListItemSecondaryAction,
     ListItemText,
-    Stack,
     Typography
 } from '@mui/material';
 import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from "@tabler/icons";
