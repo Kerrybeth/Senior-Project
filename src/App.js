@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import routes from "./ui/layout+routes/Routes"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './ui/login/login';
-import Signup from './ui/login/signup';
+import Login from './ui/login/Login';
+import Signup from './ui/login/Signup';
 import Home from "./ui/home/Home";
 import { Container, Row, Col } from "react-bootstrap";
 import { UserAuthContextProvider } from './ui/auth/UserAuthContext';
@@ -12,7 +12,7 @@ import Groups from "./ui/groups/Groups";
 import Events from "./ui/events/Events";
 import Contacts from "./ui/contacts/Contacts";
 import Settings from "./ui/settings/Settings";
-import Calendar from '../src/ui/components/calendar.js'
+import Calendar from './ui/components/Calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import PopupNotification from "./ui/notifications/PopupNotification";
 import UserEdit from "./ui/user/UserEdit";
