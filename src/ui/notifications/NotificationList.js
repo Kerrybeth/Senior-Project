@@ -12,7 +12,7 @@ import {
     ListItemText,
     Typography
 } from '@mui/material';
-import { IconBrandTelegram, IconBuildingStore, IconMailbox } from "@tabler/icons";
+import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from "@tabler/icons";
 import User1 from "../../assets/images/person_icon.jpg";
 
 export const ListItemWrapper = styled('div')(({ theme }) => ({
