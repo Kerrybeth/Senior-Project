@@ -4,63 +4,36 @@ import { colorConfigs } from "./configs";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
-import SettingsIcon from '@mui/icons-material/Settings';
-import Settings from "@mui/icons-material/Settings";
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../auth/UserAuthContext";
 import PopupNotification from "../notifications/PopupNotification";
 import { useTheme } from "@mui/material";
 import { tokens, ColorModeContext } from "../../theme";
 import { useContext } from "react";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import Cookies from "universal-cookie";
-import { guestUserLoggedin, userLoggedOut } from "../../redux/userSlice";
-import { RootState } from "../../redux/store";
-import { logOut } from "../../firebase";
-import { useDispatch, useSelector } from 'react-redux'
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import userSlice from "../../redux/userSlice";
-import { Dispatch } from "@reduxjs/toolkit";
-import { guestUserLoggedOut } from "../../redux/userSlice";
+import '../../App.css';
+
+const drawerWidth = 240;
+const navItems = ['Home', 'Settings', 'Log out'];
 
 const Topbar = () => {
-  const cookies = new Cookies();
-  const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
-  // const {uid, email} = useSelector((state: RootState) => state.user.value);
-
+  const { logOut, user } = useUserAuth();
   const navigate = useNavigate();
-  const userToken = localStorage.getItem('userToken')
-    ? localStorage.getItem('userToken')
-    : null
-
-  const { user, error, sucess, guest } = useSelector(
-    (state: any) => state.user
-  )
 
   const handleLogout = async () => {
-    if (guest) {
-      dispatch(guestUserLoggedOut());
-      navigate("/");
-    } else {
-      try {
-        await logOut();
-        dispatch(userLoggedOut());
-        navigate("/");
-      } catch (error) {
-        console.log("could not logout : " + error);
-      }
+    try {
+      await logOut();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -84,6 +57,7 @@ const Topbar = () => {
       }}
 
     >
+      <div className="pageLightLeft">
       <Toolbar>
         <IconButton
           color="inherit"
@@ -103,10 +77,9 @@ const Topbar = () => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ color: "green", ml: "5px" }}
+            sx={{ color: "black", ml: "5px" }}
           >
-            {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
-
+            Welcome {user && user.email}!
           </Typography>
         </Typography>
 
@@ -115,12 +88,9 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          {sucess == true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+          <Button component={Link} to="/login" sx={{ color: 'white' }} onClick={handleLogout}>
             Logout
-          </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
-            Login
-          </Button>)}
-
+          </Button>
           <PopupNotification />
 
           <IconButton onClick={colorMode.toggleColorMode} >
@@ -132,7 +102,9 @@ const Topbar = () => {
           </IconButton>
         </Box>
       </Toolbar>
-    </AppBar >
+      </div>
+
+    </AppBar>
   );
 };
 
