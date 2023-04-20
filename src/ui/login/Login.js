@@ -83,6 +83,7 @@ const Login = () => {
         display: 'colum',
         justifyContent: 'space-between',
         alignItems: 'center',
+        m: 15
       }}
     >
       <Box display={"grid"} alignContent={"center"}>
