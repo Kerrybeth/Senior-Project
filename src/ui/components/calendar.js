@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -21,7 +21,7 @@ export const Calendar = () => {
 
         // firebase things
         const db = getDatabase();
-        const dataRef = ref(db, 'users/' + user.uid + '/events');
+        const dataRef = ref(db, 'users/' + user == '' ? (user.user.uid) : '' + '/events');
 
         // populate array with event information, called every time the db updates
         if (user != null) {
@@ -45,7 +45,7 @@ export const Calendar = () => {
 
         // push event into db
         if (user != null) {
-            push(ref(db, 'users/' + user.uid + '/events'), {
+            push(ref(db, 'users/' + user.user.uid + '/events'), {
                 title: 'test',
                 start: arg.dateStr,
                 end: '2023-03-10'
