@@ -7,7 +7,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
-import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
+import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
 
 import '../../App.css';
 import { getAuth } from 'firebase/auth';
@@ -50,7 +50,7 @@ const Contacts = () => {
     /**
      * @returns listgroup of contacts
      */
-    function contactDisplay() {
+    function ContactDisplay() {
         return (
             <div>
                 {contacts.map((em) => (
@@ -78,9 +78,8 @@ const Contacts = () => {
 
         onValue(ref(db, 'users/'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (event.target.value.toLowerCase() == childSnapshot.child("profile").child("email").val()) {
-                    let email = childSnapshot.child("profile").child("email").val();
-                    
+                let email = childSnapshot.child("profile").child("email").val();
+                if (email == event.target.value.toLowerCase()) {
                     emailsTemp.push(email);
                 }
             });
@@ -102,14 +101,40 @@ const Contacts = () => {
                     <div style={{padding:5}}>
                         <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
                         {' '}{em}
-                        <Button style={{float:'right', marginTop:-6}}>Add</Button>
+                        <Button style={{float:'right', marginTop:-6}} onClick={() => addContact(em)}>Add</Button>
                     </div>
                     </ListGroup.Item>
                 ))}
             </div>
         );
     }
+
+    function addContact(em) {
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let email = childSnapshot.child("profile").child("email").val();
+                alert(reqCheck(childSnapshot.key));
+                if (email == em && reqCheck(childSnapshot.key)) {
+                    // push(ref(db, 'users/' + childSnapshot.key + '/notifications'), {
+                    //     type:'req',
+                    //     from:user.uid
+                    // }); 
+                }
+            });
+        });
+    }
     
+    function reqCheck(uid) {
+        onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == user.uid) {
+                    return false;
+                }
+            });
+        });
+
+        return true;
+    }
 
     // const filteredData = data.filter((item) => {
     //     return item.name.toLowercase.includes(searchQuery.toLowerCase());
@@ -125,9 +150,7 @@ const Contacts = () => {
         >
             <Tab eventKey="first" title="Contacts">
             <ListGroup>
-                <ListGroup.Item>
-                <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" /> Logan Tiraboschi</div>
-                </ListGroup.Item>
+                <ContactDisplay />
             </ListGroup>
             </Tab>
             <Tab eventKey="second" title="Invites">
