@@ -8,8 +8,6 @@ type Props = {
 };
 
 const SidebarItem = ({ item }: Props) => {
-  /*const { appState } = useSelector((state: RootState) => state.appState);*/
-
   return (
     item.sidebarProps && item.path ? (
       <ListItemButton

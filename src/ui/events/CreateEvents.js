@@ -4,7 +4,6 @@ import ListGroup from 'react-bootstrap/Listgroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-
 const CreateEvents = () => {
 	return (
 	<div>

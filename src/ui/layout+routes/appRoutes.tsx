@@ -10,7 +10,6 @@ import CreateGroupEvents from "../events/CreateGroupEvents";
 import Groups from "../groups/Groups";
 import CreateGroup from "../groups/CreateGroup";
 import Home from "../home/Home";
-import UpdateUser from "../../updateUser/UpdateUser";
 import GroupIcon from '@mui/icons-material/Group';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
@@ -80,107 +79,5 @@ const appRoutes: RouteType[] = [
         
     },
 ];
-
-// const appRoutes1: RouteType[] = [
-//     {
-//         index: true,
-//         element: <HomePage />,
-//         state: "home"
-//     },
-//     {
-//         path: "/installation",
-//         element: <InstallationPage />,
-//         state: "installation",
-//         sidebarProps: {
-//             displayText: "Installation",
-//             icon: <FileDownloadOutlinedIcon />
-//         }
-//     },
-//     {
-//         path: "/dashboard",
-//         element: <DashboardPageLayout />,
-//         state: "dashboard",
-//         sidebarProps: {
-//             displayText: "Dashboard",
-//             icon: <DashboardOutlinedIcon />
-//         },
-//         child: [
-//             {
-//                 index: true,
-//                 element: <DashboardIndex />,
-//                 state: "dashboard.index"
-//             },
-//             {
-//                 path: "/dashboard/default",
-//                 element: <DefaultPage />,
-//                 state: "dashboard.default",
-//                 sidebarProps: {
-//                     displayText: "Default"
-//                 },
-//             },
-//             {
-//                 path: "/dashboard/analytics",
-//                 element: <AnalyticsPage />,
-//                 state: "dashboard.analytics",
-//                 sidebarProps: {
-//                     displayText: "Analytic"
-//                 }
-//             },
-//             {
-//                 path: "/dashboard/saas",
-//                 element: <SaasPage />,
-//                 state: "dashboard.saas",
-//                 sidebarProps: {
-//                     displayText: "Saas"
-//                 }
-//             }
-//         ]
-//     },
-//     {
-//         path: "/component",
-//         element: <ComponentPageLayout />,
-//         state: "component",
-//         sidebarProps: {
-//             displayText: "Components",
-//             icon: <AppsOutlinedIcon />
-//         },
-//         child: [
-//             {
-//                 path: "/component/alert",
-//                 element: <AlertPage />,
-//                 state: "component.alert",
-//                 sidebarProps: {
-//                     displayText: "Alert"
-//                 },
-//             },
-//             {
-//                 path: "/component/button",
-//                 element: <ButtonPage />,
-//                 state: "component.button",
-//                 sidebarProps: {
-//                     displayText: "Button"
-//                 }
-//             }
-//         ]
-//     },
-//     {
-//         path: "/documentation",
-//         element: <DocumentationPage />,
-//         state: "documentation",
-//         sidebarProps: {
-//             displayText: "Documentation",
-//             icon: <ArticleOutlinedIcon />
-//         }
-//     },
-//     {
-//         path: "/changelog",
-//         element: <ChangelogPage />,
-//         state: "changelog",
-//         sidebarProps: {
-//             displayText: "Changelog",
-//             icon: <FormatListBulletedOutlinedIcon />
-//         }
-//     }
-// ];
 
 export default appRoutes;

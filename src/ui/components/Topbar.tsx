@@ -4,48 +4,29 @@ import { colorConfigs } from "./configs";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
-import SettingsIcon from '@mui/icons-material/Settings';
-import Settings from "@mui/icons-material/Settings";
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from "react-router-dom";
 import PopupNotification from "../notifications/PopupNotification";
 import { useTheme } from "@mui/material";
-import { tokens, ColorModeContext } from "../../theme";
+import { tokens, ColorModeContext } from "../../theme.js";
 import { useContext } from "react";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import Cookies from "universal-cookie";
-import { guestUserLoggedin, userLoggedOut } from "../../redux/userSlice";
-import { RootState } from "../../redux/store";
+import { userLoggedOut } from "../../redux/userSlice";
 import { logOut } from "../../firebase";
 import { useDispatch, useSelector } from 'react-redux'
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import userSlice from "../../redux/userSlice";
-import { Dispatch } from "@reduxjs/toolkit";
 import { guestUserLoggedOut } from "../../redux/userSlice";
 
 const Topbar = () => {
-  const cookies = new Cookies();
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
-  // const {uid, email} = useSelector((state: RootState) => state.user.value);
-
   const navigate = useNavigate();
-  const userToken = localStorage.getItem('userToken')
-    ? localStorage.getItem('userToken')
-    : null
-
-  const { user, error, sucess, guest } = useSelector(
+  const { user, sucess, guest } = useSelector(
     (state: any) => state.user
   )
 
@@ -65,6 +46,7 @@ const Topbar = () => {
   };
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  if (mobileOpen) { /**we can open mobile!**/ }
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -105,7 +87,7 @@ const Topbar = () => {
             component="div"
             sx={{ color: "green", ml: "5px" }}
           >
-            {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
+            {(guest === false || guest === undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
 
           </Typography>
         </Typography>
@@ -115,7 +97,7 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          {sucess == true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+          {sucess === true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
             Logout
           </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
             Login

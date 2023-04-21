@@ -1,21 +1,14 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
-import { getAuth, browserLocalPersistence, setPersistence, browserSessionPersistence } from 'firebase/auth'
-import * as firebase from "firebase/auth";
+import { getAuth, browserSessionPersistence } from 'firebase/auth'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
-  connectAuthEmulator
-
 } from "firebase/auth";
 
-import { userLoggedIn } from "./redux/userSlice";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { useDispatch } from "react-redux";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHOddbvXPb8w9-VtVgI0iStfZgqmuQKnc",
@@ -66,13 +59,13 @@ export function signUp(email, password) {
 
 export function logOut() {
   return signOut(auth).catch((err) => {
-    return {success: false, error: "could not logout : " + err.message}
+    return { success: false, error: "could not logout : " + err.message }
   });
 }
 
 export const sendPasswordReset = async (email) => {
   return await sendPasswordResetEmail(auth, email).catch((err) => {
-    return {success: false, error: "could not "}
+    return { success: false, error: "could not " }
   })
 }
 
@@ -90,6 +83,6 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 // firebase.setPersistence(auth, browserSessionPersistence);
 // auth.setPersistence(browserSessionPersistence);
-const database = getDatabase(app);
+// const database 
 
 export default app;

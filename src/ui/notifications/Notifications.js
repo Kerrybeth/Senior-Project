@@ -14,19 +14,9 @@ import {
     ListItemText,
     Typography
 } from '@mui/material';
-import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from "@tabler/icons";
+import { IconBrandTelegram, IconBuildingStore, IconMailbox } from "@tabler/icons";
 import User1 from "../../assets/images/person_icon.jpg";
 import { useTheme } from '@mui/material/styles';
-
-
-const OneItem = () => {
-    return (
-        <>
-            <Box></Box>
-        </>
-    );
-
-}
 
 const Notifications = () => {
     let title = "CalandarBoard";
@@ -47,13 +37,6 @@ const Notifications = () => {
         ...chipSX,
         color: theme.palette.warning.dark,
         backgroundColor: theme.palette.warning.light
-    };
-
-    const chipSuccessSX = {
-        ...chipSX,
-        color: theme.palette.success.dark,
-        backgroundColor: theme.palette.success.light,
-        height: 28
     };
 
     return (

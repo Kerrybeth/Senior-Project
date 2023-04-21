@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -9,9 +9,12 @@ import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useSelector } from 'react-redux';
 
 export const Calendar = () => {
-    const { user, error, sucess } = useSelector(
+    const { user, success } = useSelector(
         (state) => state.user
       )
+    if(success){
+        //some valid user!! (could be a guest)
+    }
 
     // local event storage
     let eventsTemp = [];
@@ -21,7 +24,7 @@ export const Calendar = () => {
 
         // firebase things
         const db = getDatabase();
-        const dataRef = ref(db, 'users/' + user == '' ? (user.user.uid) : '' + '/events');
+        const dataRef = ref(db, 'users/' + user === '' ? (user.uid) : '' + '/events');
 
         // populate array with event information, called every time the db updates
         if (user != null) {
@@ -45,22 +48,13 @@ export const Calendar = () => {
 
         // push event into db
         if (user != null) {
-            push(ref(db, 'users/' + user.user.uid + '/events'), {
+            push(ref(db, 'users/' + user.uid + '/events'), {
                 title: 'test',
                 start: arg.dateStr,
                 end: '2023-03-10'
             });
         }
     }
-
-    // function renderEventContent (eventInfo) {
-    //     return (
-    //         <>
-    //             <b>{eventInfo.timeText}</b>
-    //             <i>{eventInfo.title}</i>
-    //         </>
-    //     )
-    // }
 
     return (
         <FullCalendar

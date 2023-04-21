@@ -1,31 +1,19 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
-import { Cookies } from "react-cookie";
 import { guestUserLoggedin, userLoggedIn, userLoggedInAndNotSetRememberMe, userLoggedInAndSetRememberMe } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
-import { auth } from "../../firebase.js";
-import * as firebase from "firebase/auth";
-import { browserSessionPersistence, signInAnonymously } from "firebase/auth";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { createContext } from "react";
-import { useSelector } from "react-redux";
 import { logIn, googleSignIn } from "../../firebase.js";
 import Typography from '@mui/material/Typography';
+import { Box } from "@mui/material";
 
 const Login = () => {
-  const { loading, userInfo, error, success } = useSelector(
-    (state) => state.user
-  )
-  const cookies = new Cookies();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState("false");
@@ -33,14 +21,10 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  function writeUserData() {
-
-  }
-
   useEffect(() => {
-    if (rememberMe == "true") {
+    if (rememberMe === "true") {
       dispatch(userLoggedInAndSetRememberMe())
-    } else if (rememberMe == "false") {
+    } else if (rememberMe === "false") {
       dispatch(userLoggedInAndNotSetRememberMe())
     }
   }, [rememberMe]);

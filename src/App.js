@@ -29,8 +29,8 @@ import { browserLocalPersistence, browserSessionPersistence } from 'firebase/aut
 import { Navigate } from "react-router-dom";
 import Reset from "./ui/components/Reset";
 import { Outlet } from "react-router-dom";
-import Signup from "./ui/login/Signup";
 import Login from "./ui/login/Login";
+import Signup from "./ui/login/Signup";
 
 const ProtectedRoute = ({
   isAllowed,
