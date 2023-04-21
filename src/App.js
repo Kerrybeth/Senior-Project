@@ -1,4 +1,4 @@
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./ui/home/Home";
 import Error from "./ui/components/Error";
@@ -25,12 +25,13 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import { browserLocalPersistence, browserSessionPersistence } from 'firebase/auth'
 import { Navigate } from "react-router-dom";
 import Reset from "./ui/components/Reset";
 import { Outlet } from "react-router-dom";
 import Login from "./ui/login/Login";
 import Signup from "./ui/login/Signup";
+import { useDispatch } from "react-redux";
+import { userLoggedIn } from "./redux/userSlice";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -45,6 +46,7 @@ const ProtectedRoute = ({
 };
 
 function App() {
+  const dispatch = useDispatch();
 
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
@@ -62,11 +64,14 @@ function App() {
         //   connectAuthEmulator(auth, "http://localhost:9099");
         // }
         console.log("Auth", currentuser, currentuser.uid);
-        localStorage.setItem('userToken', currentuser.uid);
-        auth.setPersistence(rememberMe === true ? browserLocalPersistence : browserSessionPersistence)
+        if (rememberMe) {
+          localStorage.setItem('userToken', currentuser.uid);
+          dispatch(userLoggedIn(currentuser));
+        } else {
+          localStorage.setItem('userToken', '')
+        }
       } else {
-        localStorage.setItem('userToken', '')
-        console.log("current user is null : ", currentuser);
+        console.log(`current user is null : ${currentuser}`);
       }
     });
 

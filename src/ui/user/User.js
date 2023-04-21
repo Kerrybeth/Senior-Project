@@ -18,7 +18,7 @@ const User = () => {
 
 	useEffect(() => {
 
-		if (user !== null && user != undefined) {
+		if (user !== null && user !==  undefined) {
 			const db = getDatabase();
 			const dataRef = ref(db, 'users/' + user.uid + '/profile');
 
