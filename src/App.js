@@ -1,6 +1,5 @@
-import { BrowserRouter, Route, Routes, useFetcher } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './ui/login/Login';
 import Signup from './ui/login/Signup';
 import Home from "./ui/home/Home";
 import Error from "./ui/components/Error";
@@ -10,7 +9,6 @@ import Events from "./ui/events/Events";
 import Contacts from "./ui/contacts/Contacts";
 import Settings from "./ui/settings/Settings";
 import UpdateUser from "./updateUser/UpdateUser";
-import Calendar from '../src/ui/components/Calendar.js'
 import Notifications from "./ui/notifications/Notifications";
 import UserEdit from "./ui/user/UserEdit";
 import CreateGroup from "./ui/groups/CreateGroup";
@@ -24,19 +22,16 @@ import { sizeConfigs } from "./ui/components/configs";
 import Sidebar from "./ui/components/Sidebar";
 import Topbar from "./ui/components/Topbar";
 import { Helmet } from 'react-helmet';
-import Cookies from "universal-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import Signup from "./ui/login/Signup";
-import { getAuth, browserLocalPersistence, setPersistence, browserSessionPersistence } from 'firebase/auth'
+import { browserLocalPersistence, browserSessionPersistence } from 'firebase/auth'
 import { Navigate } from "react-router-dom";
-import { guestUserLoggedin } from "./redux/userSlice";
 import Reset from "./ui/components/Reset";
-import { connectAuthEmulator } from "firebase/auth";
 import { Outlet } from "react-router-dom";
-import Typography from "@mui/material/Typography/Typography";
+import Signup from "./ui/login/Signup";
+import Login from "./ui/login/Login";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -51,18 +46,13 @@ const ProtectedRoute = ({
 };
 
 function App() {
-  const cookies = new Cookies();
 
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
 
   const title = "CalendarBoard";
 
-  const userToken = localStorage.getItem('userToken')
-    ? localStorage.getItem('userToken')
-    : null
-
-  const { user, error, sucess, guest, rememberMe } = useSelector(
+  const { sucess, rememberMe } = useSelector(
     (state) => state.user
   )
 
@@ -74,7 +64,7 @@ function App() {
         // }
         console.log("Auth", currentuser, currentuser.uid);
         localStorage.setItem('userToken', currentuser.uid);
-        auth.setPersistence(rememberMe == true ? browserLocalPersistence : browserSessionPersistence)
+        auth.setPersistence(rememberMe === true ? browserLocalPersistence : browserSessionPersistence)
       } else {
         localStorage.setItem('userToken', '')
         console.log("current user is null : ", currentuser);
@@ -84,7 +74,7 @@ function App() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  },);
 
   return (
     <>
@@ -96,15 +86,15 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <Box sx={{ display: "flex" }}>
-            {sucess == true ? (<Topbar />) : (<></>)}
+            {sucess === true ? (<Topbar />) : (<></>)}
             <Box
               component="nav"
               sx={{
-                width: sucess == true ? sizeConfigs.sidebar.width : 0,
+                width: sucess === true ? sizeConfigs.sidebar.width : 0,
                 flexShrink: 0
               }}
             >
-              {sucess == true ? (<Sidebar />) : (<></>)}
+              {sucess === true ? (<Sidebar />) : (<></>)}
             </Box>
             <Box
               component="main"
