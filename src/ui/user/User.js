@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
-import ListGroup from 'react-bootstrap/Listgroup';
+import { ListGroup } from "react-bootstrap";
 import Button from '@mui/material/Button';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { useEffect, useState } from 'react';
