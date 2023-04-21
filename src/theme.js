@@ -1,7 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { createContext, useState, useMemo } from "react";
 import { useSelector } from 'react-redux';
-import { setAppState } from './redux/appStateSlice';
 
 //our custome colors, and different shades of it, use figma 
 export const tokens = (mode) => ({
@@ -18,9 +17,6 @@ export const tokens = (mode) => ({
         700: "#939393",
         800: "#626262",
         900: "#313131"
-      },
-      main: {
-        100: "#212529",
       },
       yellow: {
         100: "#FCDB3A",
