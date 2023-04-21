@@ -6,17 +6,19 @@ import ListGroup from 'react-bootstrap/Listgroup';
 import Button from '@mui/material/Button';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import { useSelector } from "react-redux";
 
 const User = () => {
-	const { user, error, sucess } = useSelector(
+	const { user, sucess } = useSelector(
 		(state) => state.user
 	)
 	const [data, setData] = useState("");
+	if (sucess) {/** we here */}
 
 	useEffect(() => {
 
-		if (user != null && user != undefined) {
+		if (user !== null && user != undefined) {
 			const db = getDatabase();
 			const dataRef = ref(db, 'users/' + user.uid + '/profile');
 
