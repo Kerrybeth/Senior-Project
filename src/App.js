@@ -83,7 +83,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>{title + "/home"}</title>
+        <title>{title}</title>
         <meta name="description" content="App Description" />
         <meta name="theme-color" content="#008f68" />
       </Helmet>
