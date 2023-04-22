@@ -12,22 +12,30 @@ import FormControl from '@mui/material/FormControl';
 import { logIn, googleSignIn } from "../../firebase.js";
 import Typography from '@mui/material/Typography';
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  const { sucess, rememberMe, guest } = useSelector(
+    (state) => state.user
+  )
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState("false");
+  const [_rememberMe, setRememberMe] = useState(rememberMe)
   const [_error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (rememberMe === "true") {
+    if(guest == false && sucess){
+      navigate("/")
+    }
+    if (_rememberMe === "true") {
       dispatch(userLoggedInAndSetRememberMe())
-    } else if (rememberMe === "false") {
+    } else if (_rememberMe === "false") {
       dispatch(userLoggedInAndNotSetRememberMe())
     }
-  }, [rememberMe]);
+  }, [rememberMe, sucess]);
 
   const handleGuestSignIn = () => {
     // signInAnonymously(auth).catch(alert);
@@ -100,7 +108,7 @@ const Login = () => {
             />
           </Form.Group>
         </Form>
-        <Button variant="primary" size="small" type="Submit" onClick={handleSubmit} sx={{ m: 2, p: 1, }}>
+        <Button variant="primary" size="small" type="Submit" onClick={handleSubmit} sx={{ m: 2, p: 1,  }}>
           Log In
         </Button>
       </Box>

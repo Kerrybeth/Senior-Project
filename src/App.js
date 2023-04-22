@@ -64,7 +64,7 @@ function App() {
         //   connectAuthEmulator(auth, "http://localhost:9099");
         // }
         console.log("Auth", currentuser, currentuser.uid);
-        if (rememberMe) {
+        if (rememberMe === "true") {
           localStorage.setItem('userToken', currentuser.uid);
           dispatch(userLoggedIn(currentuser));
         } else {

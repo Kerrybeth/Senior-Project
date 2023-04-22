@@ -3,15 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { store } from './redux/store';
 import { Card, CssBaseline } from '@mui/material';
 import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter } from 'react-router-dom';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 function ErrorFallback({ error }) {
-
-
   return (
     <>
       <Card sx={{ m: 1, p: 2 }} elevation={1}>
@@ -28,8 +27,10 @@ root.render(
     <BrowserRouter>
       <React.StrictMode>
         <Provider store={store}>
-          <CssBaseline enableColorScheme />
-          <App />
+          <PersistGate loading={null} persistor={persistor}>
+            <CssBaseline enableColorScheme />
+            <App />
+          </PersistGate>
         </Provider>
       </React.StrictMode>
     </BrowserRouter>
