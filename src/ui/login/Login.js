@@ -88,10 +88,10 @@ const Login = () => {
     >
       <Box display={"grid"} alignContent={"center"}>
         <Typography variant="h1" sx={{ textAlign: "center", m: 1, p: 1 }}>
-          CalandarBoard
+          CalendarBoard
         </Typography>
         <Typography variant="subtitle1" gutterBottom sx={{ m: 1, p: 1 }}>
-          A lightweight personal planner and social web app. Allows users to manage their schedules, avaialbity, compare schedules, and get connected to their communities. Users can also create organizations/groups, schedule meetings within it, and manage the privacy and permissions of it. Overall, the main goal is to seamlessly integratate into your exists community and give a place to discover and communicate. It gives rich options to integrate a user's calandar, contacts, emails, events, and more!
+          A lightweight personal planner and social web app. Allows users to manage their schedules, avaialbity, compare schedules, and get connected to their communities. Users can also create organizations/groups, schedule meetings within it, and manage the privacy and permissions of it. Overall, the main goal is to seamlessly integratate into your exists community and give a place to discover and communicate. It gives rich options to integrate a user's calendar, contacts, emails, events, and more!
         </Typography>
 
         {_error && <Alert variant="danger">{_error}</Alert>}
