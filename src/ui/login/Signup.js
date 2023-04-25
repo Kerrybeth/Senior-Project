@@ -8,7 +8,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
-  
+  //testinggg
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
