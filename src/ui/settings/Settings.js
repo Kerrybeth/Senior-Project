@@ -50,7 +50,7 @@ const Settings = () => {
                   <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
               </div>
             </Tab>
-            <Tab eventKey="second" title="Schedule Privacy">
+            {/* <Tab eventKey="second" title="Schedule Privacy">
               <div style={{padding:10}}>
                 <label>Select Schedule Privacy: </label>
                 <Form>
@@ -62,7 +62,7 @@ const Settings = () => {
                   </select>
                 </Form>
               </div>
-            </Tab>
+            </Tab> */}
           </Tabs>
         </div>
       </div>
