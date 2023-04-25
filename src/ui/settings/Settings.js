@@ -7,10 +7,12 @@ import Tabs from 'react-bootstrap/Tabs';
 import { deleteUser, reauthenticateWithCredential, getAuth } from 'firebase/auth';
 import '../../App.css';
 import { getDatabase, remove, ref } from "@firebase/database";
+import { useSelector } from "react-redux";
 
 const Settings = () => {
-  //const logOut = useUserAuth();
-  const user = getAuth().currentUser;
+  const { user, error, sucess } = useSelector(
+		(state) => state.user
+	)
   const [mySettings, setMySettings, setError, newEmail, setEmail, newPassword, setPassword] = useState("");
   const navigate = useNavigate();
   const db = getDatabase();
