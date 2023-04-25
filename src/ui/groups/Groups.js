@@ -19,6 +19,7 @@ const Groups = () => {
     let descsTemp = [];
     const [groups, setGroups] = useState([]);
     const [descs, setDescs] = useState([]);
+    const [selectedGroup, setSelectedGroup] = useState(null);
 
     useEffect(() => {
         // firebase things
@@ -60,13 +61,16 @@ const Groups = () => {
             return (
                 <div>
                     {groups.map((name, i) => (
-                        <ListGroup.Item>
+                        <ListGroup.Item key = {i} onClick={() => setSelectedGroup(i)}>
                             <div>
                                 <div className="fw-bold">{name}</div>
                                 <div>{descs[i]}</div>
                             </div>
                         </ListGroup.Item>
                     ))}
+                    {selectedGroup !== null && (
+                        <GroupPopup name = {groups[selectedGroup]} desc = {descs[selectedGroup]} />
+                    )}
                 </div>
             );
         }
