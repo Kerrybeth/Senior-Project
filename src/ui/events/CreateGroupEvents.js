@@ -12,6 +12,7 @@ import { getAuth, currentUser } from 'firebase/auth';
 const CreateGroupEvents = () => {
 	const navigate = useNavigate();
 	const [title, setTitle] = useState(null);
+	const [events, setEvents] = useState('');
 	const [allday, setAllday] = useState(false);
 	const [start, setStart] = useState(null);
 	const [end, setEnd] = useState(null);
@@ -20,22 +21,32 @@ const CreateGroupEvents = () => {
 	const [location, setLocation] = useState(null);
 	const {register, handleSubmit} = useForm();
 	let groupsTemp = [];
+	let idTemp = [];
+	let groupId = null;
     const [groups, setGroups] = useState([]);
+	const [id, setId] = useState([]);
 	const user = getAuth().currentUser;  
     const db = getDatabase(); 
 	
 	function submitForm(event){ /*Create an event under the group db.*/
 		console.log("test");
 		/*Do not use form until this is filled out*/
-			/*push(ref(db, 'groups/' + + '/events'){ 
-             title: title,
-			 allday: allday,
-             start: start,
-             end: end,
-			 repeat: repeatlevel,
-			 invite: invite,
-			 location: location
-         });
+		for (let i = 0; i <id.length; i++) {
+			if (groups[i] == invite[0]){
+				let groupId = id[i];
+			}
+		}
+		if (groupId != null){
+			push(ref(db, 'groups/' + groupId + '/events'), { 
+				title: title,
+				allday: allday,
+				start: start,
+				end: end,
+				repeat: repeatlevel,
+				invite: invite,
+				location: location
+			});
+		}
 		
 		 setEvents('');
 		 setTitle('');
@@ -45,7 +56,7 @@ const CreateGroupEvents = () => {
 		 setRepeatlevel('');
 		 setInvite('');
 		 setLocation('');
-		 navigate("/Events");*/
+		 navigate("/Events");
 	};
 	
 	useEffect(() => {
@@ -58,14 +69,17 @@ const CreateGroupEvents = () => {
                 for (let i = 0; i < childSnapshot.val().members.length; i++) {
                     if (user.uid === childSnapshot.val().members[i]) {
                         let name = childSnapshot.val().name;
-                        
+                        let id = childSnapshot.key;
                         groupsTemp.push(name);
+						idTemp.push(id);
                     }
                 }
             });
 
             setGroups(groupsTemp);
             groupsTemp = [];
+			setId(idTemp);
+			idTemp = [];
 			
         });
 
