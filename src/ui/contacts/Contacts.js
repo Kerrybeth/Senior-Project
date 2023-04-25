@@ -78,25 +78,28 @@ const Contacts = () => {
      * @returns listgroup of contacts
      */
     function ContactDisplay() {
-        if (contacts == []) {
+        // if (contacts == []) {
+        //     return (
+        //         <div>
+        //             <ListGroup.Item>
+        //                 You have no contacts! Click the button below to add one now.
+        //             </ListGroup.Item>
+        //         </div>
+        //     );
+        // } else {
             return (
                 <div>
-                    You have no contacts! Click the button below to add one.
+                    {contacts.map((em) => (
+                        <ListGroup.Item>
+                        <div style={{padding:5}}>
+                            <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                            {' '}{em}
+                        </div>
+                        </ListGroup.Item>
+                    ))}
                 </div>
             );
-        }
-        return (
-            <div>
-                {contacts.map((em) => (
-                    <ListGroup.Item>
-                    <div style={{padding:5}}>
-                        <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
-                        {' '}{em}
-                    </div>
-                    </ListGroup.Item>
-                ))}
-            </div>
-        );
+        //}
     }
 
     /**
