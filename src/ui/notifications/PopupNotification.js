@@ -2,24 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import {
-    Avatar,
     Box,
     Button,
-    ButtonBase,
     CardActions,
-    Chip,
     ClickAwayListener,
     Divider,
     Grid,
     Paper,
     Popper,
-    Stack,
     TextField,
-    Typography,
     useMediaQuery
 } from '@mui/material';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { IconBell } from '@tabler/icons';
 import MainCard from '../components/MainCard';
 import Transitions from '../components/Transations';
 import NotificationList from './NotificationList';
@@ -75,6 +68,7 @@ const PopupNotification = () => {
 
     return (
         <>
+            {/* actual notification btn  */}
             <Box
                 sx={{
                     m: 1,
@@ -93,6 +87,8 @@ const PopupNotification = () => {
                     <NotificationsActiveIcon />
                 </IconButton>
             </Box>
+
+            {/* the pop up notifcation  */}
             <Popper
                 placement={matchesXs ? 'bottom' : 'bottom-end'}
                 open={open}
@@ -118,36 +114,32 @@ const PopupNotification = () => {
                                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
                                     <Grid container direction="column" spacing={2}>
                                         <Grid item xs={12}>
-                                            <PerfectScrollbar
-                                                style={{ height: '100%', maxHeight: 'calc(100vh - 205px)', overflowX: 'hidden' }}
-                                            >
-                                                <Grid container direction="column" spacing={2}>
-                                                    <Grid item xs={12}>
-                                                        <Box sx={{ px: 2, pt: 0.25, p: 2 }}>
-                                                            <TextField
-                                                                id="outlined-select-currency-native"
-                                                                select
-                                                                fullWidth
-                                                                value={value}
-                                                                onChange={handleChange}
-                                                                SelectProps={{
-                                                                    native: true
-                                                                }}
-                                                            >
-                                                                {status.map((option) => (
-                                                                    <option key={option.value} value={option.value}>
-                                                                        {option.label}
-                                                                    </option>
-                                                                ))}
-                                                            </TextField>
-                                                        </Box>
-                                                    </Grid>
-                                                    <Grid item xs={12} p={0}>
-                                                        <Divider sx={{ my: 0 }} />
-                                                    </Grid>
+                                            <Grid container direction="column" spacing={2}>
+                                                <Grid item xs={12}>
+                                                    <Box sx={{ px: 2, pt: 0.25, p: 2 }}>
+                                                        <TextField
+                                                            id="outlined-select-currency-native"
+                                                            select
+                                                            fullWidth
+                                                            value={value}
+                                                            onChange={handleChange}
+                                                            SelectProps={{
+                                                                native: true
+                                                            }}
+                                                        >
+                                                            {status.map((option) => (
+                                                                <option key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </option>
+                                                            ))}
+                                                        </TextField>
+                                                    </Box>
                                                 </Grid>
-                                                <NotificationList />
-                                            </PerfectScrollbar>
+                                                <Grid item xs={12} p={0}>
+                                                    <Divider sx={{ my: 0 }} />
+                                                </Grid>
+                                            </Grid>
+                                            <NotificationList />
                                         </Grid>
                                     </Grid>
                                     <Divider />

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { useUserAuth } from "../auth/UserAuthContext";
+import { signUp } from "../../firebase";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
-  const { signUp } = useUserAuth();
+  
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,6 +16,7 @@ const Signup = () => {
     setError("");
     try {
       await signUp(email, password);
+      
       navigate("/");
     } catch (err) {
       setError(err.message);

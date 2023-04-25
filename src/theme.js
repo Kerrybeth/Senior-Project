@@ -1,13 +1,22 @@
 import { createTheme } from '@mui/material/styles';
 import { createContext, useState, useMemo } from "react";
+import { useSelector } from 'react-redux';
 
-//our custome colors, and different shades of it 
+//our custome colors, and different shades of it, use figma 
 export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
-      //these are colors for dark mode, so these colors should be light on the eye 
+      //main (used for overall background of the site) is set to greyish?
       main: {
-        100: "#212529",
+        100: "#fdfdfd",
+        200: "#fbfbfb",
+        300: "#f9f9f9",
+        400: "#f7f7f7",
+        500: "#f5f5f5",
+        600: "#c4c4c4",
+        700: "#939393",
+        800: "#626262",
+        900: "#313131"
       },
       yellow: {
         100: "#FCDB3A",
@@ -22,7 +31,7 @@ export const tokens = (mode) => ({
       },
     }
     :
-    //same colors under light mode 
+    //same colors under light mode, i.e main now is white to indicate light background 
     {
       main: {
         100: "#f5f5f5",
@@ -36,7 +45,7 @@ export const tokens = (mode) => ({
         200: "#ED2018",
       },
       blue: {
-        100: "#233044",
+        100: "#f5f5f5",
       }
     }),
 });
@@ -85,6 +94,34 @@ export const themeSettings = (mode) => {
           },
         }),
     },
+    typography: {
+      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+      fontSize: 12,
+      h1: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 40,
+      },
+      h2: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 32,
+      },
+      h3: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 24,
+      },
+      h4: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 20,
+      },
+      h5: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 16,
+      },
+      h6: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 14,
+      },
+    },
   };
 };
 
@@ -94,7 +131,8 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState("dark");
+  const md = useSelector((state) => state.appState.value)
+  const [mode, setMode] = useState(md);
 
   const colorMode = useMemo(
     () => ({

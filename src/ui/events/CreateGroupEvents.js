@@ -70,10 +70,6 @@ const CreateGroupEvents = () => {
         });
 
     }, [user]);
-
-function makeItem(x){
-	return <option>{x}</option>
-};
 	
 	return (
 	<div>
@@ -118,7 +114,11 @@ function makeItem(x){
 						<Form.Label> Invite Groups: </Form.Label>
 						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
 							<option>Select Group</option>
-							{groups.map(makeItem(name))}
+							{groups.map((groups) => {
+								return(
+								<option>{groups.name}</option>
+								)
+							})}
 						</Form.Select>
 					</Form.Group>
 					<Form.Group>

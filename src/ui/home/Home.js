@@ -1,13 +1,7 @@
-import React from "react";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
-import { useUserAuth } from "../auth/UserAuthContext";
 import EventCarousel from "./EventCarousel";
-import { Calendar } from "../components/calendar";
+import { Calendar } from "../components/Calendar";
 
 const Home = () => {
-
-  const { user } = useUserAuth();
 
   return (
     <>
