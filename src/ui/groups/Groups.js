@@ -96,7 +96,7 @@ const Groups = () => {
                     </Tab>
                 </Tabs>
             </div>
-            <Link to="/CreateGroup">
+            <Link to="/creategroup">
                 <Button variant="secondary">
                     Create group
                 </Button>
