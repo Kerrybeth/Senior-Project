@@ -62,7 +62,7 @@ function App() {
       if (currentuser !== undefined && currentuser !== null) {
         // if (process.env.NODE_ENV === 'development') {
         //   connectAuthEmulator(auth, "http://localhost:9099");
-        // }
+        // } dd
         console.log("Auth", currentuser, currentuser.uid);
         if (rememberMe === "true") {
           localStorage.setItem('userToken', currentuser.uid);
