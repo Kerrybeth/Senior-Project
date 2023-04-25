@@ -106,7 +106,7 @@ const Sidebar = () => {
       </Dialog>
 
       <Typography onClick={handleClickOpen} variant="caption" display="block" gutterBottom sx={{ p: 2, textAlign: 'center', cursor: 'pointer' }} >
-        CalandarBoard Beta v1.0.0
+        CalendarBoard Beta v1.0.0
       </Typography>
     </Drawer>
   );

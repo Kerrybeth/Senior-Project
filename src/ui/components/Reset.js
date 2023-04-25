@@ -20,7 +20,7 @@ function Reset() {
   return (
     <Box mb="30px">
       <Typography variant="h1" sx={{ textAlign: "center", p: 1, m: 1 }}>
-        CalandarBoard
+        CalendarBoard
       </Typography>
       <Typography variant="h3" sx={{ textAlign: "center", p: 1, m: 1 }}> Reset Your Password</Typography>
       <Box display={"grid"}>

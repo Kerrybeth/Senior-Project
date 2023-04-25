@@ -26,7 +26,7 @@ const Error = () => {
 
         >
             <Typography variant="h1" style={{ color: 'red', margin: "20px" }}>
-                404, CalandarBoard broke down :(
+                404, CalendarBoard broke down :(
             </Typography>
 
             <Stack

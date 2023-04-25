@@ -17,7 +17,7 @@ function ErrorFallback({ error }) {
   return (
     <>
       <Card sx={{ m: 1, p: 2 }} elevation={1}>
-        <p>Oh no! Something went really wrong with CalandarBoard, here's what I know:</p>
+        <p>Oh no! Something went really wrong with CalendarBoard, here's what I know:</p>
         <pre style={{ color: 'red' }}>{error.message}</pre>
       </Card>
     </>

@@ -29,7 +29,7 @@ const OneItem = () => {
 }
 
 const Notifications = () => {
-    let title = "CalandarBoard";
+    let title = "CalendarBoard";
     const theme = useTheme();
 
     const chipSX = {
