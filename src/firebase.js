@@ -88,7 +88,7 @@ export function googleSignIn() {
 }
 
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+//const storage = getStorage(app);
 export const auth = getAuth(app);
 // firebase.setPersistence(auth, browserSessionPersistence);
 // auth.setPersistence(browserSessionPersistence);
