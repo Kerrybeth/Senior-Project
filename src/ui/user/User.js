@@ -13,23 +13,54 @@ const User = () => {
 		(state) => state.user
 	)
 	const [data, setData] = useState("");
+	const [timeRanges, setTimeRanges] = useState([]);
 
 	useEffect(() => {
 
-		if (user != null && user != undefined) {
-			const db = getDatabase();
-			const dataRef = ref(db, 'users/' + user.uid + '/profile');
+        const db = getDatabase();  
+        const dataRef = ref(db, 'users/' + user.uid + '/profile');
+		const dataRefAv = ref(db, 'users/' + user.uid + '/profile' + '/availability' + '/availability');
 
-			onValue(dataRef, (snapshot) => {
-				const data = snapshot.val() || '';
+        onValue(dataRef, (snapshot) => {
+			const data = snapshot.val();
+			if (data.name == null) {
+				let namey = "";
+				set(ref(db, 'users/' + user.uid + '/profile'), {
+					name: namey
+				});
+			} else if (data.bio == null) {
+				let bio = "";
+				set(ref(db, 'users/' + user.uid + '/profile'), {
+					bio: bio
+				});
+			} else {
 				setData(data);
-			});
-		}
-	}, []);
+			}
+        });
+
+		//data[0].whatever
+		onValue(dataRefAv, (snapshot) => {
+			const data = snapshot.val();
+			const dataArray = [];
+			const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+			for (let dayIndex in data) {
+				const dayOfWeek = daysOfWeek[dayIndex];
+				const { start, end } = data[dayIndex];
+				dataArray.push({
+					dayOfWeek,
+					start: start,
+					end: end
+				});
+			}
+			setTimeRanges(dataArray);
+		});
+
+    }, []);
 
 	return (
 		<div>
-			<Box component='button' style={{ minHeight: '150px', minWidth: '150px', position: 'fixed', top: '100px' }}>
+			<Box component='button' style={{ minHeight: '150px', minWidth: '150px', position: 'relative', top: '100px' }}>
 				<Image src="logo.svg" roundedCircle />
 			</Box>
 			<ListGroup style={{
@@ -48,9 +79,7 @@ const User = () => {
 					}}>
 						Name: {data.name}
 						<br />
-						<br />
 						Bio: {data.bio}
-						<br />
 						<br />
 					</Typography>
 				</ListGroup.Item>
@@ -64,12 +93,27 @@ const User = () => {
 					</Link>
 				</ListGroup.Item>
 			</ListGroup>
-			{/* <Box>
-				<Typography variant="h1" style={{ position: 'relative', top: '200px' }}>
+			<Box>
+				<Typography variant="h3" style={{ position: 'relative', top: '200px' }}>
 					Availability
+					<Link to="/AvailEdit">
+						<Button variant="contained" sx={{ maxHeight: '50px', }}>
+							<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
+								Edit
+							</Typography>
+						</Button>
+					</Link>
+					{timeRanges.map(({ dayOfWeek, start, end }) => (
+        			<div key={dayOfWeek}>
+          			<h2>{dayOfWeek}</h2>
+          			<p>Start time: {start}</p>
+          			<p>End time: {end}</p>
+					</div>
+      			))}
 				</Typography>
-			</Box> */}
+			</Box>
 		</div>
 	);
 }
+
 export default User; 

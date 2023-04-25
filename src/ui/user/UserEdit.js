@@ -21,7 +21,7 @@ const UserEdit = () => {
 	const [bio, setBio] = useState('');
 
 	function handleSubmit (event) {
-		console.log("test")
+		
 		event.preventDefault();
  
         const db = getDatabase();   
@@ -32,7 +32,7 @@ const UserEdit = () => {
 
 		setNamey('');
 		setBio('');
-		navigate("/User")
+		navigate("/User");
 	};
 
     return (

@@ -10,6 +10,7 @@ import Settings from "./ui/settings/Settings";
 import UpdateUser from "./updateUser/UpdateUser";
 import Notifications from "./ui/notifications/Notifications";
 import UserEdit from "./ui/user/UserEdit";
+import AvailEdit from "./ui/user/AvailEdit";
 import CreateGroup from "./ui/groups/CreateGroup";
 import CreateEvents from "./ui/events/CreateEvents";
 import CreateGroupEvents from "./ui/events/CreateGroupEvents";
@@ -116,6 +117,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/user" element={<User />} />
                   <Route path="/useredit" element={<UserEdit />} />
+                  <Route path="/availedit" element={<AvailEdit />} />
                   <Route path="/groups" element={<Groups />} />
                   <Route path="/creategroup" element={<CreateGroup />} />
                   <Route path="/events" element={<Events />} />
