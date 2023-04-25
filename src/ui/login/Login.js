@@ -27,7 +27,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(guest == false && sucess){
+    if(guest === false && sucess){
       navigate("/")
     }
     if (_rememberMe === "true") {
