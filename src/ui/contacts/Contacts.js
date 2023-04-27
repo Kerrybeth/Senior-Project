@@ -87,15 +87,15 @@ const Contacts = () => {
      * @returns listgroup of contacts
      */
     function ContactDisplay() {
-        // if (contacts == []) {
-        //     return (
-        //         <div>
-        //             <ListGroup.Item>
-        //                 You have no contacts! Click the button below to add one now.
-        //             </ListGroup.Item>
-        //         </div>
-        //     );
-        // } else {
+        if (contacts.length === 0) {
+            return (
+                <div>
+                    <ListGroup.Item>
+                        You have no contacts! Click the button below to add one now.
+                    </ListGroup.Item>
+                </div>
+            );
+        } else {
             return (
                 <div>
                     {contacts.map((em) => (
@@ -108,7 +108,7 @@ const Contacts = () => {
                     ))}
                 </div>
             );
-        //}
+        }
     }
 
     /**
