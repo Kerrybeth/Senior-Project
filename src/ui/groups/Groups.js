@@ -3,7 +3,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, child } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import '../../App.css';
@@ -17,9 +17,10 @@ const Groups = () => {
     // can't figure out another way to do it so this works for now
     let groupsTemp = [];
     let descsTemp = [];
+    let idtemp = [];
     const [groups, setGroups] = useState([]);
     const [descs, setDescs] = useState([]);
-    const [selectedGroup, setSelectedGroup] = useState(null);
+    const [groupID, setGroupID] = useState([]);
 
     useEffect(() => {
         // firebase things
@@ -32,26 +33,27 @@ const Groups = () => {
                     if (user.uid == childSnapshot.val().members[i]) {
                         let name = childSnapshot.val().name;
                         let desc = childSnapshot.val().desc;
+                        let groupid2 = childSnapshot.key;
 
+                        idtemp.push(groupid2);
                         groupsTemp.push(name);
                         descsTemp.push(desc);
                     }
                 }
             });
 
+            setGroupID(idtemp);
             setGroups(groupsTemp);
             setDescs(descsTemp);
             groupsTemp = [];
             descsTemp = [];
+            idtemp = [];
         });
 
-    }, [user]);
+    }, [user]);     
 
-    /**
-     * @returns a list of groups the current user is a part of, or a message if in no groups
-     */
     function GroupDisplay() {
-        if (groups == []) {
+        if (groups.length === 0) {
             return (
                 <ListGroup.Item>
                     <div>You aren't in any groups yet!</div>
@@ -61,16 +63,15 @@ const Groups = () => {
             return (
                 <div>
                     {groups.map((name, i) => (
-                        <ListGroup.Item key = {i} onClick={() => setSelectedGroup(i)}>
-                            <div>
-                                <div className="fw-bold">{name}</div>
-                                <div>{descs[i]}</div>
-                            </div>
+                        <ListGroup.Item key={i}>
+                            <Link to={`/groups/${groupID[i]}`}> {/* Link to the corresponding GroupPage */}
+                                <div>
+                                    <div className="fw-bold">{name}</div>
+                                    <div>{descs[i]}</div>
+                                </div>
+                            </Link>
                         </ListGroup.Item>
                     ))}
-                    {selectedGroup !== null && (
-                        <GroupPopup name = {groups[selectedGroup]} desc = {descs[selectedGroup]} />
-                    )}
                 </div>
             );
         }
