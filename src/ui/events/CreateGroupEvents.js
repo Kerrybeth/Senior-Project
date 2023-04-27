@@ -6,7 +6,7 @@ import ListGroup from 'react-bootstrap/Listgroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form';
-import { getDatabase, ref, set, update, push, onValue} from "firebase/database";
+import { getDatabase, ref, push, onValue} from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
 const CreateGroupEvents = () => {
@@ -28,12 +28,11 @@ const CreateGroupEvents = () => {
 	const user = getAuth().currentUser;  
     const db = getDatabase(); 
 	
-	function submitForm(event){ /*Create an event under the group db.*/
-		console.log("test");
-		/*Do not use form until this is filled out*/
+	function submitForm(event){ 
 		for (let i = 0; i <id.length; i++) {
-			if (groups[i] == invite[0]){
-				let groupId = id[i];
+			let inviteConcat = invite.toString();
+			if (groups[i] == inviteConcat){
+				groupId = id[i];
 			}
 		}
 		if (groupId != null){
@@ -80,7 +79,6 @@ const CreateGroupEvents = () => {
             groupsTemp = [];
 			setId(idTemp);
 			idTemp = [];
-			
         });
 
     }, [user]);
@@ -130,7 +128,7 @@ const CreateGroupEvents = () => {
 							<option>Select Group</option>
 							{groups.map((groups) => {
 								return(
-								<option>{groups.name}</option>
+								<option>{groups}</option>
 								)
 							})}
 						</Form.Select>

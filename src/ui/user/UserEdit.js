@@ -8,18 +8,22 @@ import Button from 'react-bootstrap/Button';
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from 'firebase/auth';
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const UserEdit = () => {
+
+	const { user, error, sucess } = useSelector(
+		(state) => state.user
+	)
 
 	const navigate = useNavigate();
 	const [namey, setNamey] = useState('');
 	const [bio, setBio] = useState('');
 
 	function handleSubmit (event) {
-		console.log("test")
-		event.preventDefault();
 		
-		const user = getAuth().currentUser;  
+		event.preventDefault();
+ 
         const db = getDatabase();   
         set(ref(db, 'users/' + user.uid + '/profile'), {
             name: namey,
@@ -28,7 +32,7 @@ const UserEdit = () => {
 
 		setNamey('');
 		setBio('');
-		navigate("/User")
+		navigate("/User");
 	};
 
     return (

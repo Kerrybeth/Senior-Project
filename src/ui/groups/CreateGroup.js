@@ -11,7 +11,7 @@ import { useState } from "react";
 const CreateGroup = () => {
 
 	const { user, error, sucess } = useSelector(
-		(state) => state.isUserLoggedIn
+		(state) => state.user
 	)
 	const navigate = useNavigate();
 

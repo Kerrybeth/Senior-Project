@@ -24,7 +24,6 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 	
 	
 	function submitForm(event){ 
-		console.log("test");
 		const user = getAuth().currentUser;  
         const db = getDatabase(); 
 		
