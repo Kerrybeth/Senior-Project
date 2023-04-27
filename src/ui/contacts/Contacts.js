@@ -1,17 +1,263 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 import Offcanvas from 'react-bootstrap/Offcanvas'
+import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
+import { getDatabase, ref, set, update, push, onValue, remove } from "firebase/database";
+
 import '../../App.css';
+import { getAuth } from 'firebase/auth';
 
-function Contacts() {
+const Contacts = () => {
+    // offcanvas stuff
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    // auth
+    const user = getAuth().currentUser;
+
+    // storage for db results
+    let contactsTemp = [];
+    let emailsTemp = [];
+    let requestsTemp = [];
+    const [contacts, setContacts] = useState([]);
+    const [emails, setEmails] = useState([]);
+    const [requests, setRequests] = useState([]);
+
+    // db
+    const db = getDatabase();
+
+    /**
+     * update list of contacts with list in db
+     */
+    useEffect(() => {
+        // pulling contacts
+        onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let name = childSnapshot.val().name;
+                contactsTemp.push(name);
+            });
+    
+            setContacts(contactsTemp);
+            contactsTemp = [];
+        });
+
+        // pulling requests
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child('type').val() == 'req') {
+                    let email = findEmail(childSnapshot.child('from').val());
+                    requestsTemp.push(email);
+                }
+            });
+    
+            setRequests(requestsTemp);
+            requestsTemp = [];
+        });
+    }, [user]);
+
+    /**
+     * 
+     * @param {*} uid 
+     * @returns email associated with given uid
+     */
+    function findEmail(uid) {
+        let theirEmail;
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (uid == childSnapshot.key) {
+                    theirEmail = childSnapshot.child('profile').child('email').val();
+                }
+            });
+        });
+
+        return theirEmail;
+    }
+
+    /**
+     * @returns listgroup of contacts
+     */
+    function ContactDisplay() {
+        // if (contacts == []) {
+        //     return (
+        //         <div>
+        //             <ListGroup.Item>
+        //                 You have no contacts! Click the button below to add one now.
+        //             </ListGroup.Item>
+        //         </div>
+        //     );
+        // } else {
+            return (
+                <div>
+                    {contacts.map((em) => (
+                        <ListGroup.Item>
+                        <div style={{padding:5}}>
+                            <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                            {' '}{em}
+                        </div>
+                        </ListGroup.Item>
+                    ))}
+                </div>
+            );
+        //}
+    }
+
+    /**
+     * deals with the search functionality of the add contact area
+     * pulls from database a user email when query matches data in db
+     * @param {*} event 
+     */
+    const handleSearchInputChange = (event) => {
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let email = childSnapshot.child("profile").child("email").val();
+                if (email == event.target.value.toLowerCase()) {
+                    emailsTemp.push(email);
+                }
+            });
+
+            setEmails(emailsTemp);
+            emailsTemp = [];
+        });
+    }
+
+    /**
+     * 
+     * @returns a listgroup of matching emails (technically should only be one in the current configuration)
+     */
+    function DisplayResults() {
+        return (
+            <div>
+                {emails.map((em) => (
+                    <ListGroup.Item>
+                    <div style={{padding:5}}>
+                        <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                        {' '}{em}
+                        <Button style={{float:'right', marginTop:-6}} onClick={() => addContact(em)}>Add</Button>
+                    </div>
+                    </ListGroup.Item>
+                ))}
+            </div>
+        );
+    }
+
+    /**
+     * ability to send request to other user 
+     * @param {*} em - email to send request to
+     */
+    function addContact(em) {
+        let theirUid = findUid(em);
+        if (reqCheck(theirUid) && theirUid != null) {
+            push(ref(db, 'users/' + theirUid + '/notifications'), {
+                type:'req',
+                from:user.uid
+            }); 
+        } 
+    }
+
+    /**
+     * @param {*} em 
+     * @returns uid of user associated with email
+     */
+    function findUid(em) {
+        let theirUid;
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let email = childSnapshot.child("profile").child("email").val();
+                if (em == email) {
+                    theirUid = childSnapshot.key;
+                }
+            });
+        });
+
+        return theirUid;
+    }
+    
+    /**
+     * @param {*} uid 
+     * @returns false if request already exists in database, true otherwise
+     */
+    function reqCheck(uid) {
+        let req = true;
+        onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == user.uid) {
+                    req = false;
+                }
+            });
+        });
+
+        return req;
+    }
+    
+    /**
+     * accepts contact request
+     * @param {} req - email of sending user
+     */
+    function acceptRequest(req) {
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == findUid(req)) {
+                    // adds sendee to your contacts list
+                    push(ref(db, 'users/' + user.uid + '/contacts'), {
+                        name: req,
+                        uid: findUid(req)
+                    });
+
+                    // adds yourself to sendee's contacts list
+                    push(ref(db, 'users/' + findUid(req) + '/contacts'), {
+                        name: findEmail(user.uid),
+                        uid: user.uid
+                    }); 
+
+                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+                }
+            });
+        });
+    }
+
+    /**
+     * denies contact request
+     * @param {*} req - email fo sending user
+     */
+    function denyRequest(req) {
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == findUid(req)) {
+                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+                }
+            });
+        });
+    }
+
+    /**
+     * 
+     * @returns html for every contact request you currently have
+     */
+    function DisplayRequests() {
+        return (
+            <div>
+                {requests.map((req) => (
+                    <ListGroup.Item>
+                    <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />{req}</div>
+                    <div style={{padding:5}}>
+                        {' '}
+                        <Button variant="success" onClick={() => acceptRequest(req)}>Accept</Button>{' '} <Button variant="danger" onClick={() => denyRequest(req)}>Deny</Button>{' '}
+                    </div>
+                    </ListGroup.Item>
+                ))}
+            </div>
+        );
+    }
+
+    // const filteredData = data.filter((item) => {
+    //     return item.name.toLowercase.includes(searchQuery.toLowerCase());
+    // });
 
     return (
     <div className="pageLight">
@@ -23,19 +269,12 @@ function Contacts() {
         >
             <Tab eventKey="first" title="Contacts">
             <ListGroup>
-                <ListGroup.Item>
-                <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" /> Logan Tiraboschi</div>
-                </ListGroup.Item>
+                <ContactDisplay />
             </ListGroup>
             </Tab>
             <Tab eventKey="second" title="Invites">
             <ListGroup>
-                <ListGroup.Item>
-                    <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" /> Kerrybeth Gorman has added you as a contact</div>
-                    <div style={{ padding:5 }}>
-                        <Button variant="success">Accept</Button>{' '} <Button variant="danger">Deny</Button>{' '}
-                    </div>
-                </ListGroup.Item>
+                <DisplayRequests />
             </ListGroup>
             </Tab>
         </Tabs>
@@ -48,7 +287,10 @@ function Contacts() {
             </Offcanvas.Header>
             <Offcanvas.Body>
                 {/* Query the users database to find contact based on search input */}
-                <input type="text" placeholder="Search" />
+                <input type="text" placeholder="Search" style={{marginTop:20}}onChange={handleSearchInputChange} />
+                <ListGroup style={{marginTop:15}}>
+                    <DisplayResults />
+                </ListGroup>
             </Offcanvas.Body>
         </Offcanvas>
         </>
