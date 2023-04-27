@@ -6,8 +6,9 @@ import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
+//import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
 import { getDatabase, ref, set, update, push, onValue, remove } from "firebase/database";
+import { useSelector } from "react-redux";
 
 import '../../App.css';
 import { getAuth } from 'firebase/auth';
@@ -19,7 +20,10 @@ const Contacts = () => {
     const handleShow = () => setShow(true);
 
     // auth
-    const user = getAuth().currentUser;
+    //const user = getAuth().currentUser;
+    const { user, error, sucess } = useSelector(
+		(state) => state.user
+	)
 
     // storage for db results
     let contactsTemp = [];
