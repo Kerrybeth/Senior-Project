@@ -10,7 +10,7 @@ const Home = () => {
 	)
 
   const db = getDatabase();   
-        update(ref(db, 'users/' + user.uid + '/profile'), {
+        set(ref(db, 'users/' + user.uid + '/profile'), {
             email: user.email
         });
 
