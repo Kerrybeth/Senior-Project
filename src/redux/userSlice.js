@@ -37,7 +37,7 @@ export const userSlice = createSlice({
         },
         guestUserLoggedOut: (state) => {
             state.guest = false
-            state.sucess = false 
+            state.sucess = false
         },
         userLoggedIn: (state, { payload }) => {
             state.guest = false
