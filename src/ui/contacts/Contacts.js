@@ -61,6 +61,11 @@ const Contacts = () => {
         });
     }, [user]);
 
+    /**
+     * 
+     * @param {*} uid 
+     * @returns email associated with given uid
+     */
     function findEmail(uid) {
         let theirEmail;
         onValue(ref(db, 'users/'), (snapshot) => {
@@ -190,6 +195,10 @@ const Contacts = () => {
         return req;
     }
     
+    /**
+     * accepts contact request
+     * @param {} req - email of sending user
+     */
     function acceptRequest(req) {
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
@@ -212,6 +221,10 @@ const Contacts = () => {
         });
     }
 
+    /**
+     * denies contact request
+     * @param {*} req - email fo sending user
+     */
     function denyRequest(req) {
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
@@ -222,6 +235,10 @@ const Contacts = () => {
         });
     }
 
+    /**
+     * 
+     * @returns html for every contact request you currently have
+     */
     function DisplayRequests() {
         return (
             <div>
