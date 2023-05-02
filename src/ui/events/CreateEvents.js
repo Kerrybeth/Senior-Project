@@ -5,9 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ListGroup from 'react-bootstrap/Listgroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
+import { getDatabase, ref, push, onValue } from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
 const CreateEvents = () => { {/* If we have time, getting form validation to work would be nice.*/}
@@ -17,19 +16,18 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 	const [allday, setAllday] = useState(false);
 	const [start, setStart] = useState(null);
 	const [end, setEnd] = useState(null);
-	const [users, setUsers] = useState([]);
-	let usersTemp = [];
-	let idTemp = [];
-	let eventId = [];
-	let invitee;
-	const [id, setId] = useState([]);
 	const [repeatlevel, setRepeatlevel] = useState('Does not repeat');
 	const [invite, setInvite] = useState('Select People');
 	const [location, setLocation] = useState(null);
 	const {register, handleSubmit} = useForm();
 	const user = getAuth().currentUser;  
     const db = getDatabase(); 
-	
+	const [users, setUsers] = useState([]);
+	const [id, setId] = useState([]);
+	let usersTemp = [];
+	let idTemp = [];
+	let eventId = [];
+	let invitee;
 	
 	function submitForm(event){ 
 		for (let i = 0; i <id.length; i++) {
@@ -66,7 +64,10 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 		sendInvite(invitee);
 		navigate("/Events");
 	};
-	
+	/**
+	* sends event invite to chosen member from contacts list
+	* @param {*} invitee - the user id to send invite to.
+	*/
 	function sendInvite(invitee) {
 			if (reqCheck(invitee) && invitee != null) {
 				push(ref(db, 'users/' + invitee + '/notifications'), {
@@ -77,6 +78,10 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 			} 
     }
 	
+	/**
+     * @param {*} uid 
+     * @returns false if request already exists in database, true otherwise
+     */
 	function reqCheck(uid) {
         let req = true;
         onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
