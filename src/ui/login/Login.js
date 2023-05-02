@@ -53,6 +53,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(email.length === 0 || password.length === 0){
+
+    }else{
+      
+    }
     setError("");
     logIn(email, password).then((res) => {
       if (res) {
