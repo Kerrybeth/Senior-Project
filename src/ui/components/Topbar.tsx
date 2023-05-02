@@ -30,6 +30,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import userSlice from "../../redux/userSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import { guestUserLoggedOut } from "../../redux/userSlice";
+import '../../App.css';
 
 const Topbar = () => {
   const cookies = new Cookies();
@@ -84,6 +85,7 @@ const Topbar = () => {
       }}
 
     >
+      <div className="pageLightLeft">
       <Toolbar>
         <IconButton
           color="inherit"
@@ -103,7 +105,7 @@ const Topbar = () => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ color: "green", ml: "5px" }}
+            sx={{ color: "black", ml: "5px" }}
           >
             {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
 
@@ -115,7 +117,7 @@ const Topbar = () => {
           <Button component={Link} to="/" sx={{ color: 'black' }}>
             Home
           </Button>
-          {sucess == true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+          {sucess == true ? (<Button sx={{ color: 'white' }} onClick={handleLogout}>
             Logout
           </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
             Login
@@ -132,6 +134,7 @@ const Topbar = () => {
           </IconButton>
         </Box>
       </Toolbar>
+      </div>
     </AppBar >
   );
 };

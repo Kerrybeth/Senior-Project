@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { getDatabase, ref, set, update, push } from "firebase/database";
+import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
 const CreateEvents = () => { {/* If we have time, getting form validation to work would be nice.*/}
@@ -17,16 +17,28 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 	const [allday, setAllday] = useState(false);
 	const [start, setStart] = useState(null);
 	const [end, setEnd] = useState(null);
+	const [users, setUsers] = useState([]);
+	let usersTemp = [];
+	let idTemp = [];
+	let eventId = [];
+	let invitee;
+	const [id, setId] = useState([]);
 	const [repeatlevel, setRepeatlevel] = useState('Does not repeat');
 	const [invite, setInvite] = useState('Select People');
 	const [location, setLocation] = useState(null);
 	const {register, handleSubmit} = useForm();
+	const user = getAuth().currentUser;  
+    const db = getDatabase(); 
 	
 	
 	function submitForm(event){ 
-		const user = getAuth().currentUser;  
-        const db = getDatabase(); 
-		
+		for (let i = 0; i <id.length; i++) {
+			let inviteConcat = invite.toString();
+			console.log(users[i]);
+			if(users[i] = inviteConcat){
+				invitee = id[i];
+			}
+		}
 		push(ref(db, 'users/' + user.uid + '/events'), {
             title: title,
 			allday: allday,
@@ -36,7 +48,11 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 			invite: invite,
 			location: location
         });
-		
+		onValue(ref(db, 'users/' + user.uid + '/events'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                eventId = childSnapshot.key;
+            });
+		});
 		setEvents('');
 		setTitle('');
 		setAllday('');
@@ -45,8 +61,50 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 		setRepeatlevel('');
 		setInvite('');
 		setLocation('');
+		console.log(invitee);
+		console.log(eventId);
+		sendInvite(invitee);
 		navigate("/Events");
 	};
+	
+	function sendInvite(invitee) {
+			if (reqCheck(invitee) && invitee != null) {
+				push(ref(db, 'users/' + invitee + '/notifications'), {
+					type:'eventreq',
+					event: eventId,
+					from:user.uid
+				}); 
+			} 
+    }
+	
+	function reqCheck(uid) {
+        let req = true;
+        onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'eventreq' && childSnapshot.child("from").val() == user.uid) {
+                    req = false;
+                }
+            });
+        });
+
+        return req;
+    }
+	
+	useEffect(() => {
+		 onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let name = childSnapshot.val().name;
+				let id = childSnapshot.val().uid;
+                usersTemp.push(name);
+				idTemp.push(id);
+            });
+    
+            setUsers(usersTemp);
+            usersTemp = [];
+			setId(idTemp);
+			idTemp = [];
+        });
+	}, [user]);
 	
 	return (
 	<div>
@@ -99,6 +157,11 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 						<Form.Label> Invite People: </Form.Label>
 						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
 							<option>Select People</option>
+							{users.map((users) => {
+								return (
+								<option>{users}</option>
+								)
+							})}
 						</Form.Select>
 					</Form.Group>
 					<Form.Group>

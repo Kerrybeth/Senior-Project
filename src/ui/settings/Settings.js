@@ -48,7 +48,7 @@ const Settings = () => {
           <Tabs>
             <Tab eventKey="first" title="Account Settings">
               <div style={{padding:10}}>
-                  <Button variant="primary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
+                  <Button variant="secondary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
                   <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
               </div>
             </Tab>

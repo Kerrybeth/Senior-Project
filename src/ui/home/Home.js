@@ -1,7 +1,18 @@
 import EventCarousel from "./EventCarousel";
 import { Calendar } from "../components/Calendar";
+import { getDatabase, ref, onValue, set, update } from "firebase/database";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+
+  const { user, error, sucess } = useSelector(
+		(state) => state.user
+	)
+
+  const db = getDatabase();   
+        update(ref(db, 'users/' + user.uid + '/profile'), {
+            email: user.email
+        });
 
   return (
     <>

@@ -5,7 +5,7 @@ import ListGroup from 'react-bootstrap/Listgroup';
 import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, update } from "firebase/database";
 import { getAuth } from 'firebase/auth';
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ const UserEdit = () => {
 		event.preventDefault();
  
         const db = getDatabase();   
-        set(ref(db, 'users/' + user.uid + '/profile'), {
+        update(ref(db, 'users/' + user.uid + '/profile'), {
             name: namey,
             bio: bio
         });

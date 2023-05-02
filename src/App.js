@@ -1,4 +1,4 @@
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./ui/home/Home";
 import Error from "./ui/components/Error";
@@ -32,6 +32,7 @@ import Reset from "./ui/components/Reset";
 import { Outlet } from "react-router-dom";
 import Signup from "./ui/login/Signup";
 import Login from "./ui/login/Login";
+import GroupsPage from "./ui/groups/GroupsPage";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -127,6 +128,7 @@ function App() {
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/updateUser" element={<UpdateUser />} />
                   <Route path="/notifications" element={<Notifications />} />
+                  <Route path="/groups/:groupID" element={<GroupsPage />} />
                 </Route>
               </Routes>
             </Box>
