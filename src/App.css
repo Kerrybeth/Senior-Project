@@ -73,6 +73,12 @@
   padding-bottom:2%;
 }
 
+#profilepic {
+  width:150px;
+  height:150px;
+  object-fit: cover;
+}
+
 .carousel {
   width:75vw;
   height:100%;
