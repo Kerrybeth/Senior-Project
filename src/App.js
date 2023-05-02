@@ -34,6 +34,7 @@ import Signup from "./ui/login/Signup";
 import Login from "./ui/login/Login";
 import GroupsPage from "./ui/groups/GroupsPage";
 import UserPage from "./ui/user/UserPage";
+import EventPage from "./ui/events/EventPage";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -131,6 +132,7 @@ function App() {
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/groups/:groupID" element={<GroupsPage />} />
                   <Route path="/user/:userID" element={<UserPage />} />
+                  <Route path="/event/:eventID" element={<EventPage />} />
                 </Route>
               </Routes>
             </Box>

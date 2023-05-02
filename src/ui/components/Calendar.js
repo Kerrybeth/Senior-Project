@@ -7,15 +7,19 @@ import interactionPlugin from '@fullcalendar/interaction';
 import '../../App.css';
 import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useSelector } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
 
 export const Calendar = () => {
     const { user, error, sucess } = useSelector(
         (state) => state.user
-      )
+      );
 
+    const navigate = useNavigate();
     // local event storage
     let eventsTemp = [];
     const [events, setEvents] = useState([]);
+    let eventidTemp = [];
+    const [eventid, setEventID] = useState([]);
 
     useEffect(() => {
 
@@ -25,33 +29,44 @@ export const Calendar = () => {
 
         // populate array with event information, called every time the db updates
         if (user != null) {
+            let idval = 0;
             onValue(dataRef, (snapshot) => {
                 snapshot.forEach(childSnapshot => {
                     let title = childSnapshot.val().title || '';
                     let start = childSnapshot.val().start;
                     let end = childSnapshot.val().end;
+                    let evId = childSnapshot.key;
 
-                    eventsTemp.push({ "title": title, "start": start, "end": end });
+                    eventsTemp.push({ "title": title, "start": start, "end": end, "id": idval});
+                    eventidTemp.push(evId);
+                    idval++;
                 });
 
+                setEventID(eventidTemp);
                 setEvents(eventsTemp);
                 eventsTemp = [];
+                eventidTemp = [];
             });
         }
     }, [user]);
 
-    const handleDateClick = (arg) => {
-        const db = getDatabase();
-
-        // push event into db
-        if (user != null) {
-            push(ref(db, 'users/' + user.uid + '/events'), {
-                title: 'test',
-                start: arg.dateStr,
-                end: '2023-03-10'
-            });
-        }
+    const handleEventClick = (arg) => {
+        navigate("/event/" + eventid[arg.event.id]);
+        //<Link to={`/event/${eventid[arg.event.id]}`}></Link>
     }
+
+    // const handleDateClick = (arg) => {
+    //     const db = getDatabase();
+
+    //     // push event into db
+    //     if (user != null) {
+    //         push(ref(db, 'users/' + user.uid + '/events'), {
+    //             title: 'test',
+    //             start: arg.dateStr,
+    //             end: '2023-03-10'
+    //         });
+    //     }
+    // }
 
     // function renderEventContent (eventInfo) {
     //     return (
@@ -71,9 +86,10 @@ export const Calendar = () => {
                 right: "dayGridMonth,timeGridWeek,timeGridDay"
             }}
             initialView="dayGridMonth"
-            dateClick={handleDateClick}
+            //dateClick={handleDateClick}
             editable={true}
             selectable
+            eventClick={handleEventClick}
             // eventContent={renderEventContent}
             events={events}
         />
