@@ -9,6 +9,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 //import { useUserAuth, userAuthContext } from '../auth/UserAuthContext';
 import { getDatabase, ref, set, update, push, onValue, remove } from "firebase/database";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import '../../App.css';
 import { getAuth } from 'firebase/auth';
@@ -29,7 +30,9 @@ const Contacts = () => {
     let contactsTemp = [];
     let emailsTemp = [];
     let requestsTemp = [];
+    let uidTemp = [];
     const [contacts, setContacts] = useState([]);
+    const [uid, setUid] = useState([]);
     const [emails, setEmails] = useState([]);
     const [requests, setRequests] = useState([]);
 
@@ -44,11 +47,15 @@ const Contacts = () => {
         onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
                 let name = childSnapshot.val().name;
+                let uid = childSnapshot.val().uid;
                 contactsTemp.push(name);
+                uidTemp.push(uid);
             });
-    
+            
+            setUid(uidTemp);
             setContacts(contactsTemp);
             contactsTemp = [];
+            uidTemp = [];
         });
 
         // pulling requests
@@ -98,12 +105,14 @@ const Contacts = () => {
         } else {
             return (
                 <div>
-                    {contacts.map((em) => (
+                    {contacts.map((em, i) => (
                         <ListGroup.Item>
+                            <Link to={`/user/${uid[i]}`}> {/* Link to the corresponding userpage */}
                         <div style={{padding:5}}>
                             <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
                             {' '}{em}
                         </div>
+                        </Link>
                         </ListGroup.Item>
                     ))}
                 </div>
