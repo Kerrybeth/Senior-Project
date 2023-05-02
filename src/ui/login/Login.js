@@ -53,20 +53,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(email.length === 0 || password.length === 0){
-
-    }else{
-      
+    if (email.length === 0 || password.length === 0) {
+      setError("Enter a valid email or password!");
+    } else {
+      logIn(email, password).then((res) => {
+        if (res) {
+          dispatch(userLoggedIn(res.user));
+          navigate("/");
+        } else {
+          setError(res.error);
+        }
+      })
     }
-    setError("");
-    logIn(email, password).then((res) => {
-      if (res) {
-        dispatch(userLoggedIn(res.user));
-        navigate("/");
-      } else {
-        setError(res.error);
-      }
-    })
   };
 
   const handleGoogleSignIn = async (e) => {

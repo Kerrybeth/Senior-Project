@@ -12,13 +12,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 function ErrorFallback({ error }) {
-
+  const refresh = () => window.location.reload(true)
 
   return (
     <>
       <Card sx={{ m: 1, p: 2 }} elevation={1}>
         <p>Oh no! Something went really wrong with CalendarBoard, here's what I know:</p>
         <pre style={{ color: 'red' }}>{error.message}</pre>
+        <button onClick={refresh}>Refresh</button>
       </Card>
     </>
   )

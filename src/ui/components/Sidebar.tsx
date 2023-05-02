@@ -54,7 +54,7 @@ const Sidebar = () => {
           width: sizeConfigs.sidebar.width,
           boxSizing: "border-box",
           borderRight: "0px",
-          backgroundColor: theme.palette.mode === 'dark' ? "#323639" : "#233044",
+          backgroundColor: theme.palette.mode === 'dark' ? "#323639" : "#667798",
           color: colorConfigs.sidebar.color,
         },
         pointerEvents: guest == true ? "none" : "unset"
@@ -98,7 +98,7 @@ const Sidebar = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose2}>Source code</Button>
+          <Button sx={{}} onClick={handleClose2}>Source code</Button>
           <Button onClick={handleClose} autoFocus>
             Okay
           </Button>

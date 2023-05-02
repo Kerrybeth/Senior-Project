@@ -101,10 +101,9 @@ function App() {
               component="main"
               sx={{
                 flexGrow: 1,
-                p: 1,
                 width: `calc(100% - ${sizeConfigs.sidebar.width})`,
                 minHeight: "100vh",
-                backgroundColor: colors.main[100]
+                backgroundColor: colors.main[900]
               }}
             >
               <Toolbar />
