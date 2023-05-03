@@ -105,7 +105,7 @@ const Topbar = () => {
           <Typography
             variant="h4"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'flex', md: 'block' } }}
           >
             CalendarBoard
             <Typography

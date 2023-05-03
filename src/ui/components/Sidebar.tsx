@@ -16,6 +16,176 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
 import { useSelector } from "react-redux";
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { IconButton } from '@mui/material';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
+function AuthorsList() {
+  return (
+    <List sx={{ width: '100%', p: 1, m: 1}}>
+      {/* first card */}
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </ListItemAvatar>
+
+        <ListItemText
+          primary="Chris - "
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                I'll be in your neighborhood doing errands this…
+              </Typography>
+            </React.Fragment>
+
+          }
+        />
+
+        <IconButton onClick={() => true}>
+          <GitHubIcon />
+        </IconButton>
+        <IconButton onClick={() => true}>
+          <LinkedInIcon />
+        </IconButton>
+      </ListItem>
+
+      <Divider variant="inset" component="li" />
+
+      {/* another card */}
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+        </ListItemAvatar>
+
+        <ListItemText
+          primary="David - "
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                I'll be in your neighborhood doing errands this…
+              </Typography>
+            </React.Fragment>
+
+          }
+        />
+        <IconButton onClick={() => true}>
+          <GitHubIcon />
+        </IconButton>
+        <IconButton onClick={() => true}>
+          <LinkedInIcon />
+        </IconButton>
+      </ListItem>
+
+      <Divider variant="inset" component="li" />
+
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+        </ListItemAvatar>
+
+        <ListItemText
+          primary="Logan - "
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                I'll be in your neighborhood doing errands this…
+              </Typography>
+            </React.Fragment>
+
+          }
+        />
+        <IconButton onClick={() => true}>
+          <GitHubIcon />
+        </IconButton>
+        <IconButton onClick={() => true}>
+          <LinkedInIcon />
+        </IconButton>
+      </ListItem>
+
+      <Divider variant="inset" component="li" />
+
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </ListItemAvatar>
+
+        <ListItemText
+          primary="KarryBeth - "
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                I'll be in your neighborhood doing errands this…
+              </Typography>
+            </React.Fragment>
+
+          }
+        />
+        <IconButton onClick={() => true}>
+          <GitHubIcon />
+        </IconButton>
+        <IconButton onClick={() => true}>
+          <LinkedInIcon />
+        </IconButton>
+      </ListItem>
+
+      <Divider variant="inset" component="li" />
+
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </ListItemAvatar>
+
+        <ListItemText
+          primary="Stephane Katende - Software Engineer"
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                I like doing a lot of things, given I have the energy :)
+              </Typography>
+            </React.Fragment>
+
+          }
+        />
+        <IconButton onClick={() => true}>
+          <GitHubIcon />
+        </IconButton>
+        <IconButton onClick={() => true}>
+          <LinkedInIcon />
+        </IconButton>
+      </ListItem>
+
+    </List>
+  );
+}
 
 const Sidebar = () => {
   const { user, guest } = useSelector(
@@ -48,7 +218,7 @@ const Sidebar = () => {
     <Drawer
       variant="permanent"
       sx={{
-        display: {xs: "none"},
+        display: { xs: "none", md: "block" },
         width: sizeConfigs.sidebar.width,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
@@ -89,16 +259,17 @@ const Sidebar = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle align={"center"} id="alert-dialog-title">
           {"About"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            This web app was made with a smile by Logan, David, Stephane, Kerrybeth, and Chris. Please report
+            Here are the awesome people that dedicated their time to put this together! Please report
             any issues, and we hope it provided some value to you!
           </DialogContentText>
+          <AuthorsList />
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ alignContent: "center", color: colors.main[400] }}>
           <Button sx={{}} onClick={handleClose2}>Source code</Button>
           <Button onClick={handleClose} autoFocus>
             Okay
