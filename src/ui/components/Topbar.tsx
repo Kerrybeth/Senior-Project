@@ -31,11 +31,13 @@ import userSlice from "../../redux/userSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import { guestUserLoggedOut } from "../../redux/userSlice";
 import '../../App.css';
+import { useMediaQuery } from "@mui/material";
 
 const Topbar = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const theme = useTheme();
+  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
@@ -71,12 +73,15 @@ const Topbar = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+
+
+
   return (
     <AppBar
       position="fixed"
       elevation={3}
       sx={{
-        width: `calc(100% - ${sizeConfigs.sidebar.width})`,
+        width: matchesXs ? `calc(100% - ${sizeConfigs.sidebar.width})` : `100%` ,
         height: '80px',
         ml: sizeConfigs.sidebar.width,
         marginBottom: 1,
@@ -87,54 +92,54 @@ const Topbar = () => {
 
     >
       <div className="pageLightLeft">
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          variant="h4"
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-        >
-          CalendarBoard
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ color: "black", ml: "5px" }}
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
-
-          </Typography>
-        </Typography>
-
-        {/* home, logout, icons */}
-        <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
-          <Button component={Link} to="/" sx={{ color: 'black' }}>
-            Home
-          </Button>
-          {sucess == true ? (<Button sx={{ color: 'white' }} onClick={handleLogout}>
-            Logout
-          </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
-            Login
-          </Button>)}
-
-          <PopupNotification />
-
-          <IconButton onClick={colorMode.toggleColorMode} >
-            {theme.palette.mode === "dark" ? (
-              <DarkModeOutlinedIcon sx={{ color: colors.yellow }} />
-            ) : (
-              <LightModeOutlinedIcon />
-            )}
+            <MenuIcon />
           </IconButton>
-        </Box>
-      </Toolbar>
+          <Typography
+            variant="h4"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            CalendarBoard
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ color: "black", ml: "5px" }}
+            >
+              {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
+
+            </Typography>
+          </Typography>
+
+          {/* home, logout, icons */}
+          <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
+            <Button component={Link} to="/" sx={{ color: 'black' }}>
+              Home
+            </Button>
+            {sucess == true ? (<Button sx={{ color: 'white' }} onClick={handleLogout}>
+              Logout
+            </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
+              Login
+            </Button>)}
+
+            <PopupNotification />
+
+            <IconButton onClick={colorMode.toggleColorMode} >
+              {theme.palette.mode === "dark" ? (
+                <DarkModeOutlinedIcon sx={{ color: colors.yellow }} />
+              ) : (
+                <LightModeOutlinedIcon />
+              )}
+            </IconButton>
+          </Box>
+        </Toolbar>
       </div>
     </AppBar >
   );

@@ -48,6 +48,7 @@ const Sidebar = () => {
     <Drawer
       variant="permanent"
       sx={{
+        display: {xs: "none"},
         width: sizeConfigs.sidebar.width,
         flexShrink: 0,
         "& .MuiDrawer-paper": {

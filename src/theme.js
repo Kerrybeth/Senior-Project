@@ -2,11 +2,13 @@ import { createTheme } from '@mui/material/styles';
 import { createContext, useState, useMemo } from "react";
 import { useSelector } from 'react-redux';
 
-//our custome colors, and different shades of it, use figma 
+//our custome colors, and different shades of it, use figma to better get a picture 
+//here you define the colors you want to use under a dark or light theme with hex colros 
 export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
-      //main (used for overall background of the site) is set to greyish?
+      //main[900] (used for overall background of the site) is set to greyish to 
+      //indicate a "dark" theme and used by the overall background of the site 
       main: {
         100: "#fdfdfd",
         200: "#fbfbfb",
@@ -31,11 +33,12 @@ export const tokens = (mode) => ({
       },
     }
     :
-    //same colors under light mode, i.e main now is white to indicate light background 
+    //same colors under light mode, i.e main[900] now is white to indicate light background 
     {
       main: {
         100: "#f5f5f5",
-        900: "f5f5f5"
+        400: "#939393",
+        900: "#f5f5f5"
       },
       yellow: {
         100: "#FCDB3A",
