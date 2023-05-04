@@ -1,19 +1,9 @@
 import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
-import { Button, Stack, Paper } from "@mui/material";
+import { Button, Stack} from "@mui/material";
 import Divider from '@mui/material/Divider';
-import { styled } from "@mui/material/styles";
 import { Link } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home';
-
-const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    height: 50,
-    width: 120,
-    lineHeight: '60px',
-}));
 
 const Error = () => {
     return (

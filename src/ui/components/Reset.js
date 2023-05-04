@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Typography, Box, useTheme, Button } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 
 function Reset() {
   const [email, setEmail] = useState("");
-  const { user, error, loading, guest } = useSelector(
-    (state) => state.user
-  )
 
   const navigate = useNavigate();
 
@@ -32,7 +27,7 @@ function Reset() {
           placeholder="E-mail Address"
           style={{width: "75%", margin: 3}}
         />
-        <Button variant="contained" color="success" size="medium" sx={{ textAlign: "center", p: 1, width: "70%" }} onClick={() => navigate("/signup")}> Send password reset email</Button>
+        <Button variant="contained" color="success" size="medium" sx={{ textAlign: "center", p: 1, width: "70%" }} onClick={() => sendPasswordReset()}> Send password reset email</Button>
 
         <Button variant="primary" onClick={() => navigate("/signup")} sx={{ textAlign: "center", p: 1, m: 1 }}> Need An Account? Sign up</Button>
       </Box>

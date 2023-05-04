@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
-import { Cookies } from "react-cookie";
 import { guestUserLoggedin, userLoggedIn, userLoggedInAndNotSetRememberMe, userLoggedInAndSetRememberMe } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
 import { Box } from "@mui/material";
@@ -18,11 +17,14 @@ import { sizeConfigs } from "../components/configs";
 import { useTheme } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 
+/* test comment */
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState("false");
+  const [_rememberMe, setRememberMe] = useState(rememberMe)
   const [_error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,12 +32,15 @@ const Login = () => {
 
 
   useEffect(() => {
-    if (rememberMe == "true") {
+    if(guest === false && sucess){
+      navigate("/")
+    }
+    if (_rememberMe === "true") {
       dispatch(userLoggedInAndSetRememberMe())
-    } else if (rememberMe == "false") {
+    } else if (_rememberMe === "false") {
       dispatch(userLoggedInAndNotSetRememberMe())
     }
-  }, [rememberMe]);
+  }, [rememberMe, sucess]);
 
   const handleGuestSignIn = () => {
     // signInAnonymously(auth).catch(alert);

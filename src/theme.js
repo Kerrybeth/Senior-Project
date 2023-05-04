@@ -56,96 +56,96 @@ export const tokens = (mode) => ({
 
 //dark and white palates/themes using our colors defined above 
 export const themeSettings = (mode) => {
-  const colors = tokens(mode);
-  return {
-    palette: {
-      mode: mode,
-      ...(mode === "dark"
-        ? {
-          // palette values for dark mode
-          primary: {
-            main: colors.main[100],
-          },
-          secondary: {
-            main: '#d500f9',
-          },
-          info: {
-            main: '#2196f3',
-          },
-          success: {
-            main: '#6ec124',
-          },
-          background: {
-            default: colors.main[100],
-          },
-        }
-        : {
-          // palette values for light mode
-          primary: {
-            main: colors.main[100],
-          },
-          secondary: {
-            main: '#d500f9',
-          },
-          info: {
-            main: '#2196f3',
-          },
-          success: {
-            main: '#6ec124',
-          },
-          background: {
-            default: colors.main[100],
-          },
-        }),
-    },
-    typography: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 12,
-      h1: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 40,
-      },
-      h2: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 32,
-      },
-      h3: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 24,
-      },
-      h4: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 20,
-      },
-      h5: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 16,
-      },
-      h6: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 14,
-      },
-    },
-  };
+    const colors = tokens(mode);
+    return {
+        palette: {
+            mode: mode,
+            ...(mode === "dark"
+                ? {
+                    // palette values for dark mode
+                    primary: {
+                        main: colors.main[100],
+                    },
+                    secondary: {
+                        main: '#d500f9',
+                    },
+                    info: {
+                        main: '#2196f3',
+                    },
+                    success: {
+                        main: '#6ec124',
+                    },
+                    background: {
+                        default: colors.main[100],
+                    },
+                }
+                : {
+                    // palette values for light mode
+                    primary: {
+                        main: colors.main[100],
+                    },
+                    secondary: {
+                        main: '#d500f9',
+                    },
+                    info: {
+                        main: '#2196f3',
+                    },
+                    success: {
+                        main: '#6ec124',
+                    },
+                    background: {
+                        default: colors.main[100],
+                    },
+                }),
+        },
+        typography: {
+            fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+            fontSize: 12,
+            h1: {
+                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontSize: 40,
+            },
+            h2: {
+                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontSize: 32,
+            },
+            h3: {
+                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontSize: 24,
+            },
+            h4: {
+                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontSize: 20,
+            },
+            h5: {
+                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontSize: 16,
+            },
+            h6: {
+                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontSize: 14,
+            },
+        },
+    };
 };
 
 // context for color mode
 export const ColorModeContext = createContext({
-  toggleColorMode: () => { },
+    toggleColorMode: () => { },
 });
 
 export const useMode = () => {
-  const md = useSelector((state) => state.appState.value)
-  const [mode, setMode] = useState(md);
+    const md = useSelector((state) => state.appState.value)
+    const [mode, setMode] = useState(md);
 
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () =>
-        setMode((prev) => (prev === "light" ? "dark" : "light")),
-    }),
-    []
-  );
+    const colorMode = useMemo(
+        () => ({
+            toggleColorMode: () =>
+                setMode((prev) => (prev === "light" ? "dark" : "light")),
+        }),
+        []
+    );
 
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  return [theme, colorMode];
+    const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+    return [theme, colorMode];
 };

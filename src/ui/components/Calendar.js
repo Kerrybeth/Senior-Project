@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 
 export const Calendar = () => {
-    const { user, error, sucess } = useSelector(
+    const { user, success } = useSelector(
         (state) => state.user
       );
 

@@ -7,7 +7,6 @@ import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
 import { Typography } from "@mui/material";
 import useTheme from "@mui/material/styles/useTheme";
-import { tokens } from "../../theme";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -192,12 +191,11 @@ const Sidebar = () => {
     (state: any) => state.user
   )
 
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const mode = theme.palette.mode;
+  if(user){
+    //we got a user!
+  }
 
-  const ligtht_colors = tokens('light');
-  const dark_clolors = tokens('dark');
+  const theme = useTheme();
 
   const [open, setOpen] = React.useState(false);
 
@@ -228,7 +226,7 @@ const Sidebar = () => {
           backgroundColor: theme.palette.mode === 'dark' ? "#323639" : "#667798",
           color: colorConfigs.sidebar.color,
         },
-        pointerEvents: guest == true ? "none" : "unset"
+        pointerEvents: guest === true ? "none" : "unset"
       }}
     >
       <List disablePadding>

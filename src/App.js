@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./ui/home/Home";
 import Error from "./ui/components/Error";
@@ -26,12 +26,13 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import { browserLocalPersistence, browserSessionPersistence } from 'firebase/auth'
 import { Navigate } from "react-router-dom";
 import Reset from "./ui/components/Reset";
 import { Outlet } from "react-router-dom";
-import Signup from "./ui/login/Signup";
 import Login from "./ui/login/Login";
+import Signup from "./ui/login/Signup";
+import { useDispatch } from "react-redux";
+import { userLoggedIn } from "./redux/userSlice";
 import GroupsPage from "./ui/groups/GroupsPage";
 import UserPage from "./ui/user/UserPage";
 import EventPage from "./ui/events/EventPage";
@@ -55,6 +56,7 @@ const ProtectedRoute = ({
 };
 
 function App() {
+  const dispatch = useDispatch();
 
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
@@ -88,13 +90,16 @@ function App() {
       if (currentuser !== undefined && currentuser !== null) {
         // if (process.env.NODE_ENV === 'development') {
         //   connectAuthEmulator(auth, "http://localhost:9099");
-        // }
+        // } dd
         console.log("Auth", currentuser, currentuser.uid);
-        localStorage.setItem('userToken', currentuser.uid);
-        auth.setPersistence(rememberMe === true ? browserLocalPersistence : browserSessionPersistence)
+        if (rememberMe === "true") {
+          localStorage.setItem('userToken', currentuser.uid);
+          dispatch(userLoggedIn(currentuser));
+        } else {
+          localStorage.setItem('userToken', '')
+        }
       } else {
-        localStorage.setItem('userToken', '')
-        console.log("current user is null : ", currentuser);
+        console.log(`current user is null : ${currentuser}`);
       }
     });
 
@@ -117,7 +122,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>{title + "/home"}</title>
+        <title>{title}</title>
         <meta name="description" content="App Description" />
         <meta name="theme-color" content="#008f68" />
       </Helmet>

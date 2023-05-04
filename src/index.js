@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { store } from './redux/store';
 import { Card, CssBaseline } from '@mui/material';
 import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Button } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Typography } from '@mui/material';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 function ErrorFallback({ error }) {
   const refresh = () => window.location.reload(true)
@@ -34,8 +33,10 @@ root.render(
     <BrowserRouter>
       <React.StrictMode>
         <Provider store={store}>
-          <CssBaseline enableColorScheme />
-          <App />
+          <PersistGate loading={null} persistor={persistor}>
+            <CssBaseline enableColorScheme />
+            <App />
+          </PersistGate>
         </Provider>
       </React.StrictMode>
     </BrowserRouter>

@@ -1,17 +1,17 @@
-import { Box } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
-import ListGroup from 'react-bootstrap/Listgroup';
 import Button from '@mui/material/Button';
 import { getDatabase, ref, onValue, set, update } from "firebase/database";
 import { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import { useSelector } from "react-redux";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { Box, Stack} from "@mui/material";
 
 const User = () => {
-	const { user, error, sucess } = useSelector(
+	const { user, sucess } = useSelector(
 		(state) => state.user
 	)
 
