@@ -32,7 +32,7 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 	function submitForm(event){ 
 		for (let i = 0; i <id.length; i++) {
 			let inviteConcat = invite.toString();
-			console.log(users[i]);
+			/*console.log(users[i]); */
 			if(users[i] = inviteConcat){
 				invitee = id[i];
 			}
@@ -59,8 +59,8 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 		setRepeatlevel('');
 		setInvite('');
 		setLocation('');
-		console.log(invitee);
-		console.log(eventId);
+		/*console.log(invitee);
+		console.log(eventId); */
 		sendInvite(invitee);
 		navigate("/Events");
 	};
@@ -73,6 +73,12 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 				push(ref(db, 'users/' + invitee + '/notifications'), {
 					type:'eventreq',
 					event: eventId,
+					title: title,
+					allday: allday,
+					start: start,
+					end: end,
+					repeat: repeatlevel,
+					location: location,
 					from:user.uid
 				}); 
 			} 
