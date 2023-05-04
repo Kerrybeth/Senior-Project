@@ -73,6 +73,12 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 				push(ref(db, 'users/' + invitee + '/notifications'), {
 					type:'eventreq',
 					event: eventId,
+					title: title,
+					allday: allday,
+					start: start,
+					end: end,
+					repeat: repeatlevel,
+					location: location,
 					from:user.uid
 				}); 
 			} 
