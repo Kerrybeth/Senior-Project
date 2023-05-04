@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import cn from "classnames";
-
 import createContainer from "../notify/container";
 import { ReactComponent as Times } from "./times.svg";
 import styles from "./Notification.module.css";

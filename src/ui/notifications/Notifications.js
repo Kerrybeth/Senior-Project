@@ -21,16 +21,10 @@ import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useEffect, useState } from 'react';
 
 
-const ConditionalList = ({ item }) => {
+const ConditionalList = ({ item, onDelete }) => {
     const theme = useTheme();
 
-    const notifications = [
-        ["2 mins ago", "This is a test notification"],
-
-        ["3 mins ago", "Your bread and butter is ready!"],
-
-        ["1hr ago", "School is almost over"],
-    ];
+    // const [delete, setDelete] = React.useState(false);
 
     const chipSX = {
         height: 24,
@@ -66,7 +60,7 @@ const ConditionalList = ({ item }) => {
                 <Grid container justifyContent="flex-end">
                     <Grid item xs={12}>
                         <Typography variant="caption" display="block" gutterBottom>
-                            {item[0]}
+                            {item[0] !== undefined || ""}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -74,7 +68,7 @@ const ConditionalList = ({ item }) => {
         </ListItem>
         <Grid container direction="column" className="list-container">
             <Grid item xs={12} sx={{ pb: 2 }}>
-                <Typography variant="subtitle2">{item[1]}</Typography>
+                <Typography variant="subtitle2">{item[1] !== undefined || ""}</Typography>
             </Grid>
             <Grid item xs={12}>
                 <Grid container>
@@ -95,8 +89,12 @@ const ConditionalList = ({ item }) => {
 const Notifications = () => {
     let title = "CalendarBoard/Notifications";
     const theme = useTheme();
-    const [notifcation, setNotifications] = useState([]);
+    const [notifcation, setNotifications] = useState([["2 mins ago", "This is a test notification"],
 
+    ["3 mins ago", "Your bread and butter is ready!"],
+
+    ["1hr ago", "School is almost over"]]);
+ 
     const chipSX = {
         height: 24,
         padding: '0 6px'
@@ -157,7 +155,17 @@ const Notifications = () => {
                 <Typography variant="h5" sx={{ m: 2, position: "flex" }}>Here is a closer view of all your notifications</Typography>
 
                 <List sx={{ width: '100%', bgcolor: 'background.paper', m: 1 }}>
+
                     <ConditionalList />
+                    {/* {notifications.map(({ id, color }) => (
+                        <Notification
+                            key={id}
+                            onDelete={() => deleteNotification(id)}
+                            color={color}
+                            autoClose={true}
+                        >
+                            {message}
+                        </Notification> */}
                 </List>
             </Box>
         </>

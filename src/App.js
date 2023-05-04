@@ -39,6 +39,8 @@ import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { Color, info, success, warning, error } from "./ui/notifications/notificationsN";
 import Notification from "./ui/notifications/notificationsN";
+import * as React from "react";
+const { useRef, useLayoutEffect } = React;
 
 const ProtectedRoute = ({
   isAllowed,
@@ -65,6 +67,16 @@ function App() {
 
   const [notifications, setNotifications] = useState([]);
   const [message, setMessage] = useState("")
+
+  const firstUpdate = useRef(true);
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    // setMessage("Welcome!");
+    // createNotification(Color.success);
+  });
 
   useEffect(() => {
     setMessage("Welcome!");

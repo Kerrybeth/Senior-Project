@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import NotificationsManager from "./NotificationsManager";
 import Notification, { Color } from "./Notification";
 import createContainer from "./createContainer";

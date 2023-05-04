@@ -10,15 +10,18 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Button } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 function ErrorFallback({ error }) {
   const refresh = () => window.location.reload(true)
 
   return (
     <>
-      <Card sx={{ m: 1, p: 2 }} elevation={1}>
+      <Card sx={{ m: 1, p: 4, height: "100%" }} elevation={1}>
         <p>Oh no! Something went really wrong with CalendarBoard, here's what I know:</p>
-        <pre style={{ color: 'red' }}>{error.message}</pre>
+        <Typography sx={{ m: 1}} variant="body2" color="red">
+        {error.message}
+        </Typography>
         <button onClick={refresh}>Refresh</button>
       </Card>
     </>
