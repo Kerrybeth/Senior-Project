@@ -39,6 +39,7 @@ import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { Color, info, success, warning, error } from "./ui/notifications/notificationsN";
 import Notification from "./ui/notifications/notificationsN";
+import GroupEdit from "./ui/groups/GroupEdit";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -153,6 +154,7 @@ function App() {
                   <Route path="/updateUser" element={<UpdateUser />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/groups/:groupID" element={<GroupsPage />} />
+                  <Route path="/groups/:groupID/edit" element={<GroupEdit />} />
                   <Route path="/user/:userID" element={<UserPage />} />
                   <Route path="/event/:eventID" element={<EventPage />} />
                 </Route>
