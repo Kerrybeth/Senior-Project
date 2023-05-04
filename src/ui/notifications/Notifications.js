@@ -14,12 +14,14 @@ import {
     ListItemText,
     Typography
 } from '@mui/material';
-import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from "@tabler/icons";
 import User1 from "../../assets/images/person_icon.jpg";
 import { useTheme } from '@mui/material/styles';
+import { useSelector } from "react-redux";
+import { getDatabase, ref, push, onValue } from "firebase/database";
+import { useEffect, useState } from 'react';
 
 
-const ConditionalList = ({ time = "a few seconds ago", body = "this is a notification" }) => {
+const ConditionalList = ({ item }) => {
     const theme = useTheme();
 
     const notifications = [
@@ -54,56 +56,46 @@ const ConditionalList = ({ time = "a few seconds ago", body = "this is a notific
         height: 28
     };
 
-    return (
-        <>
-            <ListItemWrapper>
-                {/* one notification card */}
-              {notifications.map((item, index) => {
-
-                return (<>
-                <ListItem alignItems="center">
-                    <ListItemAvatar>
-                        <Avatar alt="John Doe" src={User1} />
-                    </ListItemAvatar>
-                    <ListItemText primary="John Doe" />
-                    <ListItemSecondaryAction>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item xs={12}>
-                                <Typography variant="caption" display="block" gutterBottom>
-                                    {item[0]}
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <Grid container direction="column" className="list-container">
-                    <Grid item xs={12} sx={{ pb: 2 }}>
-                        <Typography variant="subtitle2">{item[1]}</Typography>
-                    </Grid>
+    return (<>
+        <ListItem alignItems="center">
+            <ListItemAvatar>
+                <Avatar alt="John Doe" src={User1} />
+            </ListItemAvatar>
+            <ListItemText primary="John Doe" />
+            <ListItemSecondaryAction>
+                <Grid container justifyContent="flex-end">
                     <Grid item xs={12}>
-                        <Grid container>
-                            <Grid item>
-                                <Chip label="Unread" sx={chipErrorSX} />
-                            </Grid>
-                            <Grid item>
-                                <Chip label="New" sx={chipWarningSX} />
-                            </Grid>
-                        </Grid>
+                        <Typography variant="caption" display="block" gutterBottom>
+                            {item[0]}
+                        </Typography>
                     </Grid>
                 </Grid>
-                <Divider />
-                </>)
-
-              })}
-            </ListItemWrapper>
-        </>
-    );
+            </ListItemSecondaryAction>
+        </ListItem>
+        <Grid container direction="column" className="list-container">
+            <Grid item xs={12} sx={{ pb: 2 }}>
+                <Typography variant="subtitle2">{item[1]}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <Grid container>
+                    <Grid item>
+                        <Chip label="Unread" sx={chipErrorSX} />
+                    </Grid>
+                    <Grid item>
+                        <Chip label="New" sx={chipWarningSX} />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Divider />
+    </>);
 
 }
 
 const Notifications = () => {
     let title = "CalendarBoard/Notifications";
     const theme = useTheme();
+    const [notifcation, setNotifications] = useState([]);
 
     const chipSX = {
         height: 24,
@@ -129,6 +121,25 @@ const Notifications = () => {
         height: 28
     };
 
+    const { user, error, sucess } = useSelector(
+        (state) => state.user
+    )
+
+    useEffect(() => {
+        const db = getDatabase();
+        const dataRef = ref(db, 'users/' + user.uid + '/notifications');
+
+        return onValue(dataRef, (snapshot) => {
+            const data = snapshot.val();
+
+            if (snapshot.exists() && user !== null) {
+                Object.values(data).map((notifications) => {
+                    setNotifications((notifications) => [...notifications, notifications]);
+                });
+            }
+        });
+    }, []);
+
     return (
         <>
             <Helmet>
@@ -143,10 +154,10 @@ const Notifications = () => {
                     width: '100%',
                 }}
             >
-                <Typography variant="h5" sx={{ p: 0.5, position: "flex" }}>Here is a closer view of all your notifications</Typography>
+                <Typography variant="h5" sx={{ m: 2, position: "flex" }}>Here is a closer view of all your notifications</Typography>
 
-                <List sx={{ width: '100%', bgcolor: 'background.paper', m: 2 }}>
-                 
+                <List sx={{ width: '100%', bgcolor: 'background.paper', m: 1 }}>
+                    <ConditionalList />
                 </List>
             </Box>
         </>

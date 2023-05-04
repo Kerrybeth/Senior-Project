@@ -35,6 +35,10 @@ import Login from "./ui/login/Login";
 import GroupsPage from "./ui/groups/GroupsPage";
 import UserPage from "./ui/user/UserPage";
 import EventPage from "./ui/events/EventPage";
+import { useMediaQuery } from "@mui/material";
+import { useState } from "react";
+import { Color, info, success, warning, error } from "./ui/notifications/notificationsN";
+import Notification from "./ui/notifications/notificationsN";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -55,9 +59,17 @@ function App() {
 
   const title = "CalendarBoard";
 
-  const { sucess, rememberMe } = useSelector(
+  const { sucess, rememberMe, user } = useSelector(
     (state) => state.user
   )
+
+  const [notifications, setNotifications] = useState([]);
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    setMessage("Welcome!");
+    createNotification(Color.success);
+  }, [sucess]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
@@ -78,6 +90,17 @@ function App() {
       unsubscribe();
     };
   },);
+
+
+  const createNotification = (color) =>
+    setNotifications([...notifications, { color, id: notifications.length }]);
+
+  const deleteNotification = (id) =>
+    setNotifications(
+      notifications.filter((notification) => notification.id !== id)
+    );
+
+  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
@@ -103,7 +126,7 @@ function App() {
               component="main"
               sx={{
                 flexGrow: 1,
-                width: `calc(100% - ${sizeConfigs.sidebar.width})`,
+                width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `100%`,
                 minHeight: "100vh",
                 backgroundColor: colors.main[900]
               }}
@@ -134,6 +157,16 @@ function App() {
                   <Route path="/event/:eventID" element={<EventPage />} />
                 </Route>
               </Routes>
+              {notifications.map(({ id, color }) => (
+                <Notification
+                  key={id}
+                  onDelete={() => deleteNotification(id)}
+                  color={color}
+                  autoClose={true}
+                >
+                  {message}
+                </Notification>
+              ))}
             </Box>
           </Box>
         </ThemeProvider>

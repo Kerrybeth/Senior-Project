@@ -1,41 +1,33 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { Cookies } from "react-cookie";
 import { guestUserLoggedin, userLoggedIn, userLoggedInAndNotSetRememberMe, userLoggedInAndSetRememberMe } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
-import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { auth } from "../../firebase.js";
-import * as firebase from "firebase/auth";
-import { browserSessionPersistence, signInAnonymously } from "firebase/auth";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { createContext } from "react";
-import { useSelector } from "react-redux";
 import { logIn, googleSignIn } from "../../firebase.js";
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import { sizeConfigs } from "../components/configs";
+import { useTheme } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+
 
 const Login = () => {
-  const { loading, userInfo, error, success } = useSelector(
-    (state) => state.user
-  )
-  const cookies = new Cookies();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState("false");
   const [_error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
-  function writeUserData() {
-
-  }
 
   useEffect(() => {
     if (rememberMe == "true") {
@@ -80,49 +72,51 @@ const Login = () => {
     }
   };
 
+  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
+
+
   return (
-    <Box
-      sx={{
-        display: 'colum',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        m: 15
-      }}
-    >
-      <Box display={"grid"} alignContent={"center"}>
-        <Typography variant="h1" sx={{ textAlign: "center", m: 1, p: 1 }}>
-          CalendarBoard
-        </Typography>
-        <Typography variant="subtitle1" gutterBottom sx={{ m: 1, p: 1 }}>
-          A lightweight personal planner and social web app. Allows users to manage their schedules, avaialbity, compare schedules, and get connected to their communities. Users can also create organizations/groups, schedule meetings within it, and manage the privacy and permissions of it. Overall, the main goal is to seamlessly integratate into your exists community and give a place to discover and communicate. It gives rich options to integrate a user's calendar, contacts, emails, events, and more!
-        </Typography>
+    <Stack sx={{
+      width: `100%`,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      p: matchesXs === true? 0 : 20
+    }} spacing={1}>
 
-        {_error && <Alert variant="danger">{_error}</Alert>}
+      <Typography variant="h1" sx={{ textAlign: "center", m: 1, p: 1 }}>
+        CalendarBoard
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom sx={{ m: 1, p: 1 }}>
+        A lightweight personal planner and social web app. Allows users to manage their schedules, avaialbity, compare schedules, and get connected to their communities. Users can also create organizations/groups, schedule meetings within it, and manage the privacy and permissions of it. Overall, the main goal is to seamlessly integratate into your exists community and give a place to discover and communicate. It gives rich options to integrate a user's calendar, contacts, emails, events, and more!
+      </Typography>
 
-        <Form onSubmit={handleSubmit} sx={{ m: 2, p: 1 }}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control
-              type="email"
-              placeholder="Email address"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
+      {_error && <Alert variant="danger">{_error}</Alert>}
 
-          <Form.Group className="mb-3" controlId="formBasicPassword" style={{
-            marg
-              : 5, padding: 2
-          }}>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
-        </Form>
-        <Button variant="primary" size="small" type="Submit" onClick={handleSubmit} sx={{ m: 2, p: 1, }}>
-          Log In
-        </Button>
-      </Box>
+      <Form onSubmit={handleSubmit} sx={{ m: 2, p: 1 }}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Control
+            type="email"
+            placeholder="Email address"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword" style={{
+          marg
+            : 5, padding: 2
+        }}>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+      </Form>
+      <Button variant="primary" size="small" type="Submit" onClick={handleSubmit} sx={{ m: 2, p: 1, }}>
+        Log In
+      </Button>
+
 
       <hr />
       <GoogleButton
@@ -135,25 +129,25 @@ const Login = () => {
         <Button onClick={handleGuestSignIn} >Login as guest</Button>
       </Box>
 
-      <Box p={1} m={1} textAlign={"center"} sx={{ backgroundColor: "lightgrey" }}>
-        <h6>Rememeber Me</h6>
-        <FormControl defaultValue="no">
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="false"
-            name="radio-buttons-group"
-          >
-            <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="true" control={<Radio />} label="Yes" />
-            <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="false" control={<Radio />} label="No" defaultChecked={"true"} />
-          </RadioGroup>
-        </FormControl>
-      </Box>
 
-      <Box display={"flex"} justifyContent={"space-evenly"} alignContent={"center"}>
-        <Button variant="text" onClick={() => navigate("/signup")}> Need An Account? Sign up</Button>
-        <Button variant="text" onClick={() => navigate("/reset")}> Reset Password</Button>
-      </Box>
-    </Box >
+      <h6>Rememeber Me</h6>
+      <FormControl defaultValue="no">
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="false"
+          name="radio-buttons-group"
+        >
+          <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="true" control={<Radio />} label="Yes" />
+          <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="false" control={<Radio />} label="No" defaultChecked={"true"} />
+        </RadioGroup>
+      </FormControl>
+
+
+
+      <Button variant="text" onClick={() => navigate("/signup")}> Need An Account? Sign up</Button>
+      <Button variant="text" onClick={() => navigate("/reset")}> Reset Password</Button>
+
+    </Stack>
   );
 };
 

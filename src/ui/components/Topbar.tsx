@@ -84,7 +84,7 @@ const Topbar = () => {
         width: matchesXs ? `calc(100% - ${sizeConfigs.sidebar.width})` : `100%` ,
         height: '80px',
         ml: sizeConfigs.sidebar.width,
-        marginBottom: 1,
+        marginBottom: 3,
         boxShadow: "unset",
         backgroundColor: colors.main[100],
         color: colorConfigs.topbar.color
