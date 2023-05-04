@@ -1,12 +1,13 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import Image from 'react-bootstrap/Image';
 import { Link } from "react-router-dom";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { lightTheme } from '../../theme';
 import { useTheme } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
-import { getDatabase, ref, query, onValue, orderByChild} from "firebase/database";
+import { getDatabase, ref, query, push, remove, onValue, orderByChild} from "firebase/database";
 import { getAuth, currentUser } from 'firebase/auth';
 
 
@@ -15,9 +16,84 @@ const Events = () => {
 	//const date = new Date();
 	//const day = date.getDate();
 	const user = getAuth().currentUser; 
+	const db = getDatabase(); 
 	let eventsTemp = [];
     const [events, setEvents] = useState([]);
+	const [requests, setRequests] = useState([]);
+	let requestsTemp = [];
 	/*let newEvents = [];  Recent events array */
+	
+	/**
+     * accepts contact request
+     * @param {} req - email of sending user
+     */
+    function acceptRequest(req) {
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'eventreq' && childSnapshot.child("from").val() == findUid(req)) {
+                    // adds event to your events list
+                    push(ref(db, 'users/' + user.uid + '/events'), {
+                       
+                    });
+
+
+                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+                }
+            });
+        });
+    }
+	
+	 /**
+     * @param {*} em 
+     * @returns uid of user associated with email
+     */
+    function findUid(em) {
+        let theirUid;
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let email = childSnapshot.child("profile").child("email").val();
+                if (em == email) {
+                    theirUid = childSnapshot.key;
+                }
+            });
+        });
+
+        return theirUid;
+    }
+
+    /**
+     * denies contact request
+     * @param {*} req - email fo sending user
+     */
+    function denyRequest(req) {
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == findUid(req)) {
+                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+                }
+            });
+        });
+    }
+
+	/**
+     * 
+     * @returns html for every event request you currently have
+     */
+    function DisplayRequests() {
+        return (
+            <div>
+                {requests.map((req) => (
+                    <ListGroup.Item>
+                    <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />{req}</div>
+                    <div style={{padding:5}}>
+                        {' '}
+                        <Button variant="success" onClick={() => acceptRequest(req)}>Accept</Button>{' '} <Button variant="danger" onClick={() => denyRequest(req)}>Deny</Button>{' '}
+                    </div>
+                    </ListGroup.Item>
+                ))}
+            </div>
+        );
+    }
 
     useEffect(() => {
         const db = getDatabase();  
@@ -55,6 +131,25 @@ const Events = () => {
 								<ListGroup.Item>
 									<div>
 										<h2>{events.title}</h2>
+										Start Date and Time: {events.start}
+										<br />
+										End Date and Time: {events.end}
+										<br />
+										Location: {events.location}
+									</div>
+								</ListGroup.Item>
+								)
+							})}
+						</ListGroup>
+					</Tab>
+					<Tab eventKey="second" title="Event Invites"> {/* Got it to display the recieved data, need to implement recent, weekly, and monthly settings. */}
+						<ListGroup>
+							{requests.map((requests) => {
+								return(
+								<ListGroup.Item>
+									<div>
+										<h2>{requests.event}</h2>
+										Sender: {requests.event}
 										Start Date and Time: {events.start}
 										<br />
 										End Date and Time: {events.end}
