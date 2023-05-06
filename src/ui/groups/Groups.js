@@ -29,7 +29,8 @@ const Groups = () => {
 
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                for (let i = 0; i < childSnapshot.val().members.length; i++) {
+                let temp = childSnapshot.members.length;
+                for (let i = 0; i < temp; i++) {
                     if (user.uid == childSnapshot.val().members[i]) {
                         let name = childSnapshot.val().name;
                         let desc = childSnapshot.val().desc;

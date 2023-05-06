@@ -15,7 +15,6 @@ const GroupEdit = () => {
 		(state) => state.user
 	)
 	const navigate = useNavigate();
-    const register = useForm();
     const location = useLocation();
     const groupId = (location.pathname).slice(8, -5);
     const db = getDatabase();
@@ -44,7 +43,7 @@ const GroupEdit = () => {
            setIds(idsTemp);
            idsTemp = [];
        });
-   }, [user]);
+   },);
 
 	function handleSubmit(event) {
 		console.log(gname);
@@ -86,7 +85,7 @@ const GroupEdit = () => {
 							</Form.Group>
 							<Form.Group>
 						        <Form.Label> Invite People: </Form.Label>
-						        <Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
+						        <Form.Select onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
 							        <option>Select People</option>
 							            {users.map((users) => {
 								            return (
