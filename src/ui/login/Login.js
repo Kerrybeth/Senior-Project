@@ -16,8 +16,6 @@ import Stack from '@mui/material/Stack';
 import { sizeConfigs } from "../components/configs";
 import { useTheme } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
-
-import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 
 /* test comment */
