@@ -29,8 +29,7 @@ const Groups = () => {
 
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                for (let i = 0; i < childSnapshot.val().members.length; i++) {
-                    if (user.uid == childSnapshot.val().members[i]) {
+                    if (user.uid == childSnapshot.val().owner) {
                         let name = childSnapshot.val().name;
                         let desc = childSnapshot.val().desc;
                         let groupid2 = childSnapshot.key;
@@ -39,7 +38,6 @@ const Groups = () => {
                         groupsTemp.push(name);
                         descsTemp.push(desc);
                     }
-                }
             });
 
             setGroupID(idtemp);

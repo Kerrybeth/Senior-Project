@@ -65,13 +65,11 @@ const CreateGroupEvents = () => {
 
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                for (let i = 0; i < childSnapshot.val().members.length; i++) {
-                    if (user.uid === childSnapshot.val().members[i]) {
+               if (user.uid === childSnapshot.val().owner) {
                         let name = childSnapshot.val().name;
                         let id = childSnapshot.key;
                         groupsTemp.push(name);
 						idTemp.push(id);
-                    }
                 }
             });
 
@@ -97,62 +95,61 @@ const CreateGroupEvents = () => {
 							color: 'black', 
 							justifyContent: 'left', 
 							alignItems: 'left'
-						}}>
-							<Form.Group>
-								<Form.Label> Event Name:</Form.Label>
-								<Form.Control type="text" placeholder="Enter Name" />
-							</Form.Group>
-							<Form.Check type="switch" label="All-day" />
-							<Form.Group>
-								<Form.Label> Start Date: </Form.Label>
-								<input type="date"></input> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-								<br />
-								<Form.Label> End Date: </Form.Label>
-								<input type="date"></input> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
-								<br />
-								<Form.Label> Start Time: </Form.Label>
-								<input type="time"></input>
-								<br />
-								<Form.Label> End Time: </Form.Label>
-								<input type="time"></input>
-							</Form.Group>
-							<Form.Group>
-								<Form.Label>
-									Repeatability:
-								</Form.Label>
-								<Form.Select>
-									<option>Does not repeat</option>
-									<option>Every day</option>
-									<option>Every week</option>
-									<option>Every month</option>
-									<option>Every year</option>
-								</Form.Select>
-							</Form.Group>
-							<Form.Group>
-								<Form.Label> Invite Groups: </Form.Label>
-								<Form.Select>
-									<option>Select Group</option>
-								</Form.Select>
-							</Form.Group>
-							<Form.Group>
-								<Form.Label> Location:</Form.Label>
-								<Form.Control type="text" placeholder="Enter Location" />
-							</Form.Group>
-							<Button type="submit">Create Group Event</Button>
+					}}>
+					<Form.Group>
+						<Form.Label> Event Name:</Form.Label>
+						<Form.Control type="text" {...register('title', { required: true, maxLength: 20})} onChange={(event) => setTitle(event.target.value)} placeholder="Enter Name"/>
+					</Form.Group>
+					<Form.Check type="switch" {...register('allday')} onChange={(event) => setAllday(event.target.checked)} label="All-day"/> 
+					<Form.Group>
+						<Form.Label> Start Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
+						<input type="datetime-local"  {...register('start', { required: true})} onChange={(event) => setStart(event.target.value)}></input>
+						<br/>
+						<Form.Label> End Date: </Form.Label> {/*Should be formatted as yyyy-mm-dd, how it is displayed is browser determined.*/}
+						<input type="datetime-local" {...register('end', { required: true})} onChange={(event) => setEnd(event.target.value)}></input>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>
+							Repeatability:
+						</Form.Label>
+						<Form.Select  {...register('repeatlevel')} onChange={(event) => setRepeatlevel(event.target.value)}> 
+							<option>Does not repeat</option>
+							<option>Every day</option>
+							<option>Every week</option>
+							<option>Every month</option>
+							<option>Every year</option>
+						</Form.Select>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label> Invite Groups: </Form.Label>
+						<Form.Select {...register('invite')} onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
+							<option>Select Group</option>
+							{groups.map((groups) => {
+								return(
+								<option>{groups}</option>
+								)
+							})}
+						</Form.Select>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label value={location} onChange={(event) => setLocation(event.target.value)}> Location:</Form.Label>
+						<Form.Control type="text" {...register('location', {maxLength: 20})} onChange={(event) => setLocation(event.target.value)} placeholder="Enter Location" />
+					</Form.Group>
+					<Button type="submit">Create Group Event</Button>
+					</Typography>
+				</Form>
+			</ListGroup.Item>
+			<ListGroup.Item>
+				<Link to= "/Events">
+					<Button style={{maxHeight:'50px',}}>
+						<Typography variant ="h4" style={{ justifyContent: 'right', alignItems: 'right'}}>
+						Back
 						</Typography>
-					</Form>
-				</ListGroup.Item>
-				<ListGroup.Item>
-					<Link to="/Events">
-						<Button style={{ maxHeight: '50px', }}>
-							<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
-								Back
-							</Typography>
-						</Button>
-					</Link>
-				</ListGroup.Item>
-			</ListGroup>
-		</div>
+					</Button>
+				</Link>
+			</ListGroup.Item>
+		</ListGroup>
+	</div>
 	);
 }
 
