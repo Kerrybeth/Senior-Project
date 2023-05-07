@@ -20,6 +20,11 @@ import { useSelector } from "react-redux";
 
 /* test comment */
 const Login = () => {
+
+  const { sucess, rememberMe, guest } = useSelector(
+    (state) => state.user
+  )
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [_rememberMe, setRememberMe] = useState(rememberMe)

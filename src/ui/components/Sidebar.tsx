@@ -22,6 +22,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { IconButton } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { tokens } from "../../theme";
 
 function AuthorsList() {
   return (
@@ -196,6 +197,7 @@ const Sidebar = () => {
   }
 
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const [open, setOpen] = React.useState(false);
 
