@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/Listgroup';
 import { getDatabase, ref, onValue, set, update } from "firebase/database";
+import { UserCalendar } from "../components/UserCalendar";
 
 const UserPage = () => {
 
@@ -26,22 +27,11 @@ const UserPage = () => {
     const [timeRanges, setTimeRanges] = useState([]);
   
     useEffect(() => {
-        onValue(dataRef, (snapshot) => {
+
+		onValue(dataRef, (snapshot) => {
 			const data = snapshot.val();
-			if (data.name == null) {
-				let namey = "";
-				update(ref(db, 'users/' + userID + '/profile'), {
-					name: namey
-				});
-			} else if (data.bio == null) {
-				let bio = "";
-				update(ref(db, 'users/' + userID + '/profile'), {
-					bio: bio
-				});
-			} else {
-				setData(data);
-			}
-        });
+			setData(data);
+		});
 
         onValue(dataRefAv, (snapshot) => {
 			const data = snapshot.val();
@@ -81,36 +71,43 @@ const UserPage = () => {
     // }
   
     return (
-        <div>
-			<Box component='button' style={{ minHeight: '150px', minWidth: '150px', position: 'relative', top: '100px' }}>
-				<Image src="logo.svg" roundedCircle />
+        <div class="pageLight2">
+			<div>
+			<Box component='button' sx={{border: '0', backgroundColor: 'transparent', float: 'left'}} style={{ minHeight: '150px', minWidth: '150px', position: 'relative', top: '75px', maxHeight:'150px', maxWidth: '150px' }}>
+				<Image id='profilepic' src={data.image} roundedCircle />
 			</Box>
-			<ListGroup style={{
+			<div style={{
 				display: 'flex',
 				minHeight: '100px',
-				maxWidth: '1000px',
-				position: 'fixed',
-				top: '100px',
-				right: '100px'
+				maxWidth: '15vw',
+				float: 'center',
+				paddingTop: '100px',
+				paddingLeft: '4vw',
+				paddingRight: '2vw'
 			}}>
 				<ListGroup.Item>
 					<Typography variant="h3" style={{
 						color: 'black',
 						justifyContent: 'left',
-						alignItems: 'left'
+						alignItems: 'left',
+						overflowWrap: 'break-word',
+						maxWidth: '60vw',
+						minWidth: '50vw',
+						paddingBottom: '40px'
 					}}>
-						Name: {data.name}
+						<b>Name</b>: {data.name}
 						<br />
-						Bio: {data.bio}
+						<b>Bio</b>: {data.bio}
 						<br />
 					</Typography>
 				</ListGroup.Item>
-				<ListGroup.Item>
-				</ListGroup.Item>
-			</ListGroup>
+			</div>
+			</div>
+			<div id="usercalendar"><UserCalendar uid={userID} /></div>
 			<Box>
-				<Typography variant="h3" style={{ position: 'relative', top: '200px' }}>
-					Availability
+				<Typography variant="h3" style={{ position: 'relative', top: '55px' }}>
+					<div style={{paddingBottom: '20px'}}><b>Availability</b></div>
+					
 					{timeRanges.map(({ dayOfWeek, start, end }) => (
         			<div key={dayOfWeek}>
           			<h2>{dayOfWeek}</h2>

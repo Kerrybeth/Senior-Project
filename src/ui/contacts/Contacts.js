@@ -53,7 +53,6 @@ const Contacts = () => {
                 let img = null;
 
                 onValue(ref(db, 'users/' + uid + '/profile'), (snapshot) => {
-                    alert(snapshot.val().image);
                     img = snapshot.val().image;
                 });
 
@@ -82,7 +81,7 @@ const Contacts = () => {
             setRequests(requestsTemp);
             requestsTemp = [];
         });
-    }, [user]);
+    }, []);
 
     /**
      * 

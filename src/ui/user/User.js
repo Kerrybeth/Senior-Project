@@ -89,7 +89,7 @@ const User = () => {
 	return (
 		<div class="pageLight2">
 			<div>
-			<Box component='button' sx={{border: '0', backgroundColor: 'transparent', float: 'left'}} onClick={handleShow} style={{ minHeight: '150px', minWidth: '150px', position: 'relative', top: '100px', maxHeight:'150px', maxWidth: '150px' }}>
+			<Box component='button' sx={{border: '0', backgroundColor: 'transparent', float: 'left'}} onClick={handleShow} style={{ minHeight: '150px', minWidth: '150px', position: 'relative', top: '75px', maxHeight:'150px', maxWidth: '150px' }}>
 				<Image id='profilepic' src={data.image} roundedCircle />
 			</Box>
 			<Modal show={show} onHide={handleClose} centered>
@@ -110,7 +110,7 @@ const User = () => {
 				minHeight: '100px',
 				maxWidth: '15vw',
 				float: 'center',
-				paddingTop: '12vh',
+				paddingTop: '100px',
 				paddingLeft: '4vw',
 				paddingRight: '2vw'
 			}}>
@@ -121,15 +121,17 @@ const User = () => {
 						alignItems: 'left',
 						overflowWrap: 'break-word',
 						maxWidth: '60vw',
+						minWidth: '50vw',
+						paddingBottom: '10px'
 					}}>
-						Name: {data.name}
+						<b>Name</b>: {data.name}
 						<br />
-						Bio: {data.bio}
+						<b>Bio</b>: {data.bio}
 						<br />
 					</Typography>
 
 					<Link to="/UserEdit">
-						<Button variant="contained" sx={{ maxHeight: '50px', }}>
+						<Button variant="contained" sx={{ maxHeight: '50px' }}>
 							<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
 								Edit
 							</Typography>
@@ -140,15 +142,17 @@ const User = () => {
 			</div>
 			<div id="usercalendar"><UserCalendar uid={user.uid} /></div>
 			<Box>
-				<Typography variant="h3" style={{ position: 'relative', top: '200px' }}>
-					Availability
-					<Link to="/AvailEdit">
-						<Button variant="contained" sx={{ maxHeight: '50px', }}>
+				<Typography variant="h3" style={{ position: 'relative', top: '75px'}}>
+				<div style={{paddingBottom: '20px'}}><b>Availability</b>
+				<Link to="/AvailEdit">
+						<Button variant="contained" sx={{ maxHeight: '50px', left: '20px'}}>
 							<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
 								Edit
 							</Typography>
 						</Button>
 					</Link>
+				</div>
+					
 					{timeRanges.map(({ dayOfWeek, start, end }) => (
         			<div key={dayOfWeek}>
           			<h2>{dayOfWeek}</h2>
