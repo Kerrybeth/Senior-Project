@@ -9,13 +9,17 @@ import { useState, useEffect } from 'react';
 import { getDatabase, ref, query, push, remove, onValue, orderByChild} from "firebase/database";
 import { where } from 'firebase/firestore';
 import { getAuth, currentUser } from 'firebase/auth';
+import { useSelector } from 'react-redux';
 
 
 const Events = () => {
 	const theme = useTheme(); 
 	//const date = new Date();
 	//const day = date.getDate();
-	const user = getAuth().currentUser; 
+	// const user = getAuth().currentUser; 
+	const { user, sucess, guest } = useSelector(
+		(state) => state.user
+	  )
 	const db = getDatabase(); 
 	let eventsTemp = [];
     const [events, setEvents] = useState([]);

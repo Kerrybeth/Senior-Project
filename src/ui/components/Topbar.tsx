@@ -20,6 +20,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { guestUserLoggedOut } from "../../redux/userSlice";
 import '../../App.css';
 import { useMediaQuery } from "@mui/material";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 
 const Topbar = () => {
   const dispatch = useDispatch();
@@ -55,8 +58,16 @@ const Topbar = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
 
-
+  };
+  const handleClose = (path: any) => {
+    setAnchorEl(null);
+    navigate(path);
+  };
 
   return (
     <AppBar
@@ -79,15 +90,30 @@ const Topbar = () => {
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            onClick={handleClick}
+            sx={{ mr: 2, display: { xs: 'flex', sm: "flex", md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={() => handleClose("/user")}>User</MenuItem>
+            <MenuItem onClick={() => handleClose("/groups")}>Groups</MenuItem>
+            <MenuItem onClick={() => handleClose("/events")}>Events</MenuItem>
+            <MenuItem onClick={() => handleClose("/contacts")}>Contacts</MenuItem>
+            <MenuItem onClick={() => handleClose("/settings")}>Settings</MenuItem>
+          </Menu>
           <Typography
             variant="h4"
             component="div"
-           sx={{ flexGrow: 1, display: "block"}}
+            sx={{ flexGrow: 1, display: "block", fontSize: matchesXs === true ? "12px" : "25px" }}
           >
             CalendarBoard
             <Typography
@@ -102,7 +128,7 @@ const Topbar = () => {
           </Typography>
 
           {/* home, logout, icons */}
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
+          <Box sx={{ display: { xs: 'flex', sm: 'flex' }, color: 'black' }}>
             <Button component={Link} to="/" sx={{ color: 'black' }}>
               Home
             </Button>
