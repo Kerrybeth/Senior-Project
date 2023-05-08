@@ -143,7 +143,7 @@ function App() {
               component="main"
               sx={{
                 flexGrow: 1,
-                width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `100%`,
+                width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `0px`,
                 minHeight: "100vh",
                 backgroundColor: colors.main[900]
               }}

@@ -57,7 +57,7 @@ const Login = () => {
       setError("Enter a valid email or password!");
     } else {
       logIn(email, password).then((res) => {
-        if (res) {
+        if (res.success) {
           dispatch(userLoggedIn(res.user));
           navigate("/");
         } else {

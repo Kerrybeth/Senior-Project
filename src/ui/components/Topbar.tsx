@@ -63,7 +63,7 @@ const Topbar = () => {
       position="fixed"
       elevation={3}
       sx={{
-        width: matchesXs ? `calc(100% - ${sizeConfigs.sidebar.width})` : `100%` ,
+        width: matchesXs ? `calc(100% - ${sizeConfigs.sidebar.width})` : `100%`,
         height: '80px',
         ml: sizeConfigs.sidebar.width,
         marginBottom: 3,
@@ -87,29 +87,30 @@ const Topbar = () => {
           <Typography
             variant="h4"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'flex', md: 'block' } }}
+           sx={{ flexGrow: 1, display: "block"}}
           >
             CalendarBoard
             <Typography
               variant="h6"
               component="div"
-              sx={{ color: "black", ml: "5px" }}
+              sx={{ color: "black", m: "1px" }}
+              width={"fit-content"}
             >
               {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
 
             </Typography>
           </Typography>
 
-        {/* home, logout, icons */}
-        <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
-          <Button component={Link} to="/" sx={{ color: 'black' }}>
-            Home
-          </Button>
-          {sucess === true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
-            Logout
-          </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
-            Login
-          </Button>)}
+          {/* home, logout, icons */}
+          <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
+            <Button component={Link} to="/" sx={{ color: 'black' }}>
+              Home
+            </Button>
+            {sucess === true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+              Logout
+            </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
+              Login
+            </Button>)}
 
             <PopupNotification />
 
@@ -122,7 +123,7 @@ const Topbar = () => {
             </IconButton>
           </Box>
         </Toolbar>
-        </div>
+      </div>
     </AppBar >
   );
 };

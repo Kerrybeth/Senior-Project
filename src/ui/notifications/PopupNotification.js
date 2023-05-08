@@ -89,7 +89,7 @@ const PopupNotification = () => {
                     aria-haspopup="true"
                 >
 
-                    <Badge badgeContent={1} color="error">
+                    <Badge variant="dot" color="error" invisible={false}>
                         <NotificationsActiveIcon />
                     </Badge>
 
@@ -153,7 +153,7 @@ const PopupNotification = () => {
                                     </Grid>
                                     <Divider />
                                     <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                                        <Button size="small" sx={{color : colors.main[400]}} disableElevation component={Link} to="/notifications" onClick={handleClose}>
+                                        <Button size="small" sx={{ color: colors.main[400] }} disableElevation component={Link} to="/notifications" onClick={handleClose}>
                                             View All
                                         </Button>
                                     </CardActions>
