@@ -70,6 +70,13 @@ const PopupNotification = () => {
         if (event?.target.value) setValue(event?.target.value);
     };
 
+    const test_notifications = [{ name: "CalandarBoard", body: "This is a test notification" },
+
+    { name: "Alex", body: "Your bread and butter is ready!" },
+
+    { name: "Stephane", body: "School is almost over" }]
+
+
     return (
         <>
             {/* actual notification btn  */}
@@ -145,10 +152,10 @@ const PopupNotification = () => {
                                                     </Box>
                                                 </Grid>
                                                 <Grid item xs={12} p={0}>
-                                                    <Divider sx={{ my: 0 }} />
+                                                    <Divider />
                                                 </Grid>
                                             </Grid>
-                                            <NotificationList />
+                                            {test_notifications.map(NotificationList)}
                                         </Grid>
                                     </Grid>
                                     <Divider />

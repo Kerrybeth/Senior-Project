@@ -63,7 +63,7 @@ const Topbar = () => {
       position="fixed"
       elevation={3}
       sx={{
-        width: matchesXs ? `calc(100% - ${sizeConfigs.sidebar.width})` : `100%`,
+        width: matchesXs === true ? `100%` : `calc(100% - ${sizeConfigs.sidebar.width})`,
         height: '80px',
         ml: sizeConfigs.sidebar.width,
         marginBottom: 3,

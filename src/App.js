@@ -134,7 +134,8 @@ function App() {
               component="nav"
               sx={{
                 width: sucess === true ? sizeConfigs.sidebar.width : 0,
-                flexShrink: 0
+                flexShrink: 0, 
+                display: { xs: "none", md: "flex"}
               }}
             >
               {sucess === true ? (<Sidebar />) : (<></>)}
@@ -143,7 +144,7 @@ function App() {
               component="main"
               sx={{
                 flexGrow: 1,
-                width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `0px`,
+                width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `0`,
                 minHeight: "100vh",
                 backgroundColor: colors.main[900]
               }}

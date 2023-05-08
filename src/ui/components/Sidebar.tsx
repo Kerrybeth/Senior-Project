@@ -24,9 +24,9 @@ import { IconButton } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { tokens } from "../../theme";
 
-function AuthorsList() {
+function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { handleKerryBethClick }: any, { handleChrisClick }: any, { handleLoganClick }: any) {
   return (
-    <List sx={{ width: '100%', p: 1, m: 1}}>
+    <List sx={{ width: '100%', p: 1, m: 1 }}>
       {/* first card */}
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
@@ -50,7 +50,7 @@ function AuthorsList() {
           }
         />
 
-        <IconButton onClick={() => true}>
+        <IconButton onClick={handleChrisClick}>
           <GitHubIcon />
         </IconButton>
         <IconButton onClick={() => true}>
@@ -82,7 +82,7 @@ function AuthorsList() {
 
           }
         />
-        <IconButton onClick={() => true}>
+        <IconButton onClick={handleDavidClick}>
           <GitHubIcon />
         </IconButton>
         <IconButton onClick={() => true}>
@@ -113,7 +113,7 @@ function AuthorsList() {
 
           }
         />
-        <IconButton onClick={() => true}>
+        <IconButton onClick={handleLoganClick}>
           <GitHubIcon />
         </IconButton>
         <IconButton onClick={() => true}>
@@ -144,7 +144,7 @@ function AuthorsList() {
 
           }
         />
-        <IconButton onClick={() => true}>
+        <IconButton onClick={handleKerryBethClick}>
           <GitHubIcon />
         </IconButton>
         <IconButton onClick={() => true}>
@@ -175,7 +175,7 @@ function AuthorsList() {
 
           }
         />
-        <IconButton onClick={() => true}>
+        <IconButton onClick={handleStephaneClick}>
           <GitHubIcon />
         </IconButton>
         <IconButton onClick={() => true}>
@@ -192,7 +192,7 @@ const Sidebar = () => {
     (state: any) => state.user
   )
 
-  if(user){
+  if (user) {
     //we got a user!
   }
 
@@ -209,8 +209,33 @@ const Sidebar = () => {
     setOpen(false);
   };
 
-  const handleClose2 = () => {
+  const handleSourceCodeClicked = () => {
     window.open('https://github.com/anxelic/Senior-Project/tree/main', '_blank');
+    setOpen(false);
+  }
+
+  const handleDavidClicked = () => {
+    window.open('https://github.com/Risemon2', '_blank');
+    setOpen(false);
+  }
+
+  const handleChrisClicked = () => {
+    window.open('https://github.com/anxelic', '_blank');
+    setOpen(false);
+  }
+
+  const handleStephaneClicked = () => {
+    window.open('https://github.com/stephaneK123', '_blank');
+    setOpen(false);
+  }
+
+  const handleLoganClicked = () => {
+    window.open('https://github.com/alumnu', '_blank');
+    setOpen(false);
+  }
+
+  const handleKerryBethClicked = () => {
+    window.open('https://github.com/Kerrybeth', '_blank');
     setOpen(false);
   }
 
@@ -218,7 +243,6 @@ const Sidebar = () => {
     <Drawer
       variant="permanent"
       sx={{
-        display: { xs: "none", md: "block" },
         width: sizeConfigs.sidebar.width,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
@@ -267,10 +291,170 @@ const Sidebar = () => {
             Here are the awesome people that dedicated their time to put this together! Please report
             any issues, and we hope it provided some value to you!
           </DialogContentText>
-          <AuthorsList />
+
+          {/* authors + clicks to socials  */}
+          <List sx={{ width: '100%', p: 1, m: 1 }}>
+            {/* first card */}
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              </ListItemAvatar>
+
+              <ListItemText
+                primary="Chris - "
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      I'll be in your neighborhood doing errands this…
+                    </Typography>
+                  </React.Fragment>
+
+                }
+              />
+
+              <IconButton onClick={handleChrisClicked}>
+                <GitHubIcon />
+              </IconButton>
+              <IconButton onClick={() => true}>
+                <LinkedInIcon />
+              </IconButton>
+            </ListItem>
+
+            <Divider variant="inset" component="li" />
+
+            {/* another card */}
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+              </ListItemAvatar>
+
+              <ListItemText
+                primary="David - "
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      I'll be in your neighborhood doing errands this…
+                    </Typography>
+                  </React.Fragment>
+
+                }
+              />
+              <IconButton onClick={handleDavidClicked}>
+                <GitHubIcon />
+              </IconButton>
+              <IconButton onClick={() => true}>
+                <LinkedInIcon />
+              </IconButton>
+            </ListItem>
+
+            <Divider variant="inset" component="li" />
+
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+              </ListItemAvatar>
+
+              <ListItemText
+                primary="Logan - "
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      I'll be in your neighborhood doing errands this…
+                    </Typography>
+                  </React.Fragment>
+
+                }
+              />
+              <IconButton onClick={handleLoganClicked}>
+                <GitHubIcon />
+              </IconButton>
+              <IconButton onClick={() => true}>
+                <LinkedInIcon />
+              </IconButton>
+            </ListItem>
+
+            <Divider variant="inset" component="li" />
+
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              </ListItemAvatar>
+
+              <ListItemText
+                primary="KarryBeth - "
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      I'll be in your neighborhood doing errands this…
+                    </Typography>
+                  </React.Fragment>
+
+                }
+              />
+              <IconButton onClick={handleKerryBethClicked}>
+                <GitHubIcon />
+              </IconButton>
+              <IconButton onClick={() => true}>
+                <LinkedInIcon />
+              </IconButton>
+            </ListItem>
+
+            <Divider variant="inset" component="li" />
+
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              </ListItemAvatar>
+
+              <ListItemText
+                primary="Stephane Katende - Software Engineer"
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      I like doing a lot of things, given I have the energy :)
+                    </Typography>
+                  </React.Fragment>
+
+                }
+              />
+              <IconButton onClick={handleStephaneClicked}>
+                <GitHubIcon />
+              </IconButton>
+              <IconButton onClick={() => true}>
+                <LinkedInIcon />
+              </IconButton>
+            </ListItem>
+
+          </List>
+
         </DialogContent>
         <DialogActions sx={{ alignContent: "center", color: colors.main[400] }}>
-          <Button sx={{}} onClick={handleClose2}>Source code</Button>
+          <Button onClick={handleSourceCodeClicked}>Source code</Button>
           <Button onClick={handleClose} autoFocus>
             Okay
           </Button>
