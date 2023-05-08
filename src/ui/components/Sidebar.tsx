@@ -297,7 +297,7 @@ const Sidebar = () => {
             {/* first card */}
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="C" src="https://us.123rf.com/450wm/lightfieldstudios/lightfieldstudios1904/lightfieldstudios190410410/121460786-white-letter-c-with-beige-roses-and-green-leaves-isolated-on-grey.jpg" />
               </ListItemAvatar>
 
               <ListItemText
@@ -330,7 +330,7 @@ const Sidebar = () => {
             {/* another card */}
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="D" src="https://us.123rf.com/450wm/inkdrop/inkdrop1910/inkdrop191006642/132480573-letter-d-distorted-neon-glitch-effect-text-font-3d-render.jpg?ver=6" />
               </ListItemAvatar>
 
               <ListItemText
@@ -361,7 +361,7 @@ const Sidebar = () => {
 
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                <Avatar alt="L" src="https://img.freepik.com/premium-photo/fire-alphabet-letter-l-isolated-black-background_564276-9249.jpg" />
               </ListItemAvatar>
 
               <ListItemText
@@ -392,7 +392,7 @@ const Sidebar = () => {
 
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Remy Sharp" src="https://i.pinimg.com/474x/98/19/f9/9819f98e687a6d92f265f128fc95bd2b.jpg" />
               </ListItemAvatar>
 
               <ListItemText
@@ -423,7 +423,7 @@ const Sidebar = () => {
 
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="SK" src="https://media.istockphoto.com/id/1392002841/photo/glowing-glass-tube-font-letter-s-3d.jpg?b=1&s=170667a&w=0&k=20&c=ESLB9ElLfMXnXy2qylqinpC8b5_AaEuJrx7_Nw3ZFOI=" />
               </ListItemAvatar>
 
               <ListItemText
@@ -453,7 +453,7 @@ const Sidebar = () => {
           </List>
 
         </DialogContent>
-        <DialogActions sx={{ alignContent: "center", color: colors.main[400] }}>
+        <DialogActions sx={{ alignContent: "center", backgroundColor: colors.main[700] }}>
           <Button onClick={handleSourceCodeClicked}>Source code</Button>
           <Button onClick={handleClose} autoFocus>
             Okay

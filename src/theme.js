@@ -38,6 +38,7 @@ export const tokens = (mode) => ({
       main: {
         100: "#f5f5f5",
         400: "#939393",
+        700: "#333b4b",
         900: "#f5f5f5"
       },
       yellow: {

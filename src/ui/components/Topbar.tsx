@@ -64,9 +64,14 @@ const Topbar = () => {
     setAnchorEl(event.currentTarget);
 
   };
-  const handleClose = (path: any) => {
+
+  const handleClose = () => {
     setAnchorEl(null);
-    navigate(path);
+  };
+
+  const handleNav = (path: any) => {
+    setAnchorEl(null);
+    if(path) navigate(path);
   };
 
   return (
@@ -104,11 +109,11 @@ const Topbar = () => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={() => handleClose("/user")}>User</MenuItem>
-            <MenuItem onClick={() => handleClose("/groups")}>Groups</MenuItem>
-            <MenuItem onClick={() => handleClose("/events")}>Events</MenuItem>
-            <MenuItem onClick={() => handleClose("/contacts")}>Contacts</MenuItem>
-            <MenuItem onClick={() => handleClose("/settings")}>Settings</MenuItem>
+            <MenuItem onClick={() => handleNav("/user")}>User</MenuItem>
+            <MenuItem onClick={() => handleNav("/groups")}>Groups</MenuItem>
+            <MenuItem onClick={() => handleNav("/events")}>Events</MenuItem>
+            <MenuItem onClick={() => handleNav("/contacts")}>Contacts</MenuItem>
+            <MenuItem onClick={() => handleNav("/settings")}>Settings</MenuItem>
           </Menu>
           <Typography
             variant="h4"
