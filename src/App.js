@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./ui/home/Home";
 import Error from "./ui/components/Error";
@@ -10,6 +10,7 @@ import Settings from "./ui/settings/Settings";
 import UpdateUser from "./updateUser/UpdateUser";
 import Notifications from "./ui/notifications/Notifications";
 import UserEdit from "./ui/user/UserEdit";
+import AvailEdit from "./ui/user/AvailEdit";
 import CreateGroup from "./ui/groups/CreateGroup";
 import CreateEvents from "./ui/events/CreateEvents";
 import CreateGroupEvents from "./ui/events/CreateGroupEvents";
@@ -32,6 +33,15 @@ import Login from "./ui/login/Login";
 import Signup from "./ui/login/Signup";
 import { useDispatch } from "react-redux";
 import { userLoggedIn } from "./redux/userSlice";
+import GroupsPage from "./ui/groups/GroupsPage";
+import UserPage from "./ui/user/UserPage";
+import EventPage from "./ui/events/EventPage";
+import { useMediaQuery } from "@mui/material";
+import { useState } from "react";
+import { Color, info, success, warning, error } from "./ui/notifications/notificationsN";
+import Notification from "./ui/notifications/notificationsN";
+import * as React from "react";
+const { useRef, useLayoutEffect } = React;
 
 const ProtectedRoute = ({
   isAllowed,
@@ -53,9 +63,27 @@ function App() {
 
   const title = "CalendarBoard";
 
-  const { sucess, rememberMe } = useSelector(
+  const { sucess, rememberMe, user } = useSelector(
     (state) => state.user
   )
+
+  const [notifications, setNotifications] = useState([]);
+  const [message, setMessage] = useState("")
+
+  const firstUpdate = useRef(true);
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    // setMessage("Welcome!");
+    // createNotification(Color.success);
+  });
+
+  useEffect(() => {
+    setMessage("Welcome!");
+    createNotification(Color.success);
+  }, [sucess]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
@@ -80,6 +108,17 @@ function App() {
     };
   },);
 
+
+  const createNotification = (color) =>
+    setNotifications([...notifications, { color, id: notifications.length }]);
+
+  const deleteNotification = (id) =>
+    setNotifications(
+      notifications.filter((notification) => notification.id !== id)
+    );
+
+  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <Helmet>
@@ -95,7 +134,8 @@ function App() {
               component="nav"
               sx={{
                 width: sucess === true ? sizeConfigs.sidebar.width : 0,
-                flexShrink: 0
+                flexShrink: 0, 
+                display: { xs: "none", md: "flex"}
               }}
             >
               {sucess === true ? (<Sidebar />) : (<></>)}
@@ -104,10 +144,9 @@ function App() {
               component="main"
               sx={{
                 flexGrow: 1,
-                p: 1,
-                width: `calc(100% - ${sizeConfigs.sidebar.width})`,
+                width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `0`,
                 minHeight: "100vh",
-                backgroundColor: colors.main[100]
+                backgroundColor: colors.main[900]
               }}
             >
               <Toolbar />
@@ -121,6 +160,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/user" element={<User />} />
                   <Route path="/useredit" element={<UserEdit />} />
+                  <Route path="/availedit" element={<AvailEdit />} />
                   <Route path="/groups" element={<Groups />} />
                   <Route path="/creategroup" element={<CreateGroup />} />
                   <Route path="/events" element={<Events />} />
@@ -130,8 +170,21 @@ function App() {
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/updateUser" element={<UpdateUser />} />
                   <Route path="/notifications" element={<Notifications />} />
+                  <Route path="/groups/:groupID" element={<GroupsPage />} />
+                  <Route path="/user/:userID" element={<UserPage />} />
+                  <Route path="/event/:eventID" element={<EventPage />} />
                 </Route>
               </Routes>
+              {notifications.map(({ id, color }) => (
+                <Notification
+                  key={id}
+                  onDelete={() => deleteNotification(id)}
+                  color={color}
+                  autoClose={true}
+                >
+                  {message}
+                </Notification>
+              ))}
             </Box>
           </Box>
         </ThemeProvider>

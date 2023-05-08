@@ -7,15 +7,21 @@ import { Card, CssBaseline } from '@mui/material';
 import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 function ErrorFallback({ error }) {
+  const refresh = () => window.location.reload(true)
+
   return (
     <>
-      <Card sx={{ m: 1, p: 2 }} elevation={1}>
-        <p>Oh no! Something went really wrong with CalandarBoard, here's what I know:</p>
-        <pre style={{ color: 'red' }}>{error.message}</pre>
+      <Card sx={{ m: 1, p: 4, height: "100%" }} elevation={1}>
+        <p>Oh no! Something went really wrong with CalendarBoard, here's what I know:</p>
+        <Typography sx={{ m: 1}} variant="body2" color="red">
+        {error.message}
+        </Typography>
+        <button onClick={refresh}>Refresh</button>
       </Card>
     </>
   )

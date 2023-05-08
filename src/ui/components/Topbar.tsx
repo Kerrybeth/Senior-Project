@@ -18,10 +18,16 @@ import { userLoggedOut } from "../../redux/userSlice";
 import { logOut } from "../../firebase";
 import { useDispatch, useSelector } from 'react-redux'
 import { guestUserLoggedOut } from "../../redux/userSlice";
+import '../../App.css';
+import { useMediaQuery } from "@mui/material";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 
 const Topbar = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
@@ -52,68 +58,98 @@ const Topbar = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+
+  };
+  const handleClose = (path: any) => {
+    setAnchorEl(null);
+    navigate(path);
+  };
+
   return (
     <AppBar
       position="fixed"
       elevation={3}
       sx={{
-        width: `calc(100% - ${sizeConfigs.sidebar.width})`,
+        width: matchesXs === true ? `100%` : `calc(100% - ${sizeConfigs.sidebar.width})`,
         height: '80px',
         ml: sizeConfigs.sidebar.width,
+        marginBottom: 3,
         boxShadow: "unset",
         backgroundColor: colors.main[100],
         color: colorConfigs.topbar.color
       }}
 
     >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          variant="h4"
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-        >
-          CalendarBoard
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ color: "green", ml: "5px" }}
+      <div className="pageLightLeft">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleClick}
+            sx={{ mr: 2, display: { xs: 'flex', sm: "flex", md: 'none' } }}
           >
-            {(guest === false || guest === undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
-
-          </Typography>
-        </Typography>
-
-        {/* home, logout, icons */}
-        <Box sx={{ display: { xs: 'none', sm: 'flex' }, color: 'black' }}>
-          <Button component={Link} to="/" sx={{ color: 'black' }}>
-            Home
-          </Button>
-          {sucess === true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
-            Logout
-          </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
-            Login
-          </Button>)}
-
-          <PopupNotification />
-
-          <IconButton onClick={colorMode.toggleColorMode} >
-            {theme.palette.mode === "dark" ? (
-              <DarkModeOutlinedIcon sx={{ color: colors.yellow }} />
-            ) : (
-              <LightModeOutlinedIcon />
-            )}
+            <MenuIcon />
           </IconButton>
-        </Box>
-      </Toolbar>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={() => handleClose("/user")}>User</MenuItem>
+            <MenuItem onClick={() => handleClose("/groups")}>Groups</MenuItem>
+            <MenuItem onClick={() => handleClose("/events")}>Events</MenuItem>
+            <MenuItem onClick={() => handleClose("/contacts")}>Contacts</MenuItem>
+            <MenuItem onClick={() => handleClose("/settings")}>Settings</MenuItem>
+          </Menu>
+          <Typography
+            variant="h4"
+            component="div"
+            sx={{ flexGrow: 1, display: "block", fontSize: matchesXs === true ? "12px" : "25px" }}
+          >
+            CalendarBoard
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ color: "black", m: "1px" }}
+              width={"fit-content"}
+            >
+              {(guest == false || guest == undefined) ? (<>Welcome {user && user.email}!</>) : (<>Welcome guest! Login for full acess.</>)}
+
+            </Typography>
+          </Typography>
+
+          {/* home, logout, icons */}
+          <Box sx={{ display: { xs: 'flex', sm: 'flex' }, color: 'black' }}>
+            <Button component={Link} to="/" sx={{ color: 'black' }}>
+              Home
+            </Button>
+            {sucess === true ? (<Button sx={{ color: 'red' }} onClick={handleLogout}>
+              Logout
+            </Button>) : (<Button sx={{ color: 'green' }} onClick={handleLogout}>
+              Login
+            </Button>)}
+
+            <PopupNotification />
+
+            <IconButton onClick={colorMode.toggleColorMode} >
+              {theme.palette.mode === "dark" ? (
+                <DarkModeOutlinedIcon sx={{ color: colors.yellow }} />
+              ) : (
+                <LightModeOutlinedIcon />
+              )}
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </div>
     </AppBar >
   );
 };

@@ -7,10 +7,12 @@ import Tabs from 'react-bootstrap/Tabs';
 import { deleteUser, reauthenticateWithCredential, getAuth } from 'firebase/auth';
 import '../../App.css';
 import { getDatabase, remove, ref } from "@firebase/database";
+import { useSelector } from "react-redux";
 
 const Settings = () => {
-  //const logOut = useUserAuth();
-  const user = getAuth().currentUser;
+  const { user, error, sucess } = useSelector(
+		(state) => state.user
+	)
   const [mySettings, setMySettings, setError, newEmail, setEmail, newPassword, setPassword] = useState("");
   const navigate = useNavigate();
   const db = getDatabase();
@@ -46,11 +48,11 @@ const Settings = () => {
           <Tabs>
             <Tab eventKey="first" title="Account Settings">
               <div style={{padding:10}}>
-                  <Button variant="primary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
+                  <Button variant="secondary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
                   <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
               </div>
             </Tab>
-            <Tab eventKey="second" title="Schedule Privacy">
+            {/* <Tab eventKey="second" title="Schedule Privacy">
               <div style={{padding:10}}>
                 <label>Select Schedule Privacy: </label>
                 <Form>
@@ -62,7 +64,7 @@ const Settings = () => {
                   </select>
                 </Form>
               </div>
-            </Tab>
+            </Tab> */}
           </Tabs>
         </div>
       </div>

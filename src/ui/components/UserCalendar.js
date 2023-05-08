@@ -8,13 +8,11 @@ import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 
-export const Calendar = () => {
-    const { user, success } = useSelector(
-        (state) => state.user
-      );
+export const UserCalendar = ({uid}) => {
 
     const navigate = useNavigate();
     // local event storage
+
     let eventsTemp = [];
     const [events, setEvents] = useState([]);
     let eventidTemp = [];
@@ -24,10 +22,10 @@ export const Calendar = () => {
 
         // firebase things
         const db = getDatabase();
-        const dataRef = ref(db, 'users/' + user.uid + '/events');
+        const dataRef = ref(db, 'users/' + uid + '/events');
 
         // populate array with event information, called every time the db updates
-        if (user != null) {
+        if (uid != null) {
             let idval = 0;
             onValue(dataRef, (snapshot) => {
                 snapshot.forEach(childSnapshot => {
@@ -47,7 +45,7 @@ export const Calendar = () => {
                 eventidTemp = [];
             });
         }
-    }, [user]);
+    }, [uid]);
 
     const handleEventClick = (arg) => {
         navigate("/event/" + eventid[arg.event.id]);
@@ -91,7 +89,7 @@ export const Calendar = () => {
             eventClick={handleEventClick}
             // eventContent={renderEventContent}
             events={events}
+            businessHours={true}
         />
     );
-
 };

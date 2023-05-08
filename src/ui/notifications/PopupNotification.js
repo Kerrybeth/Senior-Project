@@ -18,6 +18,8 @@ import Transitions from '../components/Transations';
 import NotificationList from './NotificationList';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import { tokens } from '../../theme';
 
 // notification status options
 const status = [
@@ -33,6 +35,8 @@ const status = [
 
 const PopupNotification = () => {
     const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
     const [open, setOpen] = useState(false);
@@ -66,6 +70,13 @@ const PopupNotification = () => {
         if (event?.target.value) setValue(event?.target.value);
     };
 
+    const test_notifications = [{ name: "CalandarBoard", body: "This is a test notification" },
+
+    { name: "Alex", body: "Your bread and butter is ready!" },
+
+    { name: "Stephane", body: "School is almost over" }]
+
+
     return (
         <>
             {/* actual notification btn  */}
@@ -84,12 +95,16 @@ const PopupNotification = () => {
                     aria-controls={open ? 'menu-list-grow' : undefined}
                     aria-haspopup="true"
                 >
-                    <NotificationsActiveIcon />
+
+                    <Badge variant="dot" color="error" invisible={false}>
+                        <NotificationsActiveIcon />
+                    </Badge>
+
                 </IconButton>
-            </Box>
+            </Box >
 
             {/* the pop up notifcation  */}
-            <Popper
+            < Popper
                 placement={matchesXs ? 'bottom' : 'bottom-end'}
                 open={open}
                 anchorEl={anchorRef.current}
@@ -105,7 +120,8 @@ const PopupNotification = () => {
                             }
                         }
                     ]
-                }}
+                }
+                }
             >
                 {({ TransitionProps }) => (
                     <Transitions position={matchesXs ? 'top' : 'top-right'} in={open} {...TransitionProps}>
@@ -136,15 +152,15 @@ const PopupNotification = () => {
                                                     </Box>
                                                 </Grid>
                                                 <Grid item xs={12} p={0}>
-                                                    <Divider sx={{ my: 0 }} />
+                                                    <Divider />
                                                 </Grid>
                                             </Grid>
-                                            <NotificationList />
+                                            {test_notifications.map(NotificationList)}
                                         </Grid>
                                     </Grid>
                                     <Divider />
                                     <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                                        <Button size="small" disableElevation component={Link} to="/notifications" onClick={handleClose}>
+                                        <Button size="small" sx={{ color: colors.main[400] }} disableElevation component={Link} to="/notifications" onClick={handleClose}>
                                             View All
                                         </Button>
                                     </CardActions>
@@ -153,7 +169,7 @@ const PopupNotification = () => {
                         </Paper>
                     </Transitions>
                 )}
-            </Popper>
+            </Popper >
         </>
     );
 };

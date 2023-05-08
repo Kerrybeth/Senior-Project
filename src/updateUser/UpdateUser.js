@@ -3,13 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { updateEmail, updatePassword, reauthenticateWithCredential, getAuth } from 'firebase/auth';
 import Button from 'react-bootstrap/Button'
 import '../App.css';
+import { useSelector } from "react-redux";
 
 const UpdateUser = () => {
+
+    const { user, error, sucess } = useSelector(
+		(state) => state.user
+	)
+
     const [newEmail, setEmail] = useState("");
     const [newPassword, setPassword] = useState("");
     const navigate = useNavigate();
     //const user = useUserAuth().user;
-    const user = getAuth().currentUser;
     
     const handlePassChange = (event) => {
         event.preventDefault();
