@@ -58,6 +58,9 @@ const Contacts = () => {
 
                 contactsTemp.push(name);
                 uidTemp.push(uid);
+                if (img == null) {
+                    img = "https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg";
+                }
                 imgTemp.push(img);
             });
             
