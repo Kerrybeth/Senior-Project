@@ -3,10 +3,11 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
-import { getDatabase, ref, onValue, child } from "firebase/database";
+import { getDatabase, ref, onValue, child, push, remove } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import '../../App.css';
+import Image from 'react-bootstrap/Image';
 
 const Groups = () => {
     const { user, error, sucess } = useSelector(
@@ -18,20 +19,21 @@ const Groups = () => {
     let groupsTemp = [];
     let descsTemp = [];
     let idtemp = [];
+    let requestsTemp = [];
     const [groups, setGroups] = useState([]);
     const [descs, setDescs] = useState([]);
     const [groupID, setGroupID] = useState([]);
+    const [requests, setRequests] = useState([]);
+    const db = getDatabase();
 
     useEffect(() => {
         // firebase things
-        const db = getDatabase();
+        
         const dataRef = ref(db, 'groups/');
 
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                let temp = childSnapshot.members.length;
-                for (let i = 0; i < temp; i++) {
-                    if (user.uid == childSnapshot.val().members[i]) {
+                    if (user.uid == childSnapshot.val().owner) {
                         let name = childSnapshot.val().name;
                         let desc = childSnapshot.val().desc;
                         let groupid2 = childSnapshot.key;
@@ -40,7 +42,6 @@ const Groups = () => {
                         groupsTemp.push(name);
                         descsTemp.push(desc);
                     }
-                }
             });
 
             setGroupID(idtemp);
@@ -51,7 +52,86 @@ const Groups = () => {
             idtemp = [];
         });
 
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child('type').val() == 'groupinv') {
+                    let email = findEmail(childSnapshot.child('from').val());
+                    requestsTemp.push(email);
+                }
+            });
+    
+            setRequests(requestsTemp);
+            requestsTemp = [];
+        });
+
     }, [user]);     
+
+    function findUid(em) {
+        let theirUid;
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let email = childSnapshot.child("profile").child("email").val();
+                if (em == email) {
+                    theirUid = childSnapshot.key;
+                }
+            });
+        });
+
+        return theirUid;
+    }
+
+    function findEmail(uid) {
+        let theirEmail;
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (uid == childSnapshot.key) {
+                    theirEmail = childSnapshot.child('profile').child('email').val();
+                }
+            });
+        });
+
+        return theirEmail;
+    }
+
+    function DisplayRequests() {
+        return (
+            <div>
+                {requests.map((req) => (
+                    <ListGroup.Item>
+                    <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />{req}</div>
+                    <div style={{padding:5}}>
+                        {' '}
+                        <Button variant="success" onClick={() => acceptRequest(req)}>Accept</Button>{' '} <Button variant="danger" onClick={() => denyRequest(req)}>Deny</Button>{' '}
+                    </div>
+                    </ListGroup.Item>
+                ))}
+            </div>
+        );
+    }
+
+    function acceptRequest(req) {
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("from").val() == findUid(req)) {
+                    update(ref(db, 'groups/' + user.uid), {
+                        name: req,
+                        uid: findUid(req)
+                    });
+                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+                }
+            });
+        });
+    }
+
+    function denyRequest(req) {
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("from").val() == findUid(req)) {
+                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+                }
+            });
+        });
+    }
 
     function GroupDisplay() {
         if (groups.length === 0) {
@@ -93,11 +173,7 @@ const Groups = () => {
                     </Tab>
                     <Tab eventKey="second" title="Invites">
                         <ListGroup>
-                            <ListGroup.Item>You were invited to "Group 2" by Logan Tiraboschi
-                                <div style={{ padding: 5 }}>
-                                    <Button variant="success">Accept</Button> <Button variant="danger">Deny</Button>
-                                </div>
-                            </ListGroup.Item>
+                            <DisplayRequests />
                         </ListGroup>
                     </Tab>
                 </Tabs>

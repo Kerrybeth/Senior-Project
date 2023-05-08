@@ -25,25 +25,70 @@ const GroupEdit = () => {
     const [members, setMembers] = useState([]);
     const [users, setUsers] = useState([]);
     const [ids, setIds] = useState([]);
-    const [invite, setInvite] = useState('Select People');
     const usersTemp = [];
     const idsTemp = [];
+	const adminsTemp = [];
 
     useEffect(() => {
         onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
-           snapshot.forEach(childSnapshot => {
+           	snapshot.forEach(childSnapshot => {
                let name = childSnapshot.val().name;
                let id = childSnapshot.val().uid;
                usersTemp.push(name);
                idsTemp.push(id);
-           });
+           	});
    
-           setUsers(usersTemp);
-           usersTemp = [];
-           setIds(idsTemp);
-           idsTemp = [];
-       });
+           	setUsers(usersTemp);
+           	usersTemp = [];
+           	setIds(idsTemp);
+           	idsTemp = [];
+       	});
+
+		onValue(ref(db, `groups/${groupId}/admins`), (snapshot) => {
+			snapshot.forEach(childSnapshot => {
+				let admins = childSnapshot.val();
+				adminsTemp.push(admins);
+			});
+			
+			setAdmins(adminsTemp);
+			adminsTemp = [];
+		})
    },);
+
+   	function findUid(em) {
+		let theirUid;
+		onValue(ref(db, 'users/'), (snapshot) => {
+			snapshot.forEach(childSnapshot => {
+				let email = childSnapshot.child("profile").child("email").val();
+				if (em == email) {
+					theirUid = childSnapshot.key;
+				}
+			});
+		});
+		return theirUid;
+	}
+
+	function reqCheck(uid) {
+	let req = true;
+		onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
+			snapshot.forEach(childSnapshot => {
+				if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("from").val() == user.uid) {
+					req = false;
+				}
+			});
+		});
+		return req;
+	}
+
+	function setInvite (args) {
+		let theirUid = findUid(args);
+		if (reqCheck(theirUid) && theirUid != null) {
+			push(ref(db, 'users/' + theirUid + '/notifications'), {
+				type:'groupinv',
+				from:user.uid
+			}); 
+		} 
+	}
 
 	function handleSubmit(event) {
 		console.log(gname);

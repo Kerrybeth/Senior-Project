@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useSelector } from "react-redux";
 import { getDatabase, ref, set, update, push, onValue } from "firebase/database";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const CreateGroup = () => {
 
@@ -14,9 +14,64 @@ const CreateGroup = () => {
 		(state) => state.user
 	)
 	const navigate = useNavigate();
-
+	const db = getDatabase();
 	const [gname, setGName] = useState('');
 	const [desc, setDesc] = useState('');
+	const [users, setUsers] = useState([]);
+	const [ids, setIds] = useState([]);
+	const usersTemp = [];
+	const idsTemp = [];
+
+	useEffect(() => {
+        onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
+           	snapshot.forEach(childSnapshot => {
+               let name = childSnapshot.val().name;
+               let id = childSnapshot.val().uid;
+               usersTemp.push(name);
+               idsTemp.push(id);
+           	});
+
+           	setUsers(usersTemp);
+           	usersTemp = [];
+           	setIds(idsTemp);
+           	idsTemp = [];
+       	});
+   });
+
+	function findUid(em) {
+        let theirUid;
+        onValue(ref(db, 'users/'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                let email = childSnapshot.child("profile").child("email").val();
+                if (em == email) {
+                    theirUid = childSnapshot.key;
+                }
+            });
+        });
+        return theirUid;
+    }
+
+	function reqCheck(uid) {
+        let req = true;
+        onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
+            snapshot.forEach(childSnapshot => {
+                if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("from").val() == user.uid) {
+                    req = false;
+                }
+            });
+        });
+        return req;
+    }
+
+	function setInvite (args) {
+		let theirUid = findUid(args);
+		if (reqCheck(theirUid) && theirUid != null) {
+			push(ref(db, 'users/' + theirUid + '/notifications'), {
+				type:'groupinv',
+				from:user.uid
+			}); 
+		} 
+	}
 
 	function handleSubmit(event) {
 		console.log(gname);
@@ -59,9 +114,14 @@ const CreateGroup = () => {
 							</Form.Group>
 							<Form.Group>
 								<Form.Label> Invite People: </Form.Label>
-								<Form.Select>
-									<option>Select People</option>
-								</Form.Select>
+								<Form.Select onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
+							        <option>Select People</option>
+							            {users.map((users) => {
+								            return (
+								                <option>{users}</option>
+								            )
+							            })}
+						        </Form.Select>
 							</Form.Group>
 							<Form.Group>
 								<Form.Label> Location:</Form.Label>
