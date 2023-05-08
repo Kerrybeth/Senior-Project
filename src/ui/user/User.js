@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Box, Stack} from "@mui/material";
+import { UserCalendar } from "../components/UserCalendar";
 
 const User = () => {
 	const { user, sucess } = useSelector(
@@ -46,7 +47,7 @@ const User = () => {
 					bio: bio
 				});
 			} else if (data.image == null) {
-				let image = "";
+				let image = "https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg";
 				update(ref(db, 'users/' + user.uid + '/profile'), {
 					image: image
 				});
@@ -77,7 +78,6 @@ const User = () => {
 
 	function handleImage(event) {
 		event.preventDefault();
-		alert("hi");
 
 		//const db = getDatabase(); 
 		update(ref(db, 'users/' + user.uid + '/profile'), {
@@ -88,8 +88,9 @@ const User = () => {
 	}
 
 	return (
-		<div>
-			<Box component='button' sx={{border: '0', backgroundColor: 'transparent'}} onClick={handleShow} style={{ minHeight: '150px', minWidth: '150px', position: 'relative', top: '100px', maxHeight:'150px', maxWidth: '150px' }}>
+		<div class="pageLight2">
+			<div>
+			<Box component='button' sx={{border: '0', backgroundColor: 'transparent', float: 'left'}} onClick={handleShow} style={{ minHeight: '150px', minWidth: '150px', position: 'relative', top: '75px', maxHeight:'150px', maxWidth: '150px' }}>
 				<Image id='profilepic' src={data.image} roundedCircle />
 			</Box>
 			<Modal show={show} onHide={handleClose} centered>
@@ -105,47 +106,54 @@ const User = () => {
 					</Form>
 				</Modal.Body>
 			</Modal>
-			<ListGroup style={{
+			<div style={{
 				display: 'flex',
 				minHeight: '100px',
-				maxWidth: '1000px',
-				position: 'fixed',
-				top: '100px',
-				right: '100px'
+				maxWidth: '15vw',
+				float: 'center',
+				paddingTop: '100px',
+				paddingLeft: '4vw',
+				paddingRight: '2vw'
 			}}>
 				<ListGroup.Item>
 					<Typography variant="h3" style={{
 						color: 'black',
 						justifyContent: 'left',
 						alignItems: 'left',
-						overflowWrap: 'break-word'
+						overflowWrap: 'break-word',
+						maxWidth: '60vw',
+						minWidth: '50vw',
+						paddingBottom: '10px'
 					}}>
-						Name: {data.name}
+						<b>Name</b>: {data.name}
 						<br />
-						Bio: {data.bio}
+						<b>Bio</b>: {data.bio}
 						<br />
 					</Typography>
-				</ListGroup.Item>
-				<ListGroup.Item>
+
 					<Link to="/UserEdit">
-						<Button variant="contained" sx={{ maxHeight: '50px', }}>
+						<Button variant="contained" sx={{ maxHeight: '50px' }}>
 							<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
 								Edit
 							</Typography>
 						</Button>
 					</Link>
 				</ListGroup.Item>
-			</ListGroup>
+			</div>
+			</div>
+			<div id="usercalendar"><UserCalendar uid={user.uid} /></div>
 			<Box>
-				<Typography variant="h3" style={{ position: 'relative', top: '200px' }}>
-					Availability
-					<Link to="/AvailEdit">
-						<Button variant="contained" sx={{ maxHeight: '50px', }}>
+				<Typography variant="h3" style={{ position: 'relative', top: '75px'}}>
+				<div style={{paddingBottom: '20px'}}><b>Availability</b>
+				<Link to="/AvailEdit">
+						<Button variant="contained" sx={{ maxHeight: '50px', left: '20px'}}>
 							<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
 								Edit
 							</Typography>
 						</Button>
 					</Link>
+				</div>
+					
 					{timeRanges.map(({ dayOfWeek, start, end }) => (
         			<div key={dayOfWeek}>
           			<h2>{dayOfWeek}</h2>

@@ -31,10 +31,12 @@ const Contacts = () => {
     let emailsTemp = [];
     let requestsTemp = [];
     let uidTemp = [];
+    let imgTemp = [];
     const [contacts, setContacts] = useState([]);
     const [uid, setUid] = useState([]);
     const [emails, setEmails] = useState([]);
     const [requests, setRequests] = useState([]);
+    const [images, setImages] = useState([]);
 
     // db
     const db = getDatabase();
@@ -48,14 +50,26 @@ const Contacts = () => {
             snapshot.forEach(childSnapshot => {
                 let name = childSnapshot.val().name;
                 let uid = childSnapshot.val().uid;
+                let img = null;
+
+                onValue(ref(db, 'users/' + uid + '/profile'), (snapshot) => {
+                    img = snapshot.val().image;
+                });
+
                 contactsTemp.push(name);
                 uidTemp.push(uid);
+                if (img == null) {
+                    img = "https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg";
+                }
+                imgTemp.push(img);
             });
             
             setUid(uidTemp);
             setContacts(contactsTemp);
+            setImages(imgTemp);
             contactsTemp = [];
             uidTemp = [];
+            imgTemp = [];
         });
 
         // pulling requests
@@ -70,7 +84,7 @@ const Contacts = () => {
             setRequests(requestsTemp);
             requestsTemp = [];
         });
-    }, [user]);
+    }, []);
 
     /**
      * 
@@ -109,7 +123,7 @@ const Contacts = () => {
                         <ListGroup.Item>
                             <Link to={`/user/${uid[i]}`}> {/* Link to the corresponding userpage */}
                         <div style={{padding:5}}>
-                            <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                            <Image src={images[i]} roundedCircle className="listThumbnail" />
                             {' '}{em}
                         </div>
                         </Link>

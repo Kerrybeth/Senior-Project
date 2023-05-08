@@ -55,6 +55,14 @@
   padding-bottom:2%;
 }
 
+.pageLight2 {
+  color: black;
+  background-color: white;
+  min-width:100%;
+  min-height:50vh;
+  padding-left:40px;
+}
+
 .pageLightLeft {
   color: white;
   background-color: #667798;
@@ -71,6 +79,12 @@
   width:90%;
   padding-top:2%;
   padding-bottom:2%;
+}
+
+#usercalendar {
+  min-height: 30vh;
+  width:90%;
+  padding-top:8%;
 }
 
 #profilepic {
