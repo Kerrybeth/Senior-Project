@@ -58,7 +58,7 @@ const Login = () => {
     logIn(email, password).then((res) => {
       if (res.success) {
         const user = cookies.get('emailUser');
-        console.log(`handling submit user =${user}, res is ${res}`)
+        console.log(`handling submit user = ${JSON.stringify(user)}, user is = ${JSON.stringify(res.user)}`)
         dispatch(userLoggedIn(user));
         navigate("/");
       } else {

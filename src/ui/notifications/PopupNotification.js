@@ -79,7 +79,7 @@ const PopupNotification = () => {
     const { user, hasNotification } = useSelector(
         (state) => state.user
       )
-    console.log(`state of hasNotification ${hasNotification}`)  
+    console.log(`state of hasNotification = ${hasNotification}`)  
     
     return (
         <>

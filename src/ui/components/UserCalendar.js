@@ -7,6 +7,8 @@ import '../../App.css';
 import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
+
 
 export const UserCalendar = ({uid}) => {
 
@@ -75,6 +77,7 @@ export const UserCalendar = ({uid}) => {
     // }
 
     return (
+        <Box m={1}>
         <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
             headerToolbar={{
@@ -91,5 +94,6 @@ export const UserCalendar = ({uid}) => {
             events={events}
             businessHours={true}
         />
+        </Box>
     );
 };

@@ -102,6 +102,7 @@ function App() {
         if (rememberMe === "true") {
           localStorage.setItem('userToken', currentuser.uid);
           dispatch(userLoggedIn(currentuser));
+          console.log(`just dispatched a user = ${JSON.stringify(currentuser)}`)
         } else {
           localStorage.setItem('userToken', '')
         }
