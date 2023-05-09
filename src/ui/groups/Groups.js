@@ -3,7 +3,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
-import { getDatabase, ref, onValue, child, push, remove, update } from "firebase/database";
+import { getDatabase, ref, onValue, child, push, remove, update, get } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import '../../App.css';
@@ -20,10 +20,12 @@ const Groups = () => {
     let descsTemp = [];
     let idtemp = [];
     let requestsTemp = [];
+    let membersTemp = [];
     const [groups, setGroups] = useState([]);
     const [descs, setDescs] = useState([]);
     const [groupID, setGroupID] = useState([]);
     const [requests, setRequests] = useState([]);
+    const [membersNew, setMembersNew] = useState([]);
     const db = getDatabase();
 
     useEffect(() => {
@@ -33,17 +35,22 @@ const Groups = () => {
 
         onValue(dataRef, (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                    if (user.uid == childSnapshot.val().owner) {
-                        let name = childSnapshot.val().name;
-                        let desc = childSnapshot.val().desc;
-                        let groupid2 = childSnapshot.key;
-
-                        idtemp.push(groupid2);
-                        groupsTemp.push(name);
-                        descsTemp.push(desc);
-                    }
-            });
-
+                    childSnapshot.forEach(groupAt => {
+                        if (groupAt.key === "members") {
+                            groupAt.forEach(member => {
+                                if (user.uid === member.val()) {
+                                    let name = childSnapshot.val().name;
+                                    let desc = childSnapshot.val().desc;
+                                    let groupid2 = childSnapshot.key;
+            
+                                    idtemp.push(groupid2);
+                                    groupsTemp.push(name);
+                                    descsTemp.push(desc);
+                                }
+                            })
+                        }
+                    });
+                });
             setGroupID(idtemp);
             setGroups(groupsTemp);
             setDescs(descsTemp);
@@ -54,9 +61,12 @@ const Groups = () => {
 
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                let x = childSnapshot.val().groupid;
-                alert(x);
-                requestsTemp.push(x);
+                if (childSnapshot.child("type").val() == "groupinv") {
+                    let x = childSnapshot.child("groupid").val();
+                    //alert(x);
+                    requestsTemp.push(x);
+                }
+                
             });
         });
 
@@ -82,7 +92,7 @@ const Groups = () => {
     function getName(gid) {
         let groupname;
         onValue(ref(db, 'groups/' + gid), (snapshot) => {
-            groupname = snapshot.val().name;
+            groupname = snapshot.child("name").val();
         });
         return groupname;
     }
@@ -121,28 +131,38 @@ const Groups = () => {
         );
     }
 
-    function acceptRequest(req) {
-        alert(req);
-        update(ref(db, 'groups/' + req), {
-            members: user.uid
+    async function acceptRequest(req) {
+        let membersSnapshot = await get(ref(db, 'groups/' + req + '/members'));
+        let membersTemp = [];
+      
+        membersSnapshot.forEach((childSnapshot) => {
+            let mem = childSnapshot.val();
+            membersTemp.push(mem);
         });
-        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
-            snapshot.forEach(childSnapshot => {
-                alert(childSnapshot.child("groupid").val());
-                if (childSnapshot.child("type").val() === 'groupinv' && childSnapshot.child("groupid").val() === req) {
-                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
-                }
-            });
+      
+        membersTemp.push(user.uid);
+      
+        await update(ref(db, 'groups/' + req), {
+            members: membersTemp
+        });
+      
+        let notificationsSnapshot = await get(ref(db, 'users/' + user.uid + '/notifications'));
+      
+        notificationsSnapshot.forEach((childSnapshot) => {
+            if (childSnapshot.child('type').val() === 'groupinv' && childSnapshot.child('groupid').val() === req) {
+                remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+            }
         });
     }
+      
 
-    function denyRequest(req) {
-        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
-            snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("groupid").val() == req) {
-                    remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
-                }
-            });
+    async function denyRequest(req) {
+        let notificationsSnapshot = await get(ref(db, 'users/' + user.uid + '/notifications'));
+      
+        notificationsSnapshot.forEach((childSnapshot) => {
+            if (childSnapshot.child('type').val() === 'groupinv' && childSnapshot.child('groupid').val() === req) {
+                remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
+            }
         });
     }
 

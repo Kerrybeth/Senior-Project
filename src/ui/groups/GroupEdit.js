@@ -25,6 +25,7 @@ const GroupEdit = () => {
     const [members, setMembers] = useState([]);
     const [users, setUsers] = useState([]);
     const [ids, setIds] = useState([]);
+	const [invite, setInvite] = useState("");
     const usersTemp = [];
     const idsTemp = [];
 	const adminsTemp = [];
@@ -80,9 +81,12 @@ const GroupEdit = () => {
 		return req;
 	}
 
-	function setInvite (args) {
-		let theirUid = findUid(args);
+	function sendInv () {
+		alert(invite);
+		alert(findUid(invite));
+		let theirUid = findUid(invite);
 		if (reqCheck(theirUid) && theirUid != null) {
+			alert("im here");
 			push(ref(db, 'users/' + theirUid + '/notifications'), {
 				type:'groupinv',
 				from: user.uid,
@@ -95,10 +99,10 @@ const GroupEdit = () => {
 		console.log(gname);
 		event.preventDefault();
 
+		sendInv();
+
 		update(ref(db, `groups/${groupId}`), {
 			name: gname,
-			admins: admins,
-			members: members,
 			desc: desc
 		});
 
