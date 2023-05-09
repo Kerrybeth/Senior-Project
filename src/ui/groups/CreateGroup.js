@@ -19,8 +19,8 @@ const CreateGroup = () => {
 	const [desc, setDesc] = useState('');
 	const [users, setUsers] = useState([]);
 	const [ids, setIds] = useState([]);
-	const usersTemp = [];
-	const idsTemp = [];
+	let usersTemp = [];
+	let idsTemp = [];
 
 	useEffect(() => {
         onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
@@ -69,6 +69,7 @@ const CreateGroup = () => {
 			push(ref(db, 'users/' + theirUid + '/notifications'), {
 				type:'groupinv',
 				from:user.uid
+				//groupid: groupId
 			}); 
 		} 
 	}
@@ -112,9 +113,9 @@ const CreateGroup = () => {
 								<Form.Label> Description: </Form.Label>
 								<Form.Control type="textarea" placeholder="Enter Description" value={desc} onChange={(event) => setDesc(event.target.value)} style={{ minHeight: '200px' }} />
 							</Form.Group>
-							<Form.Group>
+							{/* <Form.Group>
 								<Form.Label> Invite People: </Form.Label>
-								<Form.Select onChange={(event) => setInvite(event.target.value)}> {/*Needs implementation.*/}
+								<Form.Select onChange={(event) => setInvite(event.target.value)}>}
 							        <option>Select People</option>
 							            {users.map((users) => {
 								            return (
@@ -122,7 +123,7 @@ const CreateGroup = () => {
 								            )
 							            })}
 						        </Form.Select>
-							</Form.Group>
+							</Form.Group> */}
 							<Form.Group>
 								<Form.Label> Location:</Form.Label>
 								<Form.Control type="text" placeholder="Enter Location" />

@@ -85,7 +85,8 @@ const GroupEdit = () => {
 		if (reqCheck(theirUid) && theirUid != null) {
 			push(ref(db, 'users/' + theirUid + '/notifications'), {
 				type:'groupinv',
-				from:user.uid
+				from: user.uid,
+				groupid: groupId
 			}); 
 		} 
 	}

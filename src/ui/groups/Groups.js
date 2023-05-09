@@ -3,7 +3,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
-import { getDatabase, ref, onValue, child, push, remove } from "firebase/database";
+import { getDatabase, ref, onValue, child, push, remove, update } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import '../../App.css';
@@ -54,15 +54,14 @@ const Groups = () => {
 
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child('type').val() == 'groupinv') {
-                    let email = findEmail(childSnapshot.child('from').val());
-                    requestsTemp.push(email);
-                }
+                let x = childSnapshot.val().groupid;
+                alert(x);
+                requestsTemp.push(x);
             });
-    
-            setRequests(requestsTemp);
-            requestsTemp = [];
         });
+
+        setRequests(requestsTemp);
+        requestsTemp = [];
 
     }, [user]);     
 
@@ -80,6 +79,14 @@ const Groups = () => {
         return theirUid;
     }
 
+    function getName(gid) {
+        let groupname;
+        onValue(ref(db, 'groups/' + gid), (snapshot) => {
+            groupname = snapshot.val().name;
+        });
+        return groupname;
+    }
+
     function findEmail(uid) {
         let theirEmail;
         onValue(ref(db, 'users/'), (snapshot) => {
@@ -94,14 +101,19 @@ const Groups = () => {
     }
 
     function DisplayRequests() {
+        // onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
+        //     snapshot.forEach(childSnapshot => {
+        //         let x = childSnapshot.val();
+        //     });
+        // });
         return (
             <div>
-                {requests.map((req) => (
-                    <ListGroup.Item>
-                    <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />{req}</div>
+                {requests.map((groupid, i) => (
+                    <ListGroup.Item key={i}>
+                    <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />{getName(groupid)}</div>
                     <div style={{padding:5}}>
                         {' '}
-                        <Button variant="success" onClick={() => acceptRequest(req)}>Accept</Button>{' '} <Button variant="danger" onClick={() => denyRequest(req)}>Deny</Button>{' '}
+                        <Button variant="success" onClick={() => acceptRequest(groupid)}>Accept</Button>{' '} <Button variant="danger" onClick={() => denyRequest(groupID[i])}>Deny</Button>{' '}
                     </div>
                     </ListGroup.Item>
                 ))}
@@ -110,13 +122,14 @@ const Groups = () => {
     }
 
     function acceptRequest(req) {
+        alert(req);
+        update(ref(db, 'groups/' + req), {
+            members: user.uid
+        });
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("from").val() == findUid(req)) {
-                    update(ref(db, 'groups/' + user.uid), {
-                        name: req,
-                        uid: findUid(req)
-                    });
+                alert(childSnapshot.child("groupid").val());
+                if (childSnapshot.child("type").val() === 'groupinv' && childSnapshot.child("groupid").val() === req) {
                     remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
                 }
             });
@@ -126,7 +139,7 @@ const Groups = () => {
     function denyRequest(req) {
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("from").val() == findUid(req)) {
+                if (childSnapshot.child("type").val() == 'groupinv' && childSnapshot.child("groupid").val() == req) {
                     remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
                 }
             });
