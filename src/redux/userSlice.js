@@ -29,6 +29,7 @@ export const userSlice = createSlice({
         error: null,
         sucess: false,
         rememberMe: "false",
+        hasNotification: false
     },
     reducers: {
         guestUserLoggedin: (state) => {
@@ -54,6 +55,12 @@ export const userSlice = createSlice({
         },
         userLoggedInAndNotSetRememberMe: (state) => {
             state.rememberMe = "false"
+        }, 
+        userLoggedInAndHasNotification: (state) => {
+            state.hasNotification = true
+        },
+        userLoggedInAndNoNotification: (state) => {
+            state.hasNotification = false
         }
     },
     extraReducers: {
@@ -73,6 +80,6 @@ export const userSlice = createSlice({
         },
     },
 });
-export const { guestUserLoggedin, guestUserLoggedOut, userLoggedIn, userLoggedOut, userLoggedInAndSetRememberMe, userLoggedInAndNotSetRememberMe } = userSlice.actions;
+export const { guestUserLoggedin, guestUserLoggedOut, userLoggedIn, userLoggedOut, userLoggedInAndSetRememberMe, userLoggedInAndNotSetRememberMe, userLoggedInAndHasNotification, userLoggedInAndNoNotification } = userSlice.actions;
 
 export default userSlice.reducer;

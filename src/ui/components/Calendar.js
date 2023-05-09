@@ -27,7 +27,7 @@ export const Calendar = () => {
         const dataRef = ref(db, 'users/' + user.uid + '/events');
 
         // populate array with event information, called every time the db updates
-        if (user != null) {
+        if (user != null || user != undefined) {
             let idval = 0;
             onValue(dataRef, (snapshot) => {
                 snapshot.forEach(childSnapshot => {

@@ -90,7 +90,7 @@ const NotificationList = ({ name, body, time = "a few seconds ago", label = "new
                     </ListItemSecondaryAction>
                 </ListItem>
                 <Grid container direction="column" className="list-container">
-                    <Grid item xs={12} sx={{ p: 1 }}>
+                    <Grid item xs={12} sx={{ p: 0.5 }}>
                         <Typography variant="subtitle2">{body}</Typography>
                     </Grid>
                     <Grid item xs={12} sx={{ p: 1 }}>

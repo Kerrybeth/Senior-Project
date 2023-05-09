@@ -1,4 +1,4 @@
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./ui/home/Home";
 import Error from "./ui/components/Error";
@@ -83,11 +83,15 @@ function App() {
     // createNotification(Color.success);
   });
 
+  // TODO - make notifications this happen only once!
+  //welcome msg 
   useEffect(() => {
-    setMessage("Welcome!");
+    setMessage("CalandarBoard v1.0.0");
     createNotification(Color.success);
   }, [sucess]);
 
+  const token = localStorage.getItem('userToken');
+  //updating current user 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       if (currentuser !== undefined && currentuser !== null) {
@@ -102,7 +106,7 @@ function App() {
           localStorage.setItem('userToken', '')
         }
       } else {
-        console.log(`current user is null : ${currentuser}`);
+        console.log(`current user is ${currentuser}, userToken is ${token}`);
       }
     });
 
@@ -137,8 +141,8 @@ function App() {
               component="nav"
               sx={{
                 width: sucess === true ? sizeConfigs.sidebar.width : 0,
-                flexShrink: 0, 
-                display: { xs: "none", md: "flex"}
+                flexShrink: 0,
+                display: { xs: "none", md: "flex" }
               }}
             >
               {sucess === true ? (<Sidebar />) : (<></>)}

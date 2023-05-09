@@ -7,8 +7,11 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-
+import { Dispatch } from "redux";
+import { userLoggedIn } from "./redux/userSlice";
 import { sendPasswordResetEmail } from "firebase/auth";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHOddbvXPb8w9-VtVgI0iStfZgqmuQKnc",
@@ -24,7 +27,10 @@ const firebaseConfig = {
 
 export function logIn(email, password) {
   auth.setPersistence(browserSessionPersistence);
-  return signInWithEmailAndPassword(auth, email, password).catch((error) => {
+  return signInWithEmailAndPassword(auth, email, password).then((res) => {
+    console.log(`sign in using email and password user=${res.user}`)
+    cookies.set('emailUser', res.user, { path: '/' });
+    return {success: true, error: null}}).catch((error) => {
     if (email === '' || password === '') {
       return {
         success: false,
@@ -52,7 +58,7 @@ export function logIn(email, password) {
 
 export function signUp(email, password) {
   return createUserWithEmailAndPassword(auth, email, password).then((res) => {
-
+    return res; 
   }).catch((err) => {
     return { success: false, error: "could not signup : " + err.message }
   })

@@ -32,7 +32,7 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext);
 
   const navigate = useNavigate();
-  const { user, sucess, guest } = useSelector(
+  const { user, sucess, guest, hasNotifications } = useSelector(
     (state: any) => state.user
   )
 

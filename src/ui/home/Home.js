@@ -10,7 +10,7 @@ const Home = () => {
 	)
 
   const db = getDatabase(); 
-        if(guest == false){
+        if(guest == false && user != undefined){
         update(ref(db, 'users/' + user.uid + '/profile'), {
             email: user.email
         });

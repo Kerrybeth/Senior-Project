@@ -17,6 +17,8 @@ import { sizeConfigs } from "../components/configs";
 import { useTheme } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 /* test comment */
 const Login = () => {
@@ -35,7 +37,7 @@ const Login = () => {
 
 
   useEffect(() => {
-    if(guest === false && sucess){
+    if (guest === false && sucess) {
       navigate("/")
     }
     if (_rememberMe === "true") {
@@ -43,7 +45,7 @@ const Login = () => {
     } else if (_rememberMe === "false") {
       dispatch(userLoggedInAndNotSetRememberMe())
     }
-  }, [rememberMe, sucess]);
+  }, [sucess]);
 
   const handleGuestSignIn = () => {
     // signInAnonymously(auth).catch(alert);
@@ -53,18 +55,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email.length === 0 || password.length === 0) {
-      setError("Enter a valid email or password!");
-    } else {
-      logIn(email, password).then((res) => {
-        if (res.success) {
-          dispatch(userLoggedIn(res.user));
-          navigate("/");
-        } else {
-          setError(res.error);
-        }
-      })
-    }
+    logIn(email, password).then((res) => {
+      if (res.success) {
+        const user = cookies.get('emailUser');
+        console.log(`handling submit user =${user}, res is ${res}`)
+        dispatch(userLoggedIn(user));
+        navigate("/");
+      } else {
+        setError(res.error);
+      }
+    })
   };
 
   const handleGoogleSignIn = async (e) => {
@@ -82,14 +82,13 @@ const Login = () => {
 
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
-
   return (
     <Stack sx={{
       width: `100%`,
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      p: matchesXs === true? 0 : 20
+      p: matchesXs === true ? 0 : 20
     }} spacing={1}>
 
       <Typography variant="h1" sx={{ textAlign: "center", m: 1, p: 1 }}>
@@ -121,7 +120,7 @@ const Login = () => {
           />
         </Form.Group>
       </Form>
-      <Button variant="primary" size="small" type="Submit" onClick={handleSubmit} sx={{ m: 2, p: 1, }}>
+      <Button variant="primary" size="small" type="Submit" sx={{ m: 2, p: 1, }} onClick={handleSubmit}>
         Log In
       </Button>
 
@@ -139,6 +138,7 @@ const Login = () => {
 
 
       <h6>Rememeber Me</h6>
+      <Box sx={{backgroundColor: "grey", borderRadius: "16px", p: 2}}>
       <FormControl defaultValue="no">
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
@@ -149,8 +149,7 @@ const Login = () => {
           <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="false" control={<Radio />} label="No" defaultChecked={"true"} />
         </RadioGroup>
       </FormControl>
-
-
+      </Box>
 
       <Button variant="text" onClick={() => navigate("/signup")}> Need An Account? Sign up</Button>
       <Button variant="text" onClick={() => navigate("/reset")}> Reset Password</Button>

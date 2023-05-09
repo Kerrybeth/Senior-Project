@@ -21,34 +21,59 @@ import { useSelector } from "react-redux";
 import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useEffect, useState } from 'react';
 import NotificationList from "./NotificationList";
+import { onSnapshot, query } from "firebase/firestore";
+import { Dispatch } from "redux";
+import { userLoggedInAndHasNotification, userLoggedInAndNoNotification } from "../../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 const Notifications = () => {
     let title = "CalendarBoard/Notifications";
     const theme = useTheme();
-    const [notifcation, setNotifications] = useState({});
+    const [notifcation, setNotifications] = useState([]);
+    const dispatch = useDispatch();
 
-    const test_notifications = [{name : "CalandarBoard", body: "This is a test notification"},
 
-    {name: "Alex", body: "Your bread and butter is ready!"},
+    const test_notifications = [{ name: "CalandarBoard", body: "This is a test notification" },
 
-    {name: "Stephane", body: "School is almost over"}]
- 
+    { name: "Alex", body: "Your bread and butter is ready!" },
+
+    { name: "Stephane", body: "School is almost over" }]
+
     const { user, error, sucess } = useSelector(
         (state) => state.user
     )
 
+    let eventsTemp = [];
+    // grab notifications 
     useEffect(() => {
+
+        // firebase things
         const db = getDatabase();
         const dataRef = ref(db, 'users/' + user.uid + '/notifications');
+        if (user != null || user != undefined) {
+            onValue(dataRef, (snapshot) => {
+                snapshot.forEach(childSnapshot => {
+                    let name = childSnapshot.val().name;
+                    let from = childSnapshot.val().from;
+                    let body = childSnapshot.val().body;
+                    let type = childSnapshot.val().type;
 
-        return onValue(dataRef, (snapshot) => {
-            const data = snapshot.val();
+                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id });
+                    console.log(`about to set notifications from=${from} body=${body}`)
+                });
+                setNotifications(eventsTemp);
+                eventsTemp = [];
+            });
+        }
 
-            if (snapshot.exists() && user !== null) {
-              setNotifications(data);
-            }
-        });
+        if(notifcation.length == 0 ){
+            dispatch(userLoggedInAndNoNotification);
+        }else{
+            dispatch(userLoggedInAndHasNotification);
+        }
     }, []);
+
+
 
     return (
         <>
@@ -67,7 +92,7 @@ const Notifications = () => {
                 <Typography variant="h5" sx={{ m: 2, position: "flex" }}>Here is a closer view of all your notifications</Typography>
 
                 <List sx={{ width: '100%', bgcolor: 'background.paper', m: 1 }}>
-                    {test_notifications.map(NotificationList)}
+                    {notifcation.map(data => NotificationList(data))}
                 </List>
             </Box>
         </>

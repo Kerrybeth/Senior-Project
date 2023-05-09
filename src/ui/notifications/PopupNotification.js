@@ -20,7 +20,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import { tokens } from '../../theme';
-
+import { useSelector } from 'react-redux';
 // notification status options
 const status = [
     {
@@ -70,13 +70,17 @@ const PopupNotification = () => {
         if (event?.target.value) setValue(event?.target.value);
     };
 
-    const test_notifications = [{ name: "CalandarBoard", body: "This is a test notification" },
+    const test_notifications = [{ name: "Admin", body: "This is a test notification" },
 
     { name: "Alex", body: "Your bread and butter is ready!" },
 
     { name: "Stephane", body: "School is almost over" }]
 
-
+    const { user, hasNotification } = useSelector(
+        (state) => state.user
+      )
+    console.log(`state of hasNotification ${hasNotification}`)  
+    
     return (
         <>
             {/* actual notification btn  */}
@@ -96,7 +100,7 @@ const PopupNotification = () => {
                     aria-haspopup="true"
                 >
 
-                    <Badge variant="dot" color="error" invisible={false}>
+                    <Badge variant="dot" color="error" invisible={!hasNotification}>
                         <NotificationsActiveIcon />
                     </Badge>
 
@@ -132,7 +136,7 @@ const PopupNotification = () => {
                                         <Grid item xs={12}>
                                             <Grid container direction="column" spacing={2}>
                                                 <Grid item xs={12}>
-                                                    <Box sx={{ px: 2, pt: 0.25, p: 2 }}>
+                                                    <Box sx={{ px: 1, pt: 0.25, p: 1 }}>
                                                         <TextField
                                                             id="outlined-select-currency-native"
                                                             select
