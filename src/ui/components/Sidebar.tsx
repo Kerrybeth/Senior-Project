@@ -193,26 +193,31 @@ function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { 
 }
 
 const BugReport = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [emailError, setEmailError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
+  const [description, setDescription] = useState("")
+  const [descriptionError, setDescriptionError] = useState(false)
+
+  const [reproduce, setReproduce] = useState("")
+  const [reproduceError, setReproduceError] = useState(false)
+
+  const [behavior, setBehavior] = useState("")
+  const [behaviorError, setBehaviorError] = useState(false)
+
+  const [severity, setSeverity] = useState("")
+  const [severityError, setSeverityError] = useState(false)
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
 
-    setEmailError(false)
-    setPasswordError(false)
+    setDescriptionError(false)
+    setReproduceError(false)
 
-    if (email == '') {
-      setEmailError(true)
-    }
-    if (password == '') {
-      setPasswordError(true)
-    }
+    if (description == '') setDescriptionError(true)
+    if (reproduce == '') setReproduceError(true)
+  
 
-    if (email && password) {
-      console.log(email, password)
+
+    if (description && reproduce) {
+      console.log(description, reproduce)
     }
   }
 
@@ -221,52 +226,52 @@ const BugReport = () => {
       <form autoComplete="off" onSubmit={handleSubmit}>
         <TextField
           label="Description of bug"
-          onChange={e => setEmail(e.target.value)}
+          onChange={e => setDescription(e.target.value)}
           required
           variant="outlined"
           color="secondary"
           type="email"
           sx={{ mb: 3 }}
           fullWidth
-          value={email}
-          error={emailError}
+          value={description}
+          error={descriptionError}
         />
         <TextField
           label="Steps to reproduce"
-          onChange={e => setEmail(e.target.value)}
+          onChange={e => setReproduce(e.target.value)}
           required
           variant="outlined"
           color="secondary"
           type="email"
           sx={{ mb: 3 }}
           fullWidth
-          value={email}
-          error={emailError}
+          value={reproduce}
+          error={reproduceError}
         />
 
         <TextField
           label="Description of Expected vs Actual Behavior?"
-          onChange={e => setEmail(e.target.value)}
+          onChange={e => setBehavior(e.target.value)}
           required
           variant="outlined"
           color="secondary"
           type="email"
           sx={{ mb: 3 }}
           fullWidth
-          value={email}
-          error={emailError}
+          value={behavior}
+          error={behaviorError}
         />
 
         <TextField
           label="How severe is this bug? "
-          onChange={e => setEmail(e.target.value)}
+          onChange={e => setSeverity(e.target.value)}
           variant="outlined"
           color="secondary"
           type="email"
           sx={{ mb: 3 }}
           fullWidth
-          value={email}
-          error={emailError}
+          value={severity}
+          error={severityError}
         />
 
 

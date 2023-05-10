@@ -153,8 +153,6 @@ function App() {
               sx={{
                 flexGrow: 1,
                 width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `0`,
-                minHeight: "100vh",
-                backgroundColor: colors.main[900]
               }}
             >
               <Toolbar />
@@ -183,7 +181,7 @@ function App() {
                   <Route path="/event/:eventID" element={<EventPage />} />
                 </Route>
               </Routes>
-              {notifications.map(({ id, color }) => (
+              {notifications.length != 0 && notifications.map(({ id, color }) => (
                 <Notification
                   key={id}
                   onDelete={() => deleteNotification(id)}

@@ -90,7 +90,7 @@ export const Chat = ({ room }) => {
                 </Typography>
                 <Item> <div className="messages">
                     {messages.map((message) => (
-                        <div key={message.id} className="message">
+                        <div style={{"overflow-y": "auto", "height": 200}} key={message.id} className="message" st>
                             <span className="user">{message.user}:</span> {message.text}
                         </div>
                     ))}
