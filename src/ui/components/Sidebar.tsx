@@ -1,4 +1,4 @@
-import { Avatar, Drawer, List, Stack, Toolbar } from "@mui/material";
+import { Avatar, Drawer, List, Stack, Toolbar, TextField, FormControl, Button, Box } from "@mui/material";
 import assets from "../../assets";
 import { colorConfigs } from "./configs";
 import { sizeConfigs } from "./configs";
@@ -7,7 +7,6 @@ import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
 import { Typography } from "@mui/material";
 import useTheme from "@mui/material/styles/useTheme";
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -23,6 +22,12 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { IconButton } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { tokens } from "../../theme";
+import BugReportIcon from '@mui/icons-material/BugReport';
+import Slide from '@mui/material/Slide';
+import { TransitionProps } from '@mui/material/transitions';
+import { useState } from "react";
+import { Link } from "react-router-dom"
+import { Bug } from "tabler-icons-react";
 
 function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { handleKerryBethClick }: any, { handleChrisClick }: any, { handleLoganClick }: any) {
   return (
@@ -43,7 +48,7 @@ function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { 
                 variant="body2"
                 color="text.primary"
               >
-                I'll be in your neighborhood doing errands this…
+                I'll be looking for animals in the closed forest
               </Typography>
             </React.Fragment>
 
@@ -76,7 +81,7 @@ function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { 
                 variant="body2"
                 color="text.primary"
               >
-                I'll be in your neighborhood doing errands this…
+                I'll be sleeping before you know it
               </Typography>
             </React.Fragment>
 
@@ -107,7 +112,7 @@ function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { 
                 variant="body2"
                 color="text.primary"
               >
-                I'll be in your neighborhood doing errands this…
+                Winner, Winner, Chicken, and Dinner.
               </Typography>
             </React.Fragment>
 
@@ -138,7 +143,7 @@ function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { 
                 variant="body2"
                 color="text.primary"
               >
-                I'll be in your neighborhood doing errands this…
+                I'll be in your neighborhood doing errands
               </Typography>
             </React.Fragment>
 
@@ -187,6 +192,103 @@ function AuthorsList({ handleDavidClick }: any, { handleStephaneClick }: any, { 
   );
 }
 
+const BugReport = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault()
+
+    setEmailError(false)
+    setPasswordError(false)
+
+    if (email == '') {
+      setEmailError(true)
+    }
+    if (password == '') {
+      setPasswordError(true)
+    }
+
+    if (email && password) {
+      console.log(email, password)
+    }
+  }
+
+  return (
+    <Box m={1}>
+      <form autoComplete="off" onSubmit={handleSubmit}>
+        <TextField
+          label="Description of bug"
+          onChange={e => setEmail(e.target.value)}
+          required
+          variant="outlined"
+          color="secondary"
+          type="email"
+          sx={{ mb: 3 }}
+          fullWidth
+          value={email}
+          error={emailError}
+        />
+        <TextField
+          label="Steps to reproduce"
+          onChange={e => setEmail(e.target.value)}
+          required
+          variant="outlined"
+          color="secondary"
+          type="email"
+          sx={{ mb: 3 }}
+          fullWidth
+          value={email}
+          error={emailError}
+        />
+
+        <TextField
+          label="Description of Expected vs Actual Behavior?"
+          onChange={e => setEmail(e.target.value)}
+          required
+          variant="outlined"
+          color="secondary"
+          type="email"
+          sx={{ mb: 3 }}
+          fullWidth
+          value={email}
+          error={emailError}
+        />
+
+        <TextField
+          label="How severe is this bug? "
+          onChange={e => setEmail(e.target.value)}
+          variant="outlined"
+          color="secondary"
+          type="email"
+          sx={{ mb: 3 }}
+          fullWidth
+          value={email}
+          error={emailError}
+        />
+
+
+        <Button sx={{ m: 1 }} variant="outlined" color="secondary" type="submit">Submit</Button>
+
+      </form>
+      <Button sx={{ m: 1 }} variant="contained" onClick={() => window.open('https://github.com/anxelic/Senior-Project/tree/main', '_blank')} >
+        Do it manually instead
+      </Button>
+    </Box>
+  );
+}
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Sidebar = () => {
   const { user, guest } = useSelector(
     (state: any) => state.user
@@ -207,6 +309,16 @@ const Sidebar = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [open1, setOpen1] = React.useState(false);
+
+  const handleClickOpen1 = () => {
+    setOpen1(true);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
   };
 
   const handleSourceCodeClicked = () => {
@@ -464,6 +576,28 @@ const Sidebar = () => {
       <Typography onClick={handleClickOpen} variant="caption" display="block" gutterBottom sx={{ p: 2, textAlign: 'center', cursor: 'pointer' }} >
         CalendarBoard Beta v1.0.0
       </Typography>
+
+      <IconButton onClick={() => setOpen1(true)}>
+        <BugReportIcon />
+      </IconButton>
+
+      <Dialog
+        open={open1}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose1}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle align={"center"} id="alert-dialog-title">
+          {"CalandarBoard Bug Report"}
+        </DialogTitle>
+        <DialogContent>
+          <BugReport />
+        </DialogContent>
+        <DialogActions sx={{ alignContent: "center", backgroundColor: colors.main[700] }}>
+          <Button onClick={handleClose1}>Nevermind</Button>
+        </DialogActions>
+      </Dialog>
     </Drawer>
   );
 };

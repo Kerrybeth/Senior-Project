@@ -146,43 +146,44 @@ const User = () => {
 				</div>
 			</div>
 			<div id="usercalendar"><UserCalendar uid={user.uid} /></div>
-			<Box>
-			{!isInChat ? (
-				<div className="room">
-					<label> Type room name: </label>
-					<input onChange={(e) => setRoom(e.target.value)} />
-					<button
-						onClick={() => {
-							setIsInChat(true);
-						}}
-					>
-						Enter Chat
-					</button>
-				</div>
-			) : (
-				<Chat room={room} />
-			)}
-			</Box>
-			<Box>
-				<Typography variant="h3" style={{ position: 'relative', top: '75px' }}>
-					<div style={{ paddingBottom: '20px' }}><b>Availability</b>
-						<Link to="/AvailEdit">
-							<Button variant="contained" sx={{ maxHeight: '50px', left: '20px' }}>
-								<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
-									Edit
-								</Typography>
-							</Button>
-						</Link>
+			<Box m={1}>
+				{!isInChat ? (
+					<div className="room">
+						<label> Who do you want to talk to</label>
+						<input onChange={(e) => setRoom(e.target.value)} />
+						<button
+							onClick={() => {
+								setIsInChat(true);
+							}}
+						>
+							Start chat
+						</button>
 					</div>
+				) : (
+					<Chat room={room} />
+				)}
+			</Box>
+			<Box style={{ position: "flex", p: 2 }}>
+				<div style={{ paddingBottom: '20px' }}><b>Availability</b>
+					<Link to="/AvailEdit">
+						<Button variant="contained" sx={{ maxHeight: '50px', left: '20px' }}>
+							<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right', marginTop: "12px" }}>
+								Edit
+							</Typography>
+						</Button>
+					</Link>
+				</div>
 
-					{timeRanges.map(({ dayOfWeek, start, end }) => (
-						<div key={dayOfWeek}>
-							<h2>{dayOfWeek}</h2>
-							<p>Start time: {start}</p>
-							<p>End time: {end}</p>
-						</div>
-					))}
-				</Typography>
+				{timeRanges.map(({ dayOfWeek, start, end }) => (
+					<>
+						<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
+							Edit
+						</Typography>
+						<Typography>
+							{`day of the week = ${dayOfWeek}\n start time = ${start}\n end time = ${end}`}
+						</Typography>
+					</>
+				))}
 			</Box>
 		</div>
 	);
