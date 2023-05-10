@@ -178,7 +178,7 @@ const Groups = () => {
                 <div>
                     {groups.map((name, i) => (
                         <ListGroup.Item key={i}>
-                            <Link to={`/groups/${groupID[i]}`}> {/* Link to the corresponding GroupPage */}
+                            <Link to={`/groups/${groupID[i]}`} style={{textDecoration: 'none'}}> {/* Link to the corresponding GroupPage */}
                                 <div>
                                     <div className="fw-bold">{name}</div>
                                     <div>{descs[i]}</div>

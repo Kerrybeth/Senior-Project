@@ -26,9 +26,9 @@ const GroupEdit = () => {
     const [users, setUsers] = useState([]);
     const [ids, setIds] = useState([]);
 	const [invite, setInvite] = useState("");
-    const usersTemp = [];
-    const idsTemp = [];
-	const adminsTemp = [];
+    let usersTemp = [];
+    let idsTemp = [];
+	let adminsTemp = [];
 
     useEffect(() => {
         onValue(ref(db, 'users/' + user.uid + '/contacts'), (snapshot) => {
