@@ -32,7 +32,7 @@ import { Outlet } from "react-router-dom";
 import Login from "./ui/login/Login";
 import Signup from "./ui/login/Signup";
 import { useDispatch } from "react-redux";
-import { userLoggedIn } from "./redux/userSlice";
+import { userLoggedIn, userLoggedOut } from "./redux/userSlice";
 import GroupsPage from "./ui/groups/GroupsPage";
 import UserPage from "./ui/user/UserPage";
 import EventPage from "./ui/events/EventPage";
@@ -102,12 +102,13 @@ function App() {
         //   connectAuthEmulator(auth, "http://localhost:9099");
         // } dd
         console.log("Auth", currentuser, currentuser.uid);
-        if (rememberMe === "true") {
+        if (currentuser != null && currentuser != undefined) {
           localStorage.setItem('userToken', currentuser.uid);
           dispatch(userLoggedIn(currentuser));
           console.log(`just dispatched a user = ${JSON.stringify(currentuser)}`)
         } else {
           localStorage.setItem('userToken', '')
+          dispatch(userLoggedOut());
         }
       } else {
         console.log(`current user is ${currentuser}, userToken is ${token}`);
@@ -140,6 +141,8 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <Box sx={{ display: "flex" }}>
+
+            {/* Topbar */}
             {sucess === true ? (<Topbar />) : (<></>)}
             <Box
               component="nav"
@@ -149,6 +152,7 @@ function App() {
                 display: { xs: "none", md: "flex" }
               }}
             >
+              {/* sidebar  */}
               {sucess === true ? (<Sidebar />) : (<></>)}
             </Box>
             <Box
@@ -158,6 +162,7 @@ function App() {
                 width: matchesXs === true ? `calc(100% - ${sizeConfigs.sidebar.width})` : `0`,
               }}
             >
+              {/* routes */}
               <Toolbar />
 
               <Routes>
@@ -165,7 +170,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/reset" element={<Reset />} />
                 <Route path="/login" element={<Login />} />
-                <Route element={<ProtectedRoute isAllowed={sucess} />}>
+                <Route element={<ProtectedRoute isAllowed={sucess && user != {}} />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/user" element={<User />} />
                   <Route path="/useredit" element={<UserEdit />} />

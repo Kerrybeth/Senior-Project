@@ -77,48 +77,57 @@ const PopupNotification = () => {
         console.log(`current notification type = ${value} `)
     };
 
-    const test_notifications = [{ name: "Admin", body: "This is a test notification" },
-
-    { name: "Alex", body: "Your bread and butter is ready!" },
-
-    { name: "Stephane", body: "School is almost over" }]
-
     const [notification, setNotifications] = useState([]);
 
-
-    let eventsTemp = [];
     // grab notifications 
+    let eventsTemp = [];
     useEffect(() => {
         // firebase things
         const db = getDatabase();
-        const dataRef = ref(db, 'users/' + user.uid + '/notifications');
+        const dataRef = ref(db, 'users/' + user?.uid + '/notifications');
         if (dataRef == null) {
-            dispatch(userLoggedInAndNoNotification);
         } else {
-            dispatch(userLoggedInAndHasNotification);
         }
         if (user != null || user != undefined) {
             onValue(dataRef, (snapshot) => {
-                snapshot.forEach(childSnapshot => {
-                    let name = childSnapshot.val().name;
-                    let from = childSnapshot.val().from;
-                    let body = childSnapshot.val().body;
-                    let type = childSnapshot.val().type;
-                    let t = childSnapshot.val().time;
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        let name = childSnapshot.val().name;
+                        let from = childSnapshot.val().from;
+                        let body = childSnapshot.val().body;
+                        let type = childSnapshot.val().type;
+                        let t = childSnapshot.val().time;
 
-                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id, "time" : t });
-                    console.log(`about to set notifications from=${from} body=${body}`)
-                });
-                setNotifications(eventsTemp);
-                eventsTemp = [];
+                        eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id, "time": t });
+                        console.log(`about to set notifications from=${from} body=${body}`)
+                    });
+                    setNotifications(eventsTemp);
+                    eventsTemp = [];
+                }
             });
         }
+    }, []);
+
+     // notification badge check
+    let len = 0;
+    useEffect(() => {
+        const db = getDatabase();
+        const dataRef = ref(db, 'users/' + user?.uid + '/notifications');
+        if (user != null || user != undefined) {
+            onValue(dataRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    len++;
+                } else {
+                    len = 0;
+                }
+            });
+        }
+        console.log(`state of hasNotification len = ${len}`)
     }, []);
 
     const { user, hasNotification } = useSelector(
         (state) => state.user
     )
-    console.log(`state of hasNotification = ${hasNotification}`)
 
     return (
         <>
@@ -197,11 +206,11 @@ const PopupNotification = () => {
                                                 <Grid item xs={12} p={0}>
                                                     <Divider />
                                                 </Grid>
-                                                <Grid item xs={12} p={0} sx={{overflow: "auto", maxHeight: {xs: "350px", md: "500px"}, maxWidth: {xs: "80px"}}}>
-                                                {notification.map(NotificationList)}
+                                                <Grid item xs={12} p={0} sx={{ overflow: "auto", maxHeight: { xs: "350px", md: "500px" }, maxWidth: { xs: "40px" } }}>
+                                                    {notification.map(NotificationList)}
                                                 </Grid>
                                             </Grid>
-                                          
+
                                         </Grid>
                                     </Grid>
                                     <Divider />

@@ -7,12 +7,15 @@ import Tabs from 'react-bootstrap/Tabs';
 import { deleteUser, reauthenticateWithCredential, getAuth } from 'firebase/auth';
 import '../../App.css';
 import { getDatabase, remove, ref } from "@firebase/database";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userLoggedOut } from "../../redux/userSlice";
+import { guestUserLoggedOut } from "../../redux/userSlice";
 
 const Settings = () => {
+  const dispatch = useDispatch();
   const { user, error, sucess } = useSelector(
-		(state) => state.user
-	)
+    (state) => state.user
+  )
   const [mySettings, setMySettings, setError, newEmail, setEmail, newPassword, setPassword] = useState("");
   const navigate = useNavigate();
   const db = getDatabase();
@@ -24,11 +27,12 @@ const Settings = () => {
   const del = async (e) => {
     e.preventDefault();
     try {
-      reauthenticateWithCredential();
+      // reauthenticateWithCredential();
       remove(ref(db, "users/" + user.uid));
       deleteUser(user);
       // await logOut();
-      navigate("/login");
+      dispatch(guestUserLoggedOut());
+      window.location.reload(true)
     } catch (err) {
       setError(err.message);
     }
@@ -42,17 +46,17 @@ const Settings = () => {
       setError(err.message);
     }
   };
-    return (
-      <div className="pageLight">
-        <div className="tabList">
-          <Tabs>
-            <Tab eventKey="first" title="Account Settings">
-              <div style={{padding:10}}>
-                  <Button variant="secondary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
-                  <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
-              </div>
-            </Tab>
-            {/* <Tab eventKey="second" title="Schedule Privacy">
+  return (
+    <div className="pageLight">
+      <div className="tabList">
+        <Tabs>
+          <Tab eventKey="first" title="Account Settings">
+            <div style={{ padding: 10 }}>
+              <Button variant="secondary" type="submit" onClick={updateUser}>Update Account</Button>{' '}
+              <Button variant="danger" type="submit" onClick={del}>Delete Account</Button>
+            </div>
+          </Tab>
+          {/* <Tab eventKey="second" title="Schedule Privacy">
               <div style={{padding:10}}>
                 <label>Select Schedule Privacy: </label>
                 <Form>
@@ -65,10 +69,10 @@ const Settings = () => {
                 </Form>
               </div>
             </Tab> */}
-          </Tabs>
-        </div>
+        </Tabs>
       </div>
-    );
+    </div>
+  );
 }
 
 export default Settings; 

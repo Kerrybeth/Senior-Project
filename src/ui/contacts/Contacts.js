@@ -203,6 +203,7 @@ const Contacts = () => {
                 name: user.uid,
                 body: `You have a friend request from ${user.email}.`,
                 time: `sent at ${dateTime}`,
+                from: "CalandarBoard",
             });
         }
     }

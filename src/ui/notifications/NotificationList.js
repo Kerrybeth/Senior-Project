@@ -26,7 +26,7 @@ export const ListItemWrapper = styled('div')(({ theme }) => ({
     }
 }));
 
-const NotificationList = ({ from = "Uknown Sender", body = "", time = "a few seconds ago", type = "new" }) => {
+const NotificationList = ({ from = "CalandarBoard", body = "", time = "a few seconds ago", type = "new" }) => {
     const theme = useTheme();
 
     const chipSX = {

@@ -176,11 +176,8 @@ const User = () => {
 
 				{timeRanges.map(({ dayOfWeek, start, end }) => (
 					<>
-						<Typography variant="h4" style={{ justifyContent: 'right', alignItems: 'right' }}>
-							Edit
-						</Typography>
 						<Typography>
-							{`day of the week = ${dayOfWeek}\n start time = ${start}\n end time = ${end}`}
+							{`${dayOfWeek}\n start time = ${start}\n end time = ${end}`}
 						</Typography>
 					</>
 				))}
