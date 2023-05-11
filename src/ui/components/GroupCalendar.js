@@ -7,31 +7,28 @@ import '../../App.css';
 import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 
-export const Calendar = () => {
-    const { user, success } = useSelector(
-        (state) => state.user
-      );
+
+export const GroupCalendar = ({uid}) => {
 
     const navigate = useNavigate();
     // local event storage
+
     let eventsTemp = [];
     const [events, setEvents] = useState([]);
     let eventidTemp = [];
     const [eventid, setEventID] = useState([]);
-    let idTemp = [];
-    const [groupIds, setGroupIds] = useState([]);
 
     useEffect(() => {
 
         // firebase things
         const db = getDatabase();
-        const dataRef = ref(db, 'users/' + user.uid + '/events');
-        const dataRef2 = ref(db, 'groups/');
-        let idval = 0;
+        const dataRef = ref(db, 'groups/' + uid + '/events');
 
         // populate array with event information, called every time the db updates
-        if (user != null || user != undefined) {
+        if (uid != null) {
+            let idval = 0;
             onValue(dataRef, (snapshot) => {
                 snapshot.forEach(childSnapshot => {
                     let title = childSnapshot.val().title || '';
@@ -44,51 +41,14 @@ export const Calendar = () => {
                     eventidTemp.push(evId);
                     idval++;
                 });
+
+                setEventID(eventidTemp);
+                setEvents(eventsTemp);
+                eventsTemp = [];
+                eventidTemp = [];
             });
         }
-
-        // find groups you're apart of
-        if (user != null || user != undefined) {
-            onValue(dataRef2, (snapshot) => {
-                snapshot.forEach(childSnapshot => {
-                        childSnapshot.forEach(groupAt => {
-                            if (groupAt.key === "members") {
-                                groupAt.forEach(member => {
-                                    if (user.uid === member.val()) {
-                                        let groupid2 = childSnapshot.key;
-                                        idTemp.push(groupid2);
-                                    }
-                                })
-                            }
-                        });
-                    });
-
-            setGroupIds(idTemp);
-            });
-        }
-
-        // find group events
-        idTemp.forEach(gid => {
-            onValue(ref(db, `groups/${gid}/events`), (snapshot) => {
-                snapshot.forEach(childSnapshot => {
-                    let title = childSnapshot.val().title || '';
-                    let start = childSnapshot.val().start;
-                    let end = childSnapshot.val().end;
-                    let evId = childSnapshot.key;
-                    let color = childSnapshot.val().color;
-    
-                    eventsTemp.push({ "title": title, "start": start, "end": end, "id": idval, "color": color});
-                    eventidTemp.push(evId);
-                    idval++;
-                });
-            });
-        });
-            setEventID(eventidTemp);
-            setEvents(eventsTemp);
-            eventsTemp = [];
-            eventidTemp = [];
-            idTemp = [];
-    }, []);
+    }, [uid]);
 
     const handleEventClick = (arg) => {
         navigate("/event/" + eventid[arg.event.id]);
@@ -118,6 +78,7 @@ export const Calendar = () => {
     // }
 
     return (
+        <Box m={1}>
         <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
             headerToolbar={{
@@ -132,7 +93,8 @@ export const Calendar = () => {
             eventClick={handleEventClick}
             // eventContent={renderEventContent}
             events={events}
+            businessHours={true}
         />
+        </Box>
     );
-
 };

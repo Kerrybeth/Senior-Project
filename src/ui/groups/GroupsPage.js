@@ -8,6 +8,7 @@ import { Button } from 'react-bootstrap';
 import Typography from '@mui/material/Typography';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
+import { GroupCalendar } from "../components/GroupCalendar";
 
 const GroupsPage = () => {
 
@@ -127,6 +128,7 @@ const GroupsPage = () => {
                 <DisplayMembers />
             </ListGroup>
             </div>
+            <div id="usercalendar"><GroupCalendar uid={groupId} /></div>
         </div>
     );
 }

@@ -44,7 +44,8 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
             end: end,
 			repeat: repeatlevel,
 			invite: invite,
-			location: location
+			location: location,
+			color: 'purple'
         });
 		onValue(ref(db, 'users/' + user.uid + '/events'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
@@ -61,7 +62,7 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 		setLocation('');
 		/*console.log(invitee);
 		console.log(eventId); */
-		sendInvite(invitee);
+		sendInvite(findUid(invite));
 		navigate("/Events");
 	};
 	/**
@@ -80,10 +81,28 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 					repeat: repeatlevel,
 					location: location,
 					from:user.uid,
-					body: "You got an invite to a group"
+					body: "You got an invite to a group event"
 				}); 
 			} 
     }
+
+	    /**
+     * @param {*} em 
+     * @returns uid of user associated with email
+     */
+		function findUid(em) {
+			let theirUid;
+			onValue(ref(db, 'users/'), (snapshot) => {
+				snapshot.forEach(childSnapshot => {
+					let email = childSnapshot.child("profile").child("email").val();
+					if (em == email) {
+						theirUid = childSnapshot.key;
+					}
+				});
+			});
+	
+			return theirUid;
+		}
 	
 	/**
      * @param {*} uid 
@@ -119,11 +138,14 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 	}, [user]);
 	
 	return (
-	<Box m={3}>
+	<div class='pageLight2'>
 		<Box>
-			<Typography variant = "h1" style={{ color: 'black', textDecoration: 'underline'}}>
+		<br></br>
+		<br></br>
+			<Typography variant = "h1" style={{ color: 'black'}}>
 			Create Event
 			</Typography>
+			<br></br>
 		</Box>
 		<ListGroup>
 			<ListGroup.Item>
@@ -194,7 +216,7 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 				</Link>
 			</ListGroup.Item>
 		</ListGroup>
-		</Box>
+		</div>
 	);
 }
 

@@ -82,11 +82,8 @@ const GroupEdit = () => {
 	}
 
 	function sendInv () {
-		alert(invite);
-		alert(findUid(invite));
 		let theirUid = findUid(invite);
 		if (reqCheck(theirUid) && theirUid != null) {
-			alert("im here");
 			push(ref(db, 'users/' + theirUid + '/notifications'), {
 				type:'groupinv',
 				from: user.uid,
@@ -110,12 +107,14 @@ const GroupEdit = () => {
 	};
 
 	return (
-		<div>
+		<div class='pageLight2'>
         <br></br>
 			<Box>
-				<Typography variant="h1" style={{ color: 'black', textDecoration: 'underline' }}>
+				<br></br>
+				<Typography variant="h1" style={{ color: 'black' }}>
 					Edit Group
 				</Typography>
+				<br></br>
 			</Box>
 			<ListGroup>
 				<ListGroup.Item>

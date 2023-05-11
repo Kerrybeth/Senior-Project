@@ -91,11 +91,14 @@ const CreateGroup = () => {
 	};
 
 	return (
-		<div>
+		<div class='pageLight2'>
 			<Box>
-				<Typography variant="h1" style={{ color: 'black', textDecoration: 'underline' }}>
+				<br></br>
+				<br></br>
+				<Typography variant="h1" style={{ color: 'black' }}>
 					Create Group
 				</Typography>
+				<br></br>
 			</Box>
 			<ListGroup>
 				<ListGroup.Item>

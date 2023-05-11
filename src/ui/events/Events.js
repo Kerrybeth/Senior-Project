@@ -87,7 +87,7 @@ const Events = () => {
     function denyRequest(req) {
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == sender) {
+                if (childSnapshot.child("type").val() == 'eventreq' && childSnapshot.child("event").val() == req) {
                     remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
                 }
             });

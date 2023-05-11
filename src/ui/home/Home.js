@@ -20,6 +20,7 @@ const Home = () => {
   return (
     <>
     <Box m={3}>
+      <br></br>
       <div classname="App">
         <div className="pageLight">
           <EventCarousel></EventCarousel>
