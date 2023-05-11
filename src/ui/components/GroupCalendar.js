@@ -35,8 +35,9 @@ export const GroupCalendar = ({uid}) => {
                     let start = childSnapshot.val().start;
                     let end = childSnapshot.val().end;
                     let evId = childSnapshot.key;
+                    let color = childSnapshot.val().color;
 
-                    eventsTemp.push({ "title": title, "start": start, "end": end, "id": idval});
+                    eventsTemp.push({ "title": title, "start": start, "end": end, "id": idval, "color": color});
                     eventidTemp.push(evId);
                     idval++;
                 });

@@ -19,35 +19,76 @@ export const Calendar = () => {
     const [events, setEvents] = useState([]);
     let eventidTemp = [];
     const [eventid, setEventID] = useState([]);
+    let idTemp = [];
+    const [groupIds, setGroupIds] = useState([]);
 
     useEffect(() => {
 
         // firebase things
         const db = getDatabase();
         const dataRef = ref(db, 'users/' + user.uid + '/events');
+        const dataRef2 = ref(db, 'groups/');
+        let idval = 0;
 
         // populate array with event information, called every time the db updates
         if (user != null || user != undefined) {
-            let idval = 0;
             onValue(dataRef, (snapshot) => {
                 snapshot.forEach(childSnapshot => {
                     let title = childSnapshot.val().title || '';
                     let start = childSnapshot.val().start;
                     let end = childSnapshot.val().end;
                     let evId = childSnapshot.key;
+                    let color = childSnapshot.val().color;
 
-                    eventsTemp.push({ "title": title, "start": start, "end": end, "id": idval});
+                    eventsTemp.push({ "title": title, "start": start, "end": end, "id": idval, "color": color});
                     eventidTemp.push(evId);
                     idval++;
                 });
-
-                setEventID(eventidTemp);
-                setEvents(eventsTemp);
-                eventsTemp = [];
-                eventidTemp = [];
             });
         }
-    }, [user]);
+
+        // find groups you're apart of
+        if (user != null || user != undefined) {
+            onValue(dataRef2, (snapshot) => {
+                snapshot.forEach(childSnapshot => {
+                        childSnapshot.forEach(groupAt => {
+                            if (groupAt.key === "members") {
+                                groupAt.forEach(member => {
+                                    if (user.uid === member.val()) {
+                                        let groupid2 = childSnapshot.key;
+                                        idTemp.push(groupid2);
+                                    }
+                                })
+                            }
+                        });
+                    });
+
+            setGroupIds(idTemp);
+            });
+        }
+
+        // find group events
+        idTemp.forEach(gid => {
+            onValue(ref(db, `groups/${gid}/events`), (snapshot) => {
+                snapshot.forEach(childSnapshot => {
+                    let title = childSnapshot.val().title || '';
+                    let start = childSnapshot.val().start;
+                    let end = childSnapshot.val().end;
+                    let evId = childSnapshot.key;
+                    let color = childSnapshot.val().color;
+    
+                    eventsTemp.push({ "title": title, "start": start, "end": end, "id": idval, "color": color});
+                    eventidTemp.push(evId);
+                    idval++;
+                });
+            });
+        });
+            setEventID(eventidTemp);
+            setEvents(eventsTemp);
+            eventsTemp = [];
+            eventidTemp = [];
+            idTemp = [];
+    }, []);
 
     const handleEventClick = (arg) => {
         navigate("/event/" + eventid[arg.event.id]);

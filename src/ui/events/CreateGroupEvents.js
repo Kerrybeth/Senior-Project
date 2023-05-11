@@ -43,7 +43,8 @@ const CreateGroupEvents = () => {
 				end: end,
 				repeat: repeatlevel,
 				invite: invite,
-				location: location
+				location: location,
+				color: 'green'
 			});
 		}
 		
@@ -82,11 +83,14 @@ const CreateGroupEvents = () => {
     }, [user]);
 	
 	return (
-	<div>
+	<div class='pageLight2'>
 		<Box>
-			<Typography variant = "h1" style={{ color: 'black', textDecoration: 'underline'}}>
+		<br></br>
+		<br></br>
+			<Typography variant = "h1" style={{ color: 'black'}}>
 			Create Group Event
 			</Typography>
+			<br></br>
 		</Box>
 		<ListGroup>
 			<ListGroup.Item>
