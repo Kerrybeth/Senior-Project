@@ -10,7 +10,6 @@ import { getDatabase, ref, set, update, push, onValue, remove } from "firebase/d
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import '../../App.css';
-import { getAuth } from 'firebase/auth';
 
 const Contacts = () => {
     // offcanvas stuff
@@ -30,11 +29,13 @@ const Contacts = () => {
     let requestsTemp = [];
     let uidTemp = [];
     let imgTemp = [];
+    let searchImgTemp = [];
     const [contacts, setContacts] = useState([]);
     const [uid, setUid] = useState([]);
     const [emails, setEmails] = useState([]);
     const [requests, setRequests] = useState([]);
     const [images, setImages] = useState([]);
+    const [searchImages, setSearchImages] = useState([]);
 
     // db
     const db = getDatabase();
@@ -145,13 +146,24 @@ const Contacts = () => {
         onValue(ref(db, 'users/'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
                 let email = childSnapshot.child("profile").child("email").val();
+                let img = null;
+
                 if (email == event.target.value.toLowerCase()) {
                     emailsTemp.push(email);
                 }
+
+                // get pfp
+                onValue(ref(db, 'users/' + findUid(email) + '/profile'), (snapshot) => {
+                    img = snapshot.val().image;
+                    searchImgTemp.push(img);
+                });
             });
 
+
             setEmails(emailsTemp);
+            setSearchImages(searchImgTemp);
             emailsTemp = [];
+            searchImgTemp = [];
         });
     }
 
@@ -264,6 +276,72 @@ const Contacts = () => {
                 }
             });
         });
+    }
+
+    /**
+     * @returns listgroup of contacts
+     */
+    function ContactDisplay() {
+        if (contacts.length === 0) {
+            return (
+                <div>
+                    <ListGroup.Item>
+                        You have no contacts! Click the button below to add one now.
+                    </ListGroup.Item>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    {contacts.map((em, i) => (
+                        <ListGroup.Item>
+                            <Link to={`/user/${uid[i]}`} style={{textDecoration: 'none'}}> {/* Link to the corresponding userpage */}
+                        <div style={{padding:5}}>
+                            <Image src={images[i]} roundedCircle className="listThumbnail" />
+                            {' '}{em}
+                        </div>
+                        </Link>
+                        </ListGroup.Item>
+                    ))}
+                </div>
+            );
+        }
+    }
+
+    /**
+     * 
+     * @returns a listgroup of matching emails (technically should only be one in the current configuration)
+     */
+    function DisplayResults() {
+        // if (searchImages.length === 0) {
+            return (
+                <div>
+                    {emails.map((em) => (
+                        <ListGroup.Item>
+                            <div style={{padding:5}}>
+                                <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                                {' '}{em}
+                                <Button style={{float:'right', marginTop:-6}} onClick={() => addContact(em)}>Add</Button>
+                            </div>
+                        </ListGroup.Item>
+                    ))}
+                </div>
+            );
+        // } else {
+        //     return (
+        //         <div>
+        //             {emails.map((em, i) => (
+        //                 <ListGroup.Item key={i}>
+        //                     <div style={{padding:5}}>
+        //                         <Image src={searchImages[i]} roundedCircle className="listThumbnail" />
+        //                         {' '}{em}
+        //                         <Button style={{float:'right', marginTop:-6}} onClick={() => addContact(em)}>Add</Button>
+        //                     </div>
+        //                 </ListGroup.Item>
+        //             ))}
+        //         </div>
+        //     );
+        // }
     }
 
     /**

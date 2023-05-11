@@ -378,7 +378,7 @@ const Sidebar = () => {
             direction="row"
             justifyContent="center"
           >
-            <Avatar src={assets.images.logo} />
+            <Avatar variant="square" src={assets.images.logo} />
           </Stack>
         </Toolbar>
         {appRoutes.map((route, index) => (

@@ -40,6 +40,7 @@ import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { Color, info, success, warning, error } from "./ui/notifications/notificationsN";
 import Notification from "./ui/notifications/notificationsN";
+import GroupEdit from "./ui/groups/GroupEdit";
 import * as React from "react";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -178,6 +179,7 @@ function App() {
                   <Route path="/updateUser" element={<UpdateUser />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/groups/:groupID" element={<GroupsPage />} />
+                  <Route path="/groups/:groupID/edit" element={<GroupEdit />} />
                   <Route path="/user/:userID" element={<UserPage />} />
                   <Route path="/event/:eventID" element={<EventPage />} />
                 </Route>
