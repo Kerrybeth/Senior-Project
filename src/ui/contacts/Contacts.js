@@ -79,7 +79,7 @@ const Contacts = () => {
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
                 if (childSnapshot.child('type').val() == 'req') {
-                    let email = findEmail(childSnapshot.child('from').val());
+                    let email = findEmail(childSnapshot.child('name').val());
                     requestsTemp.push(email);
                 }
             });
@@ -233,7 +233,7 @@ const Contacts = () => {
         let req = true;
         onValue(ref(db, 'users/' + uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == user.uid) {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("name").val() == user.uid) {
                     req = false;
                 }
             });
@@ -249,7 +249,7 @@ const Contacts = () => {
     function acceptRequest(req) {
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == findUid(req)) {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("name").val() == findUid(req)) {
                     // adds sendee to your contacts list
                     push(ref(db, 'users/' + user.uid + '/contacts'), {
                         name: req,
@@ -275,7 +275,7 @@ const Contacts = () => {
     function denyRequest(req) {
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snapshot) => {
             snapshot.forEach(childSnapshot => {
-                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("from").val() == findUid(req)) {
+                if (childSnapshot.child("type").val() == 'req' && childSnapshot.child("name").val() == findUid(req)) {
                     remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
                 }
             });
