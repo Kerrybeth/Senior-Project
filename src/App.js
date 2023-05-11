@@ -66,10 +66,11 @@ function App() {
 
   const title = "CalendarBoard";
 
-  const { sucess, rememberMe, user } = useSelector(
+  const { sucess, rememberMe, user, hasNotification } = useSelector(
     (state) => state.user
   )
 
+  console.log(`notifications from home =${hasNotification}`)
   const [notifications, setNotifications] = useState([]);
   const [message, setMessage] = useState("")
 

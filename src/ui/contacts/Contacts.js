@@ -21,8 +21,8 @@ const Contacts = () => {
     // auth
     //const user = getAuth().currentUser;
     const { user, error, sucess } = useSelector(
-		(state) => state.user
-	)
+        (state) => state.user
+    )
 
     // storage for db results
     let contactsTemp = [];
@@ -51,7 +51,11 @@ const Contacts = () => {
                 let img = null;
 
                 onValue(ref(db, 'users/' + uid + '/profile'), (snapshot) => {
-                    img = snapshot.val().image;
+                    if (snapshot.exists) {
+                        img = snapshot.val()?.image 
+                    } else {
+                        img = null
+                    }
                 });
 
                 contactsTemp.push(name);
@@ -61,7 +65,7 @@ const Contacts = () => {
                 }
                 imgTemp.push(img);
             });
-            
+
             setUid(uidTemp);
             setContacts(contactsTemp);
             setImages(imgTemp);
@@ -78,7 +82,7 @@ const Contacts = () => {
                     requestsTemp.push(email);
                 }
             });
-    
+
             setRequests(requestsTemp);
             requestsTemp = [];
         });
@@ -120,11 +124,11 @@ const Contacts = () => {
                     {contacts.map((em, i) => (
                         <ListGroup.Item>
                             <Link to={`/user/${uid[i]}`}> {/* Link to the corresponding userpage */}
-                        <div style={{padding:5}}>
-                            <Image src={images[i]} roundedCircle className="listThumbnail" />
-                            {' '}{em}
-                        </div>
-                        </Link>
+                                <div style={{ padding: 5 }}>
+                                    <Image src={images[i]} roundedCircle className="listThumbnail" />
+                                    {' '}{em}
+                                </div>
+                            </Link>
                         </ListGroup.Item>
                     ))}
                 </div>
@@ -160,11 +164,11 @@ const Contacts = () => {
             <div>
                 {emails.map((em) => (
                     <ListGroup.Item>
-                    <div style={{padding:5}}>
-                        <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
-                        {' '}{em}
-                        <Button style={{float:'right', marginTop:-6}} onClick={() => addContact(em)}>Add</Button>
-                    </div>
+                        <div style={{ padding: 5 }}>
+                            <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                            {' '}{em}
+                            <Button style={{ float: 'right', marginTop: -6 }} onClick={() => addContact(em)}>Add</Button>
+                        </div>
                     </ListGroup.Item>
                 ))}
             </div>
@@ -179,10 +183,12 @@ const Contacts = () => {
         let theirUid = findUid(em);
         if (reqCheck(theirUid) && theirUid != null) {
             push(ref(db, 'users/' + theirUid + '/notifications'), {
-                type:'req',
-                from:user.uid
-            }); 
-        } 
+                type: 'req',
+                name: user.uid,
+                body: `You have a friend request from ${user.email}.`,
+                time: new Date()
+            });
+        }
     }
 
     /**
@@ -202,7 +208,7 @@ const Contacts = () => {
 
         return theirUid;
     }
-    
+
     /**
      * @param {*} uid 
      * @returns false if request already exists in database, true otherwise
@@ -219,7 +225,7 @@ const Contacts = () => {
 
         return req;
     }
-    
+
     /**
      * accepts contact request
      * @param {} req - email of sending user
@@ -238,7 +244,7 @@ const Contacts = () => {
                     push(ref(db, 'users/' + findUid(req) + '/contacts'), {
                         name: findEmail(user.uid),
                         uid: user.uid
-                    }); 
+                    });
 
                     remove(ref(db, 'users/' + user.uid + '/notifications/' + childSnapshot.key));
                 }
@@ -269,11 +275,11 @@ const Contacts = () => {
             <div>
                 {requests.map((req) => (
                     <ListGroup.Item>
-                    <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />{req}</div>
-                    <div style={{padding:5}}>
-                        {' '}
-                        <Button variant="success" onClick={() => acceptRequest(req)}>Accept</Button>{' '} <Button variant="danger" onClick={() => denyRequest(req)}>Deny</Button>{' '}
-                    </div>
+                        <div><Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />{req}</div>
+                        <div style={{ padding: 5 }}>
+                            {' '}
+                            <Button variant="success" onClick={() => acceptRequest(req)}>Accept</Button>{' '} <Button variant="danger" onClick={() => denyRequest(req)}>Deny</Button>{' '}
+                        </div>
                     </ListGroup.Item>
                 ))}
             </div>
@@ -285,42 +291,42 @@ const Contacts = () => {
     // });
 
     return (
-    <div className="pageLight">
-        <div className="tabList">
-        <Tabs
-            defaultActiveKey="first"
-            id="contacts-tabs"
-            className="mb-3"
-        >
-            <Tab eventKey="first" title="Contacts">
-            <ListGroup>
-                <ContactDisplay />
-            </ListGroup>
-            </Tab>
-            <Tab eventKey="second" title="Invites">
-            <ListGroup>
-                <DisplayRequests />
-            </ListGroup>
-            </Tab>
-        </Tabs>
+        <div className="pageLight">
+            <div className="tabList">
+                <Tabs
+                    defaultActiveKey="first"
+                    id="contacts-tabs"
+                    className="mb-3"
+                >
+                    <Tab eventKey="first" title="Contacts">
+                        <ListGroup>
+                            <ContactDisplay />
+                        </ListGroup>
+                    </Tab>
+                    <Tab eventKey="second" title="Invites">
+                        <ListGroup>
+                            <DisplayRequests />
+                        </ListGroup>
+                    </Tab>
+                </Tabs>
+            </div>
+            <Button variant="secondary" onClick={handleShow}>Add Contact</Button>{' '}
+            <>
+                <Offcanvas show={show} onHide={handleClose} placement="end">
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title>Add Friend</Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        {/* Query the users database to find contact based on search input */}
+                        <input type="text" placeholder="Search" style={{ marginTop: 20 }} onChange={handleSearchInputChange} />
+                        <ListGroup style={{ marginTop: 15 }}>
+                            <DisplayResults />
+                        </ListGroup>
+                    </Offcanvas.Body>
+                </Offcanvas>
+            </>
         </div>
-        <Button variant="secondary" onClick={handleShow}>Add Contact</Button>{' '}
-        <>
-        <Offcanvas show={show} onHide={handleClose} placement="end">
-            <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Add Friend</Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-                {/* Query the users database to find contact based on search input */}
-                <input type="text" placeholder="Search" style={{marginTop:20}}onChange={handleSearchInputChange} />
-                <ListGroup style={{marginTop:15}}>
-                    <DisplayResults />
-                </ListGroup>
-            </Offcanvas.Body>
-        </Offcanvas>
-        </>
-    </div>
     );
-  }
-  
-  export default Contacts;
+}
+
+export default Contacts;

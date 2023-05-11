@@ -79,7 +79,8 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 					end: end,
 					repeat: repeatlevel,
 					location: location,
-					from:user.uid
+					from:user.uid,
+					body: "You got an invite to a group"
 				}); 
 			} 
     }
@@ -118,7 +119,7 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 	}, [user]);
 	
 	return (
-	<div>
+	<Box m={3}>
 		<Box>
 			<Typography variant = "h1" style={{ color: 'black', textDecoration: 'underline'}}>
 			Create Event
@@ -193,7 +194,7 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 				</Link>
 			</ListGroup.Item>
 		</ListGroup>
-	</div>
+		</Box>
 	);
 }
 

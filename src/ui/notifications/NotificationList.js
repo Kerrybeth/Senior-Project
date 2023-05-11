@@ -26,7 +26,7 @@ export const ListItemWrapper = styled('div')(({ theme }) => ({
     }
 }));
 
-const NotificationList = ({ name, body, time = "a few seconds ago", label = "new" }) => {
+const NotificationList = ({ from = "Uknown Sender", body = "", time = "a few seconds ago", type = "new" }) => {
     const theme = useTheme();
 
     const chipSX = {
@@ -52,55 +52,64 @@ const NotificationList = ({ name, body, time = "a few seconds ago", label = "new
             sx={{
                 width: '100%',
                 height: '100%',
-                maxWidth: 330,
-                maxHeight: 'calc(90vh - 205px)',
+                maxWidth: '100%',
+                maxHeight: '75%',
                 py: 0,
                 borderRadius: '10px',
-                [theme.breakpoints.down('md')]: {
-                    maxWidth: 300
-                },
                 '& .MuiListItemSecondaryAction-root': {
-                    top: 22
+                    top: 2
                 },
                 '& .MuiDivider-root': {
                     my: 0
                 },
                 '& .list-container': {
-                    pl: 7
+                    pl: 2
                 },
                 display: 'flow',
-                overflow: 'auto'
             }}
         >
             <ListItemWrapper>
-                {/* one notification card */}
                 <ListItem alignItems="center">
-                    <ListItemAvatar>
-                        <Avatar alt={name} src={User1} />
-                    </ListItemAvatar>
-                    <ListItemText primary={name} />
-                    <ListItemSecondaryAction>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item xs={12}>
-                                <Typography variant="caption" display="block" gutterBottom>
+
+                    <Grid container direction="row">
+                        <Grid container direction={"column"} alignContent={"space-between"}>
+                            <Grid item xs={6} m={1} >
+                                <Typography variant="caption" alignSelf={"left"} gutterBottom>
+                                    {/* {from.length <= 10 ? from : `${from.substring(0, 10)}... `} */}
+                                    {from}
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={6} m={1} >
+                                <Typography variant="caption" alignSelf={"right"} gutterBottom>
                                     {time}
                                 </Typography>
                             </Grid>
                         </Grid>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <Grid container direction="column" className="list-container">
-                    <Grid item xs={12} sx={{ p: 0.5 }}>
-                        <Typography variant="subtitle2">{body}</Typography>
-                    </Grid>
-                    <Grid item xs={12} sx={{ p: 1 }}>
-                        <Grid container>
-                            <Grid item>
-                                {label === "new" ? (<Chip label="New" sx={chipWarningSX} />) : (<></>)}
+                        <Grid container direction="row" className="list-container">
+                            <Grid item xs={12} sx={{ p: 0.5 }}>
+                                <Typography variant="subtitle2">{body}</Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ p: 1 }}>
+                                <Grid container>
+                                    <Grid item>
+                                        {
+                                            {
+                                                'new': <Chip label="New" sx={chipWarningSX} />,
+                                                'req': <Chip label="Req" sx={chipErrorSX} />,
+                                                'sys': <Chip label="Sys" sx={chipSX} />,
+                                                'eventreq': <Chip label="Event Request" sx={chipSX} />,
+                                                'groupinv': <Chip label="Group Request" sx={chipSX} />
+                                                
+                                            }[type]
+                                        }
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
+                </ListItem>
+
                 <Divider />
             </ListItemWrapper>
         </List>

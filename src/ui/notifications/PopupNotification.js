@@ -21,19 +21,25 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import { tokens } from '../../theme';
 import { useSelector } from 'react-redux';
+import { userLoggedInAndHasNotification, userLoggedInAndNoNotification } from "../../redux/userSlice";
+import { useDispatch } from "react-redux";
+import { getDatabase, ref, push, onValue } from "firebase/database";
+
+
 // notification status options
 const status = [
     {
-        value: 'unread',
-        label: 'Unread'
+        value: 'new',
+        label: 'New'
     },
     {
-        value: 'other',
-        label: 'Other'
+        value: 'req',
+        label: 'Request'
     }
 ];
 
 const PopupNotification = () => {
+    const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -76,11 +82,43 @@ const PopupNotification = () => {
 
     { name: "Stephane", body: "School is almost over" }]
 
+    const [notification, setNotifications] = useState([]);
+
+
+    let eventsTemp = [];
+    // grab notifications 
+    useEffect(() => {
+        // firebase things
+        const db = getDatabase();
+        const dataRef = ref(db, 'users/' + user.uid + '/notifications');
+        if (dataRef == null) {
+            dispatch(userLoggedInAndNoNotification);
+        } else {
+            dispatch(userLoggedInAndHasNotification);
+        }
+        if (user != null || user != undefined) {
+            onValue(dataRef, (snapshot) => {
+                snapshot.forEach(childSnapshot => {
+                    let name = childSnapshot.val().name;
+                    let from = childSnapshot.val().from;
+                    let body = childSnapshot.val().body;
+                    let type = childSnapshot.val().type;
+                    let t = true;
+
+                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id, "increaseWidth": t });
+                    console.log(`about to set notifications from=${from} body=${body}`)
+                });
+                setNotifications(eventsTemp);
+                eventsTemp = [];
+            });
+        }
+    }, []);
+
     const { user, hasNotification } = useSelector(
         (state) => state.user
-      )
-    console.log(`state of hasNotification = ${hasNotification}`)  
-    
+    )
+    console.log(`state of hasNotification = ${hasNotification}`)
+
     return (
         <>
             {/* actual notification btn  */}
@@ -158,8 +196,11 @@ const PopupNotification = () => {
                                                 <Grid item xs={12} p={0}>
                                                     <Divider />
                                                 </Grid>
+                                                <Grid item xs={12} p={0} sx={{overflow: "auto", maxHeight: {xs: "350px", md: "500px"}, maxWidth: {xs: "80px"}}}>
+                                                {notification.map(NotificationList)}
+                                                </Grid>
                                             </Grid>
-                                            {test_notifications.map(NotificationList)}
+                                          
                                         </Grid>
                                     </Grid>
                                     <Divider />

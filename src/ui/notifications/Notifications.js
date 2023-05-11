@@ -22,14 +22,13 @@ import { getDatabase, ref, push, onValue } from "firebase/database";
 import { useEffect, useState } from 'react';
 import NotificationList from "./NotificationList";
 import { onSnapshot, query } from "firebase/firestore";
-import { Dispatch } from "redux";
 import { userLoggedInAndHasNotification, userLoggedInAndNoNotification } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
 
 const Notifications = () => {
     let title = "CalendarBoard/Notifications";
     const theme = useTheme();
-    const [notifcation, setNotifications] = useState([]);
+    const [notification, setNotifications] = useState([]);
     const dispatch = useDispatch();
 
 
@@ -57,8 +56,9 @@ const Notifications = () => {
                     let from = childSnapshot.val().from;
                     let body = childSnapshot.val().body;
                     let type = childSnapshot.val().type;
+                    let t = true; 
 
-                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id });
+                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id});
                     console.log(`about to set notifications from=${from} body=${body}`)
                 });
                 setNotifications(eventsTemp);
@@ -66,13 +66,12 @@ const Notifications = () => {
             });
         }
 
-        if(notifcation.length == 0 ){
+        if(notification.length == 0 ){
             dispatch(userLoggedInAndNoNotification);
         }else{
             dispatch(userLoggedInAndHasNotification);
         }
     }, []);
-
 
 
     return (
@@ -86,13 +85,13 @@ const Notifications = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     marginTop: 2,
-                    width: '100%',
+                   
                 }}
             >
-                <Typography variant="h5" sx={{ m: 2, position: "flex" }}>Here is a closer view of all your notifications</Typography>
+                <Typography variant="h5" sx={{ m: 2, position: "flex", textAlign: "center"}}>Here is a closer view of all your notifications</Typography>
 
-                <List sx={{ width: '100%', bgcolor: 'background.paper', m: 1 }}>
-                    {notifcation.map(data => NotificationList(data))}
+                <List sx={{ bgcolor: 'background.paper', m: 1 }}>
+                    {notification.map(data => NotificationList(data))}
                 </List>
             </Box>
         </>

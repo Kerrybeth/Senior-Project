@@ -20,7 +20,7 @@ const registerUser = createAsyncThunk(
 )
 
 export const userSlice = createSlice({
-    name: 'isUserLoggedIn',
+    name: 'user',
     initialState: {
         loading: false,
         guest: false,

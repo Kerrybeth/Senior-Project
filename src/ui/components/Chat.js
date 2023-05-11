@@ -17,8 +17,12 @@ import Box from "@mui/material/Box";
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import { useTheme, Typography } from "@mui/material";
+import { useTheme, Typography, Button } from "@mui/material";
 import { tokens } from "../../theme";
+import FormControl, { useFormControl } from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormHelperText from '@mui/material/FormHelperText';
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,6 +31,21 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
+
+function MyFormHelperText() {
+    const { focused } = useFormControl() || {};
+
+    const helperText = React.useMemo(() => {
+        if (focused) {
+            return 'This field is being focused';
+        }
+
+        return 'Helper text';
+    }, [focused]);
+
+    return <FormHelperText>{helperText}</FormHelperText>;
+}
+
 
 export const Chat = ({ room }) => {
     const db = getFirestore();
@@ -60,7 +79,6 @@ export const Chat = ({ room }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         try {
             if (newMessage === "") return;
             await addDoc(messagesRef, {
@@ -75,9 +93,10 @@ export const Chat = ({ room }) => {
         setNewMessage("");
     };
 
-   
 
 
+
+    // TODO add recent messages 
     console.log(`message load is ${JSON.stringify(messages)}`)
     return (
         <Box>
@@ -88,28 +107,32 @@ export const Chat = ({ room }) => {
                 >
                     {`Your talking to ${room.toUpperCase()}`}
                 </Typography>
-                <Item> <div className="messages">
+                <Item> <div style={{ "overflow-y": "auto", "height": 200 }} className="messages">
                     {messages.map((message) => (
-                        <div style={{"overflow-y": "auto", "height": 200}} key={message.id} className="message" st>
+                        <div key={message.id} className="message" st>
                             <span className="user">{message.user}:</span> {message.text}
                         </div>
                     ))}
                 </div></Item>
-                <div className="chat-app">
-                    <form onSubmit={handleSubmit} className="new-message-form">
-                        <input
-                            type="text"
-                            value={newMessage}
-                            onChange={(event) => setNewMessage(event.target.value)}
-                            className="new-message-input"
-                            placeholder="Type your message here..."
-                        />
-                        <button type="submit" className="send-button">
-                            Send
-                        </button>
-                    </form>
-                </div>
+                <Item>
+                    <Box component="form" noValidate autoComplete="off">
+                        <FormControl sx={{ width: '25ch' }}>
+                            <form onSubmit={handleSubmit} >
+                                <input
+                                    type="text"
+                                    value={newMessage}
+                                    onChange={(event) => setNewMessage(event.target.value)}
+                                    className="new-message-input"
+                                    placeholder="Type your message here..."
+                                />
+                                <Button onClick={handleSubmit} preventDefault="true" variant="contained">
+                                    Send message
+                                </Button>
+                            </form>
+                        </FormControl>
+                    </Box>
+                </Item>
             </Stack>
-        </Box>
+        </Box >
     );
 };

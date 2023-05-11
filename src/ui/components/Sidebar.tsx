@@ -215,7 +215,6 @@ const BugReport = () => {
     if (reproduce == '') setReproduceError(true)
   
 
-
     if (description && reproduce) {
       console.log(description, reproduce)
     }
