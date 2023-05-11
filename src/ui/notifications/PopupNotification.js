@@ -74,6 +74,7 @@ const PopupNotification = () => {
 
     const handleChange = (event) => {
         if (event?.target.value) setValue(event?.target.value);
+        console.log(`current notification type = ${value} `)
     };
 
     const test_notifications = [{ name: "Admin", body: "This is a test notification" },
@@ -103,9 +104,9 @@ const PopupNotification = () => {
                     let from = childSnapshot.val().from;
                     let body = childSnapshot.val().body;
                     let type = childSnapshot.val().type;
-                    let t = true;
+                    let t = childSnapshot.val().time;
 
-                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id, "increaseWidth": t });
+                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id, "time" : t });
                     console.log(`about to set notifications from=${from} body=${body}`)
                 });
                 setNotifications(eventsTemp);

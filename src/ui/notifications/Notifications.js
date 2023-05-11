@@ -56,9 +56,9 @@ const Notifications = () => {
                     let from = childSnapshot.val().from;
                     let body = childSnapshot.val().body;
                     let type = childSnapshot.val().type;
-                    let t = true; 
+                    let t = childSnapshot.val().time; 
 
-                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id});
+                    eventsTemp.push({ "from": from, "body": body, "name": name, "type": type, "id": snapshot.id, "time" : t});
                     console.log(`about to set notifications from=${from} body=${body}`)
                 });
                 setNotifications(eventsTemp);

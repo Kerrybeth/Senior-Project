@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 import { getDatabase, ref, query, onValue, orderByChild } from "firebase/database";
 import { getAuth } from 'firebase/auth';
 import { Carousel, Card, CardGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 function EventCarousel() {
   const [events, setEvents] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const user = getAuth().currentUser;
+
+  const { user, hasNotification } = useSelector(
+    (state) => state.user
+)
   let eventsTemp = [];
 
   useEffect(() => {

@@ -126,29 +126,30 @@ const Login = () => {
 
 
       <hr />
-      <GoogleButton
-        className="g-btn"
-        type="dark"
-        sx={{ outerWidth: "50%" }}
-        onClick={handleGoogleSignIn}
-      />
+      <Box maxWidth={"75%"}>
+        <GoogleButton
+          className="g-btn"
+          type="dark"
+          onClick={handleGoogleSignIn}
+        />
+      </Box>
       <Box m={1} textAlign={"center"}>
         <Button onClick={handleGuestSignIn} >Login as guest</Button>
       </Box>
 
 
       <h6>Rememeber Me</h6>
-      <Box sx={{backgroundColor: "grey", borderRadius: "16px", p: 2}}>
-      <FormControl defaultValue="no">
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="false"
-          name="radio-buttons-group"
-        >
-          <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="true" control={<Radio />} label="Yes" />
-          <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="false" control={<Radio />} label="No" defaultChecked={"true"} />
-        </RadioGroup>
-      </FormControl>
+      <Box sx={{ backgroundColor: "grey", borderRadius: "16px", p: 2 }}>
+        <FormControl defaultValue="no">
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="false"
+            name="radio-buttons-group"
+          >
+            <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="true" control={<Radio />} label="Yes" />
+            <FormControlLabel onChange={(e) => setRememberMe(e.target.value)} value="false" control={<Radio />} label="No" defaultChecked={"true"} />
+          </RadioGroup>
+        </FormControl>
       </Box>
 
       <Button variant="text" onClick={() => navigate("/signup")}> Need An Account? Sign up</Button>

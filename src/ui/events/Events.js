@@ -285,11 +285,11 @@ const Events = () => {
 				</Tabs>
 			</div>
 			<Link to="/CreateEvents"> 
-				<Button variant="secondary">
+				<Button variant="secondary" style={{m: "20px"}}>
 					Create Event
 				</Button>
 			</Link>
-			<Link to="/CreateGroupEvents">
+			<Link to="/CreateGroupEvents" style={{m: "20px"}}>
 				<Button variant="secondary">
 					Create Group Event
 				</Button>

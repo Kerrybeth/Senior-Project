@@ -2,6 +2,7 @@ import EventCarousel from "./EventCarousel";
 import { Calendar } from "../components/Calendar";
 import { getDatabase, ref, onValue, set, update } from "firebase/database";
 import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 
 const Home = () => {
 
@@ -18,6 +19,7 @@ const Home = () => {
 
   return (
     <>
+    <Box m={3}>
       <div classname="App">
         <div className="pageLight">
           <EventCarousel></EventCarousel>
@@ -28,6 +30,7 @@ const Home = () => {
           {/*</div>*/}
         </div>
       </div>
+      </Box>
     </>
   );
 };
