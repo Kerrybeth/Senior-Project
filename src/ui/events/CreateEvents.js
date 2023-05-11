@@ -61,7 +61,7 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 		setLocation('');
 		/*console.log(invitee);
 		console.log(eventId); */
-		sendInvite(invitee);
+		sendInvite(findUid(invite));
 		navigate("/Events");
 	};
 	/**
@@ -84,6 +84,24 @@ const CreateEvents = () => { {/* If we have time, getting form validation to wor
 				}); 
 			} 
     }
+
+	    /**
+     * @param {*} em 
+     * @returns uid of user associated with email
+     */
+		function findUid(em) {
+			let theirUid;
+			onValue(ref(db, 'users/'), (snapshot) => {
+				snapshot.forEach(childSnapshot => {
+					let email = childSnapshot.child("profile").child("email").val();
+					if (em == email) {
+						theirUid = childSnapshot.key;
+					}
+				});
+			});
+	
+			return theirUid;
+		}
 	
 	/**
      * @param {*} uid 
