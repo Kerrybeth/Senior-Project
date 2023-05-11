@@ -229,7 +229,7 @@ const BugReport = () => {
           required
           variant="outlined"
           color="secondary"
-          type="email"
+          type="text"
           sx={{ mb: 3 }}
           fullWidth
           value={description}
@@ -241,7 +241,7 @@ const BugReport = () => {
           required
           variant="outlined"
           color="secondary"
-          type="email"
+          type="text"
           sx={{ mb: 3 }}
           fullWidth
           value={reproduce}
@@ -254,7 +254,7 @@ const BugReport = () => {
           required
           variant="outlined"
           color="secondary"
-          type="email"
+          type="text"
           sx={{ mb: 3 }}
           fullWidth
           value={behavior}
@@ -266,7 +266,7 @@ const BugReport = () => {
           onChange={e => setSeverity(e.target.value)}
           variant="outlined"
           color="secondary"
-          type="email"
+          type="text"
           sx={{ mb: 3 }}
           fullWidth
           value={severity}
