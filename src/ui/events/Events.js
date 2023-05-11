@@ -166,7 +166,7 @@ const Events = () => {
 				let invite = childSnapshot.val().invite; 
 				let location = childSnapshot.val().location;
 
-                eventsTemp.push({"title": title, "start": start, "end": end, "invite": invite, "location": location});
+                eventsTemp.push({"title": title, "start": start, "end": end, "invite": invite, "location": location, "body" : `you got an event invite from ${user.email}`});
             });
             setEvents(eventsTemp);
             eventsTemp = [];

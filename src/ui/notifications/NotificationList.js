@@ -66,6 +66,7 @@ const NotificationList = ({ from = "Uknown Sender", body = "", time = "a few sec
                     pl: 2
                 },
                 display: 'flow',
+                zIndex: 1000
             }}
         >
             <ListItemWrapper>

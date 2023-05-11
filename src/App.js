@@ -93,6 +93,7 @@ function App() {
   }, [sucess]);
 
   const token = localStorage.getItem('userToken');
+  
   //updating current user 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {

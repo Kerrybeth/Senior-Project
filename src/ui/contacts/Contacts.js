@@ -53,7 +53,7 @@ const Contacts = () => {
 
                 onValue(ref(db, 'users/' + uid + '/profile'), (snapshot) => {
                     if (snapshot.exists) {
-                        img = snapshot.val()?.image 
+                        img = snapshot.val()?.image
                     } else {
                         img = null
                     }
@@ -154,7 +154,7 @@ const Contacts = () => {
 
                 // get pfp
                 onValue(ref(db, 'users/' + findUid(email) + '/profile'), (snapshot) => {
-                    img = snapshot.val().image;
+                    img = snapshot.val()?.image;
                     searchImgTemp.push(img);
                 });
             });
@@ -193,12 +193,16 @@ const Contacts = () => {
      */
     function addContact(em) {
         let theirUid = findUid(em);
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
         if (reqCheck(theirUid) && theirUid != null) {
             push(ref(db, 'users/' + theirUid + '/notifications'), {
                 type: 'req',
                 name: user.uid,
                 body: `You have a friend request from ${user.email}.`,
-                time: new Date()
+                time: `sent at ${dateTime}`,
             });
         }
     }
@@ -295,12 +299,12 @@ const Contacts = () => {
                 <div>
                     {contacts.map((em, i) => (
                         <ListGroup.Item>
-                            <Link to={`/user/${uid[i]}`} style={{textDecoration: 'none'}}> {/* Link to the corresponding userpage */}
-                        <div style={{padding:5}}>
-                            <Image src={images[i]} roundedCircle className="listThumbnail" />
-                            {' '}{em}
-                        </div>
-                        </Link>
+                            <Link to={`/user/${uid[i]}`} style={{ textDecoration: 'none' }}> {/* Link to the corresponding userpage */}
+                                <div style={{ padding: 5 }}>
+                                    <Image src={images[i]} roundedCircle className="listThumbnail" />
+                                    {' '}{em}
+                                </div>
+                            </Link>
                         </ListGroup.Item>
                     ))}
                 </div>
@@ -314,19 +318,19 @@ const Contacts = () => {
      */
     function DisplayResults() {
         // if (searchImages.length === 0) {
-            return (
-                <div>
-                    {emails.map((em) => (
-                        <ListGroup.Item>
-                            <div style={{padding:5}}>
-                                <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
-                                {' '}{em}
-                                <Button style={{float:'right', marginTop:-6}} onClick={() => addContact(em)}>Add</Button>
-                            </div>
-                        </ListGroup.Item>
-                    ))}
-                </div>
-            );
+        return (
+            <div>
+                {emails.map((em) => (
+                    <ListGroup.Item>
+                        <div style={{ padding: 5 }}>
+                            <Image src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" roundedCircle className="listThumbnail" />
+                            {' '}{em}
+                            <Button style={{ float: 'right', marginTop: -6 }} onClick={() => addContact(em)}>Add</Button>
+                        </div>
+                    </ListGroup.Item>
+                ))}
+            </div>
+        );
         // } else {
         //     return (
         //         <div>
